@@ -29,22 +29,22 @@
 <!-- PROJECT LOGO -->
 <br />
 <div align="center">
-  <a href="https://github.com/TUK-EIS/VDSProject">
+  <a href="https://github.com/rpigor/VDSProject_23Group7">
     <img src="doc/figures/RPTU-Logo-RGB.png" alt="Logo" width="400" height="200">
   </a>
   <h3 align="center">
   VDS Class Project
   <br />
-  Group #X
+  Group #7
   <br />
-  Winter Semester 2022/2023
+  Winter Semester 2023/2024
   </h3>
 
   <p align="center">
     GitHub repository for the Verification of Digital Systems Class Project
     <br />
     <br />
-    <a href="https://github.com/TUK-EIS/VDSProject/issues">Report Bug</a>
+    <a href="https://github.com/rpigor/VDSProject_23Group7/issues">Report Bug</a>
   </p>
 </div>
 
@@ -156,12 +156,12 @@ This is an example of how to list things you need to use the software and how to
 ### Installation
 1. Clone the repo
    ```sh
-   git clone https://github.com/your_username_/VDSProject
+   git clone https://github.com/rpigor/VDSProject_23Group7
    ```
 **Installation with CLion**
 
 CLion comes with CMake. 
-2. Open CLion and open VDSProject/CMakeLists.txt as a project.
+2. Open CLion and open rpigor/CMakeLists.txt as a project.
 3. Select your target and build the project.
    
 **Installation without CLion**
@@ -169,7 +169,7 @@ CLion comes with CMake.
 
 2. Navigate to the project folder and create a build directory
     ```sh
-    cd VDSProject && mkdir build
+    cd VDSProject_23Group7 && mkdir build
     ```
 3. Navigate to the build folder and invoke CMake
     ```sh
@@ -258,14 +258,14 @@ You might find helpful links below.
 
 <!-- MARKDOWN LINKS & IMAGES -->
 <!-- https://www.markdownguide.org/basic-syntax/#reference-style-links -->
-[contributors-shield]: https://img.shields.io/github/contributors/TUK-EIS/VDSProject.svg?style=for-the-badge
-[contributors-url]: https://github.com/TUK-EIS/VDSProject/graphs/contributors
-[forks-shield]: https://img.shields.io/github/forks/TUK-EIS/VDSProject.svg?style=for-the-badge
-[forks-url]: https://github.com/TUK-EIS/VDSProject/network/members
-[stars-shield]: https://img.shields.io/github/stars/TUK-EIS/VDSProject.svg?style=for-the-badge
-[stars-url]: https://github.com/TUK-EIS/VDSProject/stargazers
-[issues-shield]: https://img.shields.io/github/issues/TUK-EIS/VDSProject.svg?style=for-the-badge
-[issues-url]: https://github.com/TUK-EIS/VDSProject/issues
+[contributors-shield]: https://img.shields.io/github/contributors/rpigor/VDSProject_23Group7.svg?style=for-the-badge
+[contributors-url]: https://github.com/rpigor/VDSProject_23Group7/graphs/contributors
+[forks-shield]: https://img.shields.io/github/forks/rpigor/VDSProject_23Group7.svg?style=for-the-badge
+[forks-url]: https://github.com/rpigor/VDSProject_23Group7/network/members
+[stars-shield]: https://img.shields.io/github/stars/rpigor/VDSProject_23Group7.svg?style=for-the-badge
+[stars-url]: https://github.com/rpigor/VDSProject_23Group7/stargazers
+[issues-shield]: https://img.shields.io/github/issues/rpigor/VDSProject_23Group7.svg?style=for-the-badge
+[issues-url]: https://github.com/rpigor/VDSProject_23Group7/issues
 <!--
 [license-shield]: https://img.shields.io/github/license/othneildrew/Best-README-Template.svg?style=for-the-badge
 [license-url]: https://github.com/othneildrew/Best-README-Template/blob/master/LICENSE.txt
