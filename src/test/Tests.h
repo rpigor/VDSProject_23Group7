@@ -28,4 +28,14 @@ TEST_F(ManagerTest, TrueAndFalseConstantsWork)
     EXPECT_EQ(manager.False(), ClassProject::FALSE_ID);
 }
 
+TEST_F(ManagerTest, uniqueTableSizeWorks)
+{
+    EXPECT_EQ(manager.uniqueTableSize(), 2);
+
+    manager.createVar("a");
+    manager.createVar("b");
+
+    EXPECT_EQ(manager.uniqueTableSize(), 4);
+}
+
 #endif
