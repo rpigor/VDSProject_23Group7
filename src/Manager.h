@@ -98,7 +98,7 @@ namespace ClassProject {
 
         void findVars(const BDD_ID &root, std::set<BDD_ID> &vars_of_root) override;
 
-        size_t uniqueTableSize() override;
+        std::size_t uniqueTableSize() override;
 
         void visualizeBDD(std::string filepath, BDD_ID &root) override;
     };

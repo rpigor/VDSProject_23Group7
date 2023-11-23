@@ -133,9 +133,9 @@ void Manager::findVars(const BDD_ID &root, std::set<BDD_ID> &vars_of_root)
 
 }
 
-size_t Manager::uniqueTableSize()
+std::size_t Manager::uniqueTableSize()
 {
-
+    return uniqueTable.size();
 }
 
 void Manager::visualizeBDD(std::string filepath, BDD_ID &root)
