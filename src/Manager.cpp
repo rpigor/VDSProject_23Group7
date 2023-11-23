@@ -1,10 +1,26 @@
 #include "Manager.h"
+#include <boost/functional/hash.hpp>
 
 using namespace ClassProject;
 
+std::size_t NodeTripleHash::operator()(const NodeTriple &triple) const
+{
+    std::size_t hash = 0;
+    boost::hash_combine(hash, boost::hash_value(triple.topVariable));
+    boost::hash_combine(hash, boost::hash_value(triple.low));
+    boost::hash_combine(hash, boost::hash_value(triple.high));
+    return hash;
+}
+
 Manager::Manager()
 {
+    NodeTriple falseTriple {FALSE_ID, FALSE_ID, FALSE_ID};
+    Node falseNode {FALSE_ID, falseTriple, "false"};
+    NodeTriple trueTriple {TRUE_ID, TRUE_ID, TRUE_ID};
+    Node trueNode {TRUE_ID, trueTriple, "true"};
 
+    uniqueTable.emplace(falseTriple, falseNode);
+    uniqueTable.emplace(trueTriple, trueNode);
 }
 
 BDD_ID Manager::createVar(const std::string &label)
@@ -14,12 +30,12 @@ BDD_ID Manager::createVar(const std::string &label)
 
 const BDD_ID &Manager::True()
 {
-
+    return uniqueTable.at(NodeTriple {TRUE_ID, TRUE_ID, TRUE_ID}).id;
 }
 
 const BDD_ID &Manager::False()
 {
-
+    return uniqueTable.at(NodeTriple {FALSE_ID, FALSE_ID, FALSE_ID}).id;
 }
 
 bool Manager::isConstant(BDD_ID f)

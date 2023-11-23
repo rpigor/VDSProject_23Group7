@@ -6,6 +6,7 @@
 #define VDSPROJECT_MANAGER_H
 
 #include "ManagerInterface.h"
+#include <unordered_map>
 
 namespace ClassProject {
 
@@ -13,7 +14,46 @@ namespace ClassProject {
     static const BDD_ID FALSE_ID = 1;
     static const BDD_ID TRUE_ID = 2;
 
+    class NodeTriple {
+    public:
+        BDD_ID topVariable;
+        BDD_ID low;
+        BDD_ID high;
+
+        inline bool operator==(const NodeTriple &triple) const
+        {
+            return (this->topVariable == triple.topVariable) && (this->low == triple.low) && (this->high == triple.high);
+        }
+    };
+
+    class NodeTripleHash {
+    public:
+        std::size_t operator()(const NodeTriple &triple) const;
+    };
+
+    class Node {
+    public:
+        BDD_ID id;
+        NodeTriple triple;
+        std::string label;
+
+        inline Node(BDD_ID id, NodeTriple triple, std::string label)
+        : id(id), triple(triple), label(label)
+        {
+
+        }
+
+        inline Node(BDD_ID id, BDD_ID topVariable, BDD_ID low, BDD_ID high, std::string label)
+        : id(id), triple(NodeTriple {topVariable, low, high}), label(label)
+        {
+
+        }
+    };
+
     class Manager : public ManagerInterface {
+    private:
+        std::unordered_map<NodeTriple, Node, NodeTripleHash> uniqueTable;
+
     public:
         Manager();
 
