@@ -13,6 +13,15 @@ protected:
     ClassProject::Manager manager;
 };
 
+TEST_F(ManagerTest, CreateVarWorks)
+{
+    ClassProject::BDD_ID aVarId = manager.createVar("a");
+    EXPECT_EQ(aVarId, ClassProject::INVALID_ID + 3);
+    manager.createVar("b");
+    ClassProject::BDD_ID cVarId = manager.createVar("c");
+    EXPECT_EQ(cVarId, ClassProject::INVALID_ID + 5);
+}
+
 TEST_F(ManagerTest, TrueAndFalseConstantsWork)
 {
     EXPECT_EQ(manager.True(), ClassProject::TRUE_ID);
