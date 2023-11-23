@@ -25,17 +25,22 @@ Manager::Manager()
 
 BDD_ID Manager::createVar(const std::string &label)
 {
+    BDD_ID varId = uniqueTable.size() + 1;
+    NodeTriple varNodeTriple {varId, TRUE_ID, FALSE_ID};
+    Node varNode {varId, varNodeTriple, label};
 
+    uniqueTable.emplace(varNodeTriple, varNode);
+    return varId;
 }
 
 const BDD_ID &Manager::True()
 {
-    return uniqueTable.at(NodeTriple {TRUE_ID, TRUE_ID, TRUE_ID}).id;
+    return uniqueTable.at(NodeTriple {TRUE_ID, TRUE_ID, TRUE_ID}).id; // when optimizing: simply return TRUE_ID
 }
 
 const BDD_ID &Manager::False()
 {
-    return uniqueTable.at(NodeTriple {FALSE_ID, FALSE_ID, FALSE_ID}).id;
+    return uniqueTable.at(NodeTriple {FALSE_ID, FALSE_ID, FALSE_ID}).id; // when optimizing: simply return FALSE_ID
 }
 
 bool Manager::isConstant(BDD_ID f)
