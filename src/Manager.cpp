@@ -15,9 +15,9 @@ std::size_t NodeTripleHash::operator()(const NodeTriple &triple) const
 Manager::Manager()
 {
     NodeTriple falseTriple {FALSE_ID, FALSE_ID, FALSE_ID};
-    Node falseNode {FALSE_ID, falseTriple, "false"};
+    Node falseNode {FALSE_ID, falseTriple, "False"};
     NodeTriple trueTriple {TRUE_ID, TRUE_ID, TRUE_ID};
-    Node trueNode {TRUE_ID, trueTriple, "true"};
+    Node trueNode {TRUE_ID, trueTriple, "True"};
 
     uniqueTable.emplace(falseTriple, falseNode);
     uniqueTable.emplace(trueTriple, trueNode);
@@ -25,7 +25,7 @@ Manager::Manager()
 
 BDD_ID Manager::createVar(const std::string &label)
 {
-    BDD_ID varId = uniqueTable.size() + 1;
+    BDD_ID varId = uniqueTable.size();
     NodeTriple varNodeTriple {varId, TRUE_ID, FALSE_ID};
     Node varNode {varId, varNodeTriple, label};
 

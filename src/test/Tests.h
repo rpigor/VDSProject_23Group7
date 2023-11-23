@@ -16,10 +16,10 @@ protected:
 TEST_F(ManagerTest, CreateVarWorks)
 {
     ClassProject::BDD_ID aVarId = manager.createVar("a");
-    EXPECT_EQ(aVarId, ClassProject::INVALID_ID + 3);
+    EXPECT_EQ(aVarId, 2);
     manager.createVar("b");
     ClassProject::BDD_ID cVarId = manager.createVar("c");
-    EXPECT_EQ(cVarId, ClassProject::INVALID_ID + 5);
+    EXPECT_EQ(cVarId, 4);
 }
 
 TEST_F(ManagerTest, TrueAndFalseConstantsWork)

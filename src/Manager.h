@@ -10,9 +10,8 @@
 
 namespace ClassProject {
 
-    static const BDD_ID INVALID_ID = 0;
-    static const BDD_ID FALSE_ID = 1;
-    static const BDD_ID TRUE_ID = 2;
+    static const BDD_ID FALSE_ID = 0;
+    static const BDD_ID TRUE_ID = 1;
 
     class NodeTriple {
     public:
