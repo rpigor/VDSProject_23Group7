@@ -1,4 +1,5 @@
 #include "Manager.h"
+#include <stack>
 
 using namespace ClassProject;
 
@@ -35,12 +36,12 @@ BDD_ID Manager::createVar(const std::string &label)
 
 const BDD_ID &Manager::True()
 {
-    return TRUE_ID; // equivalent to uniqueTable.get<UniqueTableHashMapTags::ById>().find(TRUE_ID)->id;
+    return TRUE_ID;
 }
 
 const BDD_ID &Manager::False()
 {
-    return FALSE_ID; // equivalent to uniqueTable.get<UniqueTableHashMapTags::ById>().find(FALSE_ID)->id;
+    return FALSE_ID;
 }
 
 bool Manager::isConstant(BDD_ID f)
@@ -128,7 +129,20 @@ std::string Manager::getTopVarName(const BDD_ID &root)
 
 void Manager::findNodes(const BDD_ID &root, std::set<BDD_ID> &nodes_of_root)
 {
+    std::stack<BDD_ID> nodes;
+    nodes.push(root);
+    while (!nodes.empty())
+    {
+        auto topNode = uniqueTableById().find(nodes.top());
+        nodes_of_root.insert(nodes.top());
+        nodes.pop();
 
+        if (!isConstant(topNode->id))
+        {
+            nodes.push(topNode->triple.high);
+            nodes.push(topNode->triple.low);
+        }
+    }
 }
 
 void Manager::findVars(const BDD_ID &root, std::set<BDD_ID> &vars_of_root)
