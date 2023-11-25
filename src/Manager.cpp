@@ -26,7 +26,7 @@ Manager::Manager()
 BDD_ID Manager::createVar(const std::string &label)
 {
     BDD_ID varId = uniqueTable.size();
-    NodeTriple varNodeTriple {varId, TRUE_ID, FALSE_ID};
+    NodeTriple varNodeTriple {varId, FALSE_ID, TRUE_ID};
     Node varNode {varId, varNodeTriple, label};
 
     uniqueTable.insert(varNode);
