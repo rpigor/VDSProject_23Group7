@@ -59,6 +59,77 @@ TEST_F(ManagerTest, TopVarWorks)
     EXPECT_EQ(manager.topVar(aVarId), aVarId);
 }
 
+TEST_F(ManagerTest, IteWorks)
+{
+    ClassProject::BDD_ID aVarId = manager.createVar("a");
+    ClassProject::BDD_ID bVarId = manager.createVar("b");
+
+    EXPECT_EQ(manager.ite(aVarId, ClassProject::TRUE_ID, ClassProject::FALSE_ID), aVarId);
+    EXPECT_EQ(manager.ite(ClassProject::TRUE_ID, ClassProject::FALSE_ID, bVarId), ClassProject::FALSE_ID);
+    EXPECT_EQ(manager.ite(ClassProject::FALSE_ID, ClassProject::TRUE_ID, ClassProject::TRUE_ID), ClassProject::TRUE_ID);
+
+    ClassProject::BDD_ID negAId = manager.ite(aVarId, ClassProject::FALSE_ID, ClassProject::TRUE_ID);
+    EXPECT_EQ(manager.coFactorTrue(negAId), ClassProject::TRUE_ID);
+    EXPECT_EQ(manager.coFactorFalse(negAId), ClassProject::FALSE_ID);
+
+    ClassProject::BDD_ID orABId = manager.ite(aVarId, ClassProject::TRUE_ID, bVarId);
+    EXPECT_EQ(manager.coFactorTrue(orABId), ClassProject::TRUE_ID);
+    EXPECT_EQ(manager.coFactorTrue(orABId, bVarId), ClassProject::TRUE_ID);
+    EXPECT_EQ(manager.coFactorFalse(orABId), bVarId);
+    EXPECT_EQ(manager.coFactorFalse(orABId, bVarId), aVarId);
+
+    ClassProject::BDD_ID cVarId = manager.createVar("c");
+    ClassProject::BDD_ID andCOrABId = manager.ite(orABId, cVarId, ClassProject::FALSE_ID);
+    EXPECT_EQ(manager.coFactorTrue(andCOrABId), cVarId);
+    EXPECT_EQ(manager.coFactorTrue(andCOrABId, cVarId), orABId);
+    EXPECT_EQ(manager.coFactorFalse(andCOrABId, cVarId), ClassProject::FALSE_ID);
+}
+
+TEST_F(ManagerTest, CoFactorTrueWorks)
+{
+    ClassProject::BDD_ID aVarId = manager.createVar("a");
+    ClassProject::BDD_ID bVarId = manager.createVar("b");
+
+    EXPECT_EQ(manager.coFactorTrue(ClassProject::TRUE_ID), ClassProject::TRUE_ID);
+    EXPECT_EQ(manager.coFactorTrue(ClassProject::FALSE_ID, ClassProject::TRUE_ID), ClassProject::FALSE_ID);
+    EXPECT_EQ(manager.coFactorTrue(ClassProject::TRUE_ID, aVarId), ClassProject::TRUE_ID);
+    EXPECT_EQ(manager.coFactorTrue(ClassProject::FALSE_ID, bVarId), ClassProject::FALSE_ID);
+    EXPECT_EQ(manager.coFactorTrue(aVarId, aVarId), ClassProject::TRUE_ID);
+    EXPECT_EQ(manager.coFactorTrue(bVarId, aVarId), bVarId);
+    EXPECT_EQ(manager.coFactorTrue(aVarId, ClassProject::FALSE_ID), aVarId);
+
+    ClassProject::BDD_ID andABId = manager.ite(aVarId, bVarId, ClassProject::FALSE_ID);
+    EXPECT_EQ(manager.coFactorTrue(andABId), bVarId);
+    EXPECT_EQ(manager.coFactorTrue(andABId, bVarId), aVarId);
+
+    ClassProject::BDD_ID orABId = manager.ite(aVarId, ClassProject::TRUE_ID, bVarId);
+    EXPECT_EQ(manager.coFactorTrue(orABId), ClassProject::TRUE_ID);
+    EXPECT_EQ(manager.coFactorTrue(orABId, bVarId), ClassProject::TRUE_ID);
+
+}
+
+TEST_F(ManagerTest, CoFactorFalseWorks)
+{
+    ClassProject::BDD_ID aVarId = manager.createVar("a");
+    ClassProject::BDD_ID bVarId = manager.createVar("b");
+
+    EXPECT_EQ(manager.coFactorFalse(ClassProject::TRUE_ID), ClassProject::TRUE_ID);
+    EXPECT_EQ(manager.coFactorFalse(ClassProject::FALSE_ID, ClassProject::TRUE_ID), ClassProject::FALSE_ID);
+    EXPECT_EQ(manager.coFactorFalse(ClassProject::TRUE_ID, aVarId), ClassProject::TRUE_ID);
+    EXPECT_EQ(manager.coFactorFalse(ClassProject::FALSE_ID, bVarId), ClassProject::FALSE_ID);
+    EXPECT_EQ(manager.coFactorFalse(aVarId, aVarId), ClassProject::FALSE_ID);
+    EXPECT_EQ(manager.coFactorFalse(bVarId, aVarId), bVarId);
+    EXPECT_EQ(manager.coFactorFalse(aVarId, ClassProject::FALSE_ID), aVarId);
+
+    ClassProject::BDD_ID andABId = manager.ite(aVarId, bVarId, ClassProject::FALSE_ID);
+    EXPECT_EQ(manager.coFactorFalse(andABId), ClassProject::FALSE_ID);
+    EXPECT_EQ(manager.coFactorFalse(andABId, bVarId), ClassProject::FALSE_ID);
+
+    ClassProject::BDD_ID orABId = manager.ite(aVarId, ClassProject::TRUE_ID, bVarId);
+    EXPECT_EQ(manager.coFactorFalse(orABId), bVarId);
+    EXPECT_EQ(manager.coFactorFalse(orABId, bVarId), aVarId);
+}
+
 TEST_F(ManagerTest, GetTopVarNameWorks)
 {
     ClassProject::BDD_ID aVarId = manager.createVar("a");
