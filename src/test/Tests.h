@@ -50,6 +50,15 @@ TEST_F(ManagerTest, IsVariableWorks)
     EXPECT_TRUE(manager.isVariable(bVarId));
 }
 
+TEST_F(ManagerTest, TopVarWorks)
+{
+    EXPECT_EQ(manager.topVar(ClassProject::TRUE_ID), ClassProject::TRUE_ID);
+    EXPECT_EQ(manager.topVar(ClassProject::FALSE_ID), ClassProject::FALSE_ID);
+
+    ClassProject::BDD_ID aVarId = manager.createVar("a");
+    EXPECT_EQ(manager.topVar(aVarId), aVarId);
+}
+
 TEST_F(ManagerTest, uniqueTableSizeWorks)
 {
     EXPECT_EQ(manager.uniqueTableSize(), 2);
