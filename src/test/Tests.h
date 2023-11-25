@@ -28,6 +28,28 @@ TEST_F(ManagerTest, TrueAndFalseConstantsWork)
     EXPECT_EQ(manager.False(), ClassProject::FALSE_ID);
 }
 
+TEST_F(ManagerTest, IsConstantWorks)
+{
+    EXPECT_TRUE(manager.isConstant(ClassProject::TRUE_ID));
+    EXPECT_TRUE(manager.isConstant(ClassProject::FALSE_ID));
+
+    ClassProject::BDD_ID aVarId = manager.createVar("a");
+    ClassProject::BDD_ID bVarId = manager.createVar("b");
+    EXPECT_FALSE(manager.isConstant(aVarId));
+    EXPECT_FALSE(manager.isConstant(bVarId));
+}
+
+TEST_F(ManagerTest, IsVariableWorks)
+{
+    EXPECT_FALSE(manager.isVariable(ClassProject::TRUE_ID));
+    EXPECT_FALSE(manager.isVariable(ClassProject::FALSE_ID));
+
+    ClassProject::BDD_ID aVarId = manager.createVar("a");
+    ClassProject::BDD_ID bVarId = manager.createVar("b");
+    EXPECT_TRUE(manager.isVariable(aVarId));
+    EXPECT_TRUE(manager.isVariable(bVarId));
+}
+
 TEST_F(ManagerTest, uniqueTableSizeWorks)
 {
     EXPECT_EQ(manager.uniqueTableSize(), 2);
