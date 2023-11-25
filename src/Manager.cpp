@@ -1,5 +1,6 @@
 #include "Manager.h"
 #include <stack>
+#include <utility>
 
 using namespace ClassProject;
 
@@ -63,27 +64,110 @@ BDD_ID Manager::topVar(BDD_ID f)
 
 BDD_ID Manager::ite(BDD_ID i, BDD_ID t, BDD_ID e)
 {
+    if ((i == TRUE_ID) || (t == e))
+    {
+        return t;
+    }
 
+    if (i == FALSE_ID)
+    {
+        return e;
+    }
+
+    NodeTriple iteTriple {i, t, e};
+    auto computedTableResult = computedTable.find(iteTriple);
+    if (computedTableResult != computedTable.end())
+    {
+        return computedTableResult->second.result;
+    }
+
+    BDD_ID xTopVar = std::min({topVar(i), topVar(t), topVar(e)}, [&](const BDD_ID &i1, const BDD_ID &i2) {
+        if (isConstant(i1))
+        {
+            return false;
+        }
+        else if (isConstant(i2))
+        {
+            return true;
+        }
+
+        return i1 < i2;
+    });
+
+    BDD_ID rHigh = ite(coFactorTrue(i, xTopVar), coFactorTrue(t, xTopVar), coFactorTrue(e, xTopVar));
+    BDD_ID rLow = ite(coFactorFalse(i, xTopVar), coFactorFalse(t, xTopVar), coFactorFalse(e, xTopVar));
+    if (rHigh == rLow)
+    {
+        return rHigh;
+    }
+
+    BDD_ID rId;
+    NodeTriple rTriple {xTopVar, rLow, rHigh};
+    auto uniqueTableResult = uniqueTableByTriple().find(rTriple);
+    if (uniqueTableResult == uniqueTableByTriple().end())
+    {
+        rId = uniqueTable.size();
+        Node rNode {rId, rTriple, "n"+std::to_string(rId)};
+        uniqueTableByTriple().insert(rNode);
+    }
+    else
+    {
+        rId = uniqueTableResult->id;
+    }
+
+    std::string compComment = "ite(" + std::to_string(i) + ", " + std::to_string(t) + ", " + std::to_string(e) + ")";
+    ComputedNode compNode {rId, compComment};
+    computedTable.insert(std::make_pair(rTriple, compNode));
+
+    return rId;
 }
 
 BDD_ID Manager::coFactorTrue(BDD_ID f, BDD_ID x)
 {
+    if (isConstant(f) || isConstant(x) || topVar(f) > x)
+    {
+        return f;
+    }
 
+    auto fNode = uniqueTableById().find(f);
+    if (topVar(f) == x)
+    {
+        return fNode->triple.high;
+    }
+
+    BDD_ID trueCoFactId = coFactorTrue(fNode->triple.high, x);
+    BDD_ID falseCoFactId = coFactorTrue(fNode->triple.low, x);
+
+    return ite(topVar(f), trueCoFactId, falseCoFactId);
 }
 
 BDD_ID Manager::coFactorFalse(BDD_ID f, BDD_ID x)
 {
+    if (isConstant(f) || isConstant(x) || topVar(f) > x)
+    {
+        return f;
+    }
 
+    auto fNode = uniqueTableById().find(f);
+    if (topVar(f) == x)
+    {
+        return fNode->triple.low;
+    }
+
+    BDD_ID trueCoFactId = coFactorFalse(fNode->triple.high, x);
+    BDD_ID falseCoFactId = coFactorFalse(fNode->triple.low, x);
+
+    return ite(topVar(f), trueCoFactId, falseCoFactId);
 }
 
 BDD_ID Manager::coFactorTrue(BDD_ID f)
 {
-
+    return coFactorTrue(f, topVar(f));
 }
 
 BDD_ID Manager::coFactorFalse(BDD_ID f)
 {
-
+    return coFactorFalse(f, topVar(f));
 }
 
 BDD_ID Manager::and2(BDD_ID a, BDD_ID b)

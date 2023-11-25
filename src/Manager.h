@@ -7,12 +7,22 @@
 
 #include "ManagerInterface.h"
 #include "UniqueTable.h"
+#include <boost/unordered_map.hpp>
+#include <string>
 
 namespace ClassProject {
+
+    class ComputedNode {
+    public:
+        BDD_ID result;
+        std::string comment;
+    };
 
     class Manager : public ManagerInterface {
     private:
         UniqueTableHashMap uniqueTable;
+
+        boost::unordered_map<NodeTriple, ComputedNode, NodeTripleHash> computedTable;
 
         UniqueTableHashMap::index<UniqueTableHashMapTags::ById>::type &uniqueTableById();
 
