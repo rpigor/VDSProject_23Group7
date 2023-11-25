@@ -6,7 +6,10 @@
 #define VDSPROJECT_MANAGER_H
 
 #include "ManagerInterface.h"
-#include <unordered_map>
+#include <boost/multi_index_container.hpp>
+#include <boost/multi_index/hashed_index.hpp>
+#include <boost/multi_index/member.hpp>
+#include <boost/multi_index/tag.hpp>
 
 namespace ClassProject {
 
@@ -19,10 +22,7 @@ namespace ClassProject {
         BDD_ID low;
         BDD_ID high;
 
-        inline bool operator==(const NodeTriple &triple) const
-        {
-            return (this->topVariable == triple.topVariable) && (this->low == triple.low) && (this->high == triple.high);
-        }
+        bool operator==(const NodeTriple &triple) const;
     };
 
     class NodeTripleHash {
@@ -49,9 +49,36 @@ namespace ClassProject {
         }
     };
 
+    namespace UniqueTableHashMapTags {
+
+        struct ById {
+
+        };
+
+        struct ByTriple {
+
+        };
+
+    }
+
+    using UniqueTableHashMap = boost::multi_index_container<
+        Node,
+        boost::multi_index::indexed_by<
+            boost::multi_index::hashed_unique<
+                boost::multi_index::tag<UniqueTableHashMapTags::ById>,
+                boost::multi_index::member<Node, BDD_ID, &Node::id>
+            >,
+            boost::multi_index::hashed_unique<
+                boost::multi_index::tag<UniqueTableHashMapTags::ByTriple>,
+                boost::multi_index::member<Node, NodeTriple, &Node::triple>,
+                NodeTripleHash
+            >
+        >
+    >;
+
     class Manager : public ManagerInterface {
     private:
-        std::unordered_map<NodeTriple, Node, NodeTripleHash> uniqueTable;
+        UniqueTableHashMap uniqueTable;
 
     public:
         Manager();

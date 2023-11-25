@@ -3,6 +3,11 @@
 
 using namespace ClassProject;
 
+bool NodeTriple::operator==(const NodeTriple &triple) const
+{
+    return (this->topVariable == triple.topVariable) && (this->low == triple.low) && (this->high == triple.high);
+}
+
 std::size_t NodeTripleHash::operator()(const NodeTriple &triple) const
 {
     std::size_t hash = 0;
@@ -19,8 +24,8 @@ Manager::Manager()
     NodeTriple trueTriple {TRUE_ID, TRUE_ID, TRUE_ID};
     Node trueNode {TRUE_ID, trueTriple, "True"};
 
-    uniqueTable.emplace(falseTriple, falseNode);
-    uniqueTable.emplace(trueTriple, trueNode);
+    uniqueTable.insert(falseNode);
+    uniqueTable.insert(trueNode);
 }
 
 BDD_ID Manager::createVar(const std::string &label)
@@ -29,18 +34,18 @@ BDD_ID Manager::createVar(const std::string &label)
     NodeTriple varNodeTriple {varId, TRUE_ID, FALSE_ID};
     Node varNode {varId, varNodeTriple, label};
 
-    uniqueTable.emplace(varNodeTriple, varNode);
+    uniqueTable.insert(varNode);
     return varId;
 }
 
 const BDD_ID &Manager::True()
 {
-    return uniqueTable.at(NodeTriple {TRUE_ID, TRUE_ID, TRUE_ID}).id; // when optimizing: simply return TRUE_ID
+    return TRUE_ID; // equivalent to uniqueTable.get<UniqueTableHashMapTags::ById>().find(TRUE_ID)->id;
 }
 
 const BDD_ID &Manager::False()
 {
-    return uniqueTable.at(NodeTriple {FALSE_ID, FALSE_ID, FALSE_ID}).id; // when optimizing: simply return FALSE_ID
+    return FALSE_ID; // equivalent to uniqueTable.get<UniqueTableHashMapTags::ById>().find(FALSE_ID)->id;
 }
 
 bool Manager::isConstant(BDD_ID f)
