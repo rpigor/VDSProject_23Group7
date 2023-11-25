@@ -14,6 +14,10 @@ namespace ClassProject {
     private:
         UniqueTableHashMap uniqueTable;
 
+        UniqueTableHashMap::index<UniqueTableHashMapTags::ById>::type &uniqueTableById();
+
+        UniqueTableHashMap::index<UniqueTableHashMapTags::ByTriple>::type &uniqueTableByTriple();
+
     public:
         Manager();
 

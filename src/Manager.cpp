@@ -1,7 +1,16 @@
 #include "Manager.h"
-#include <boost/functional/hash.hpp>
 
 using namespace ClassProject;
+
+UniqueTableHashMap::index<UniqueTableHashMapTags::ById>::type &Manager::uniqueTableById()
+{
+    return uniqueTable.get<UniqueTableHashMapTags::ById>();
+}
+
+UniqueTableHashMap::index<UniqueTableHashMapTags::ByTriple>::type &Manager::uniqueTableByTriple()
+{
+    return uniqueTable.get<UniqueTableHashMapTags::ByTriple>();
+}
 
 Manager::Manager()
 {
@@ -36,12 +45,13 @@ const BDD_ID &Manager::False()
 
 bool Manager::isConstant(BDD_ID f)
 {
-
+    return (f == TRUE_ID) || (f == FALSE_ID);
 }
 
 bool Manager::isVariable(BDD_ID x)
 {
-
+    auto xNode = uniqueTableById().find(x);
+    return (xNode->triple.high == TRUE_ID) && (xNode->triple.low == FALSE_ID);
 }
 
 BDD_ID Manager::topVar(BDD_ID f)
