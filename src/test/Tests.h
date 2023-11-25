@@ -68,6 +68,17 @@ TEST_F(ManagerTest, GetTopVarNameWorks)
     EXPECT_EQ(manager.getTopVarName(bVarId), "b");
 }
 
+TEST_F(ManagerTest, FindNodesWorks)
+{
+    std::set<ClassProject::BDD_ID> nodes;
+    manager.createVar("a");
+    ClassProject::BDD_ID bVarId = manager.createVar("b");
+    manager.findNodes(bVarId, nodes);
+    std::set<ClassProject::BDD_ID> groundTruthNodes = {bVarId, ClassProject::TRUE_ID, ClassProject::FALSE_ID};
+
+    EXPECT_EQ(nodes, groundTruthNodes);
+}
+
 TEST_F(ManagerTest, uniqueTableSizeWorks)
 {
     EXPECT_EQ(manager.uniqueTableSize(), 2);
