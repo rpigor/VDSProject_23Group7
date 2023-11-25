@@ -59,6 +59,15 @@ TEST_F(ManagerTest, TopVarWorks)
     EXPECT_EQ(manager.topVar(aVarId), aVarId);
 }
 
+TEST_F(ManagerTest, GetTopVarNameWorks)
+{
+    ClassProject::BDD_ID aVarId = manager.createVar("a");
+    ClassProject::BDD_ID bVarId = manager.createVar("b");
+
+    EXPECT_EQ(manager.getTopVarName(aVarId), "a");
+    EXPECT_EQ(manager.getTopVarName(bVarId), "b");
+}
+
 TEST_F(ManagerTest, uniqueTableSizeWorks)
 {
     EXPECT_EQ(manager.uniqueTableSize(), 2);
