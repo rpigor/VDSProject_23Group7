@@ -149,7 +149,22 @@ TEST_F(ManagerTest, And2Works)
     EXPECT_EQ(manager.coFactorTrue(andBCVarId, cVarId), bVarId);
     EXPECT_EQ(manager.coFactorTrue(andCAndABId), andBCVarId);
     EXPECT_EQ(manager.coFactorFalse(andCAndABId), ClassProject::FALSE_ID);
+}
 
+TEST_F(ManagerTest, Or2Works)
+{
+    ClassProject::BDD_ID aVarId = manager.createVar("a");
+    ClassProject::BDD_ID bVarId = manager.createVar("b");
+    ClassProject::BDD_ID orABId = manager.or2(aVarId, bVarId);
+    ClassProject::BDD_ID cVarId = manager.createVar("c");
+    ClassProject::BDD_ID orBCId = manager.or2(bVarId, cVarId);
+    ClassProject::BDD_ID orCOrABId = manager.or2(cVarId, orABId);
+
+    EXPECT_EQ(manager.coFactorTrue(orABId), ClassProject::TRUE_ID);
+    EXPECT_EQ(manager.coFactorFalse(orABId), bVarId);
+    EXPECT_EQ(manager.coFactorFalse(orBCId, cVarId), bVarId);
+    EXPECT_EQ(manager.coFactorTrue(orCOrABId), ClassProject::TRUE_ID);
+    EXPECT_EQ(manager.coFactorFalse(orCOrABId), orBCId);
 }
 
 TEST_F(ManagerTest, GetTopVarNameWorks)
