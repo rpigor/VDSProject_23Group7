@@ -178,7 +178,17 @@ TEST_F(ManagerTest, Xor2Works)
     EXPECT_EQ(manager.coFactorFalse(xorABId), bVarId);
     EXPECT_EQ(manager.coFactorTrue(xorABId), negBId);
     EXPECT_EQ(manager.coFactorTrue(manager.coFactorTrue(xorABId)), ClassProject::FALSE_ID);
+}
 
+TEST_F(ManagerTest, NegWorks)
+{
+    ClassProject::BDD_ID aVarId = manager.createVar("a");
+    ClassProject::BDD_ID negAId = manager.neg(aVarId);
+    ClassProject::BDD_ID negNegAId = manager.neg(negAId);
+
+    EXPECT_EQ(manager.coFactorTrue(negAId), ClassProject::FALSE_ID);
+    EXPECT_EQ(manager.coFactorFalse(negAId), ClassProject::TRUE_ID);
+    EXPECT_EQ(aVarId, negNegAId);
 }
 
 TEST_F(ManagerTest, GetTopVarNameWorks)
