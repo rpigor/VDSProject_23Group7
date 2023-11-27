@@ -230,6 +230,7 @@ BDD_ID Manager::coFactorFalse(BDD_ID f)
 
 BDD_ID Manager::and2(BDD_ID a, BDD_ID b)
 {
+    return ite(a, b, FALSE_ID);
 
 }
 
