@@ -84,85 +84,78 @@ $(function() {
 <div class="line"><a id="l00006" name="l00006"></a><span class="lineno">    6</span><span class="preprocessor">#define VDSPROJECT_MANAGER_H</span></div>
 <div class="line"><a id="l00007" name="l00007"></a><span class="lineno">    7</span> </div>
 <div class="line"><a id="l00008" name="l00008"></a><span class="lineno">    8</span><span class="preprocessor">#include &quot;ManagerInterface.h&quot;</span></div>
-<div class="line"><a id="l00009" name="l00009"></a><span class="lineno">    9</span><span class="preprocessor">#include &quot;UniqueTable.h&quot;</span></div>
+<div class="line"><a id="l00009" name="l00009"></a><span class="lineno">    9</span><span class="preprocessor">#include &quot;Table.h&quot;</span></div>
 <div class="line"><a id="l00010" name="l00010"></a><span class="lineno">   10</span><span class="preprocessor">#include &lt;boost/unordered_map.hpp&gt;</span></div>
 <div class="line"><a id="l00011" name="l00011"></a><span class="lineno">   11</span><span class="preprocessor">#include &lt;string&gt;</span></div>
 <div class="line"><a id="l00012" name="l00012"></a><span class="lineno">   12</span> </div>
 <div class="line"><a id="l00016" name="l00016"></a><span class="lineno"><a class="line" href="namespaceClassProject.html">   16</a></span><span class="keyword">namespace </span><a class="code hl_namespace" href="namespaceClassProject.html">ClassProject</a> {</div>
 <div class="line"><a id="l00017" name="l00017"></a><span class="lineno">   17</span> </div>
-<div class="line"><a id="l00021" name="l00021"></a><span class="lineno"><a class="line" href="classClassProject_1_1ComputedNode.html">   21</a></span>    <span class="keyword">class </span><a class="code hl_class" href="classClassProject_1_1ComputedNode.html">ComputedNode</a> {</div>
-<div class="line"><a id="l00022" name="l00022"></a><span class="lineno">   22</span>    <span class="keyword">public</span>:</div>
-<div class="line"><a id="l00023" name="l00023"></a><span class="lineno">   23</span>        BDD_ID result;</div>
-<div class="line"><a id="l00024" name="l00024"></a><span class="lineno">   24</span>        std::string comment;</div>
-<div class="line"><a id="l00025" name="l00025"></a><span class="lineno">   25</span>    };</div>
-<div class="line"><a id="l00026" name="l00026"></a><span class="lineno">   26</span> </div>
-<div class="line"><a id="l00031" name="l00031"></a><span class="lineno"><a class="line" href="classClassProject_1_1Manager.html">   31</a></span>    <span class="keyword">class </span><a class="code hl_class" href="classClassProject_1_1Manager.html">Manager</a> : <span class="keyword">public</span> ManagerInterface {</div>
-<div class="line"><a id="l00032" name="l00032"></a><span class="lineno">   32</span>    <span class="keyword">private</span>:</div>
-<div class="line"><a id="l00033" name="l00033"></a><span class="lineno">   33</span>        UniqueTableHashMap uniqueTable;</div>
-<div class="line"><a id="l00034" name="l00034"></a><span class="lineno">   34</span> </div>
-<div class="line"><a id="l00035" name="l00035"></a><span class="lineno">   35</span>        boost::unordered_map&lt;NodeTriple, ComputedNode, NodeTripleHash&gt; computedTable;</div>
-<div class="line"><a id="l00036" name="l00036"></a><span class="lineno">   36</span> </div>
-<div class="line"><a id="l00037" name="l00037"></a><span class="lineno">   37</span>        UniqueTableHashMap::index&lt;UniqueTableHashMapTags::ById&gt;::type &amp;uniqueTableById();</div>
-<div class="line"><a id="l00038" name="l00038"></a><span class="lineno">   38</span> </div>
-<div class="line"><a id="l00039" name="l00039"></a><span class="lineno">   39</span>        UniqueTableHashMap::index&lt;UniqueTableHashMapTags::ByTriple&gt;::type &amp;uniqueTableByTriple();</div>
-<div class="line"><a id="l00040" name="l00040"></a><span class="lineno">   40</span> </div>
-<div class="line"><a id="l00041" name="l00041"></a><span class="lineno">   41</span>        std::string nodeToString(BDD_ID i, BDD_ID t, BDD_ID e);</div>
-<div class="line"><a id="l00042" name="l00042"></a><span class="lineno">   42</span> </div>
-<div class="line"><a id="l00043" name="l00043"></a><span class="lineno">   43</span>    <span class="keyword">public</span>:</div>
-<div class="line"><a id="l00047" name="l00047"></a><span class="lineno">   47</span>        <a class="code hl_function" href="classClassProject_1_1Manager.html#a1658ff9f18e38ccd9cb8b0b371b9c20b">Manager</a>();</div>
-<div class="line"><a id="l00048" name="l00048"></a><span class="lineno">   48</span> </div>
-<div class="line"><a id="l00055" name="l00055"></a><span class="lineno">   55</span>        BDD_ID <a class="code hl_function" href="classClassProject_1_1Manager.html#aa3fe08b0b002032a13a5ff9d05f39cfd">createVar</a>(<span class="keyword">const</span> std::string &amp;label) <span class="keyword">override</span>;</div>
-<div class="line"><a id="l00056" name="l00056"></a><span class="lineno">   56</span> </div>
-<div class="line"><a id="l00062" name="l00062"></a><span class="lineno">   62</span>        <span class="keyword">const</span> BDD_ID &amp;<a class="code hl_function" href="classClassProject_1_1Manager.html#a7229b49af4aebfd32af558a18e17e243">True</a>() <span class="keyword">override</span>;</div>
-<div class="line"><a id="l00063" name="l00063"></a><span class="lineno">   63</span> </div>
-<div class="line"><a id="l00069" name="l00069"></a><span class="lineno">   69</span>        <span class="keyword">const</span> BDD_ID &amp;<a class="code hl_function" href="classClassProject_1_1Manager.html#a699638a290747c865312b4c130260a06">False</a>() <span class="keyword">override</span>;</div>
-<div class="line"><a id="l00070" name="l00070"></a><span class="lineno">   70</span> </div>
-<div class="line"><a id="l00077" name="l00077"></a><span class="lineno">   77</span>        <span class="keywordtype">bool</span> <a class="code hl_function" href="classClassProject_1_1Manager.html#a1f569cd9f52041717ffc42157114dbea">isConstant</a>(BDD_ID f) <span class="keyword">override</span>;</div>
-<div class="line"><a id="l00078" name="l00078"></a><span class="lineno">   78</span> </div>
-<div class="line"><a id="l00085" name="l00085"></a><span class="lineno">   85</span>        <span class="keywordtype">bool</span> <a class="code hl_function" href="classClassProject_1_1Manager.html#aacbffc7d53f4f71c3596d5b21be5bd6b">isVariable</a>(BDD_ID x) <span class="keyword">override</span>;</div>
-<div class="line"><a id="l00086" name="l00086"></a><span class="lineno">   86</span> </div>
-<div class="line"><a id="l00093" name="l00093"></a><span class="lineno">   93</span>        BDD_ID <a class="code hl_function" href="classClassProject_1_1Manager.html#a6513250e35580b1931ccfb0581ff3f02">topVar</a>(BDD_ID f) <span class="keyword">override</span>;</div>
-<div class="line"><a id="l00094" name="l00094"></a><span class="lineno">   94</span> </div>
-<div class="line"><a id="l00104" name="l00104"></a><span class="lineno">  104</span>        BDD_ID <a class="code hl_function" href="classClassProject_1_1Manager.html#a7cdb795eb4a196e1e72dcbf4378526b4">ite</a>(BDD_ID i, BDD_ID t, BDD_ID e) <span class="keyword">override</span>;</div>
-<div class="line"><a id="l00105" name="l00105"></a><span class="lineno">  105</span> </div>
-<div class="line"><a id="l00114" name="l00114"></a><span class="lineno">  114</span>        BDD_ID <a class="code hl_function" href="classClassProject_1_1Manager.html#ad3b56050cfd8e8216fca5ceea713c375">coFactorTrue</a>(BDD_ID f, BDD_ID x) <span class="keyword">override</span>;</div>
-<div class="line"><a id="l00115" name="l00115"></a><span class="lineno">  115</span> </div>
-<div class="line"><a id="l00124" name="l00124"></a><span class="lineno">  124</span>        BDD_ID <a class="code hl_function" href="classClassProject_1_1Manager.html#a8649e9857af1bba0199c5d6fcf8f6eb9">coFactorFalse</a>(BDD_ID f, BDD_ID x) <span class="keyword">override</span>;</div>
+<div class="line"><a id="l00022" name="l00022"></a><span class="lineno"><a class="line" href="classClassProject_1_1Manager.html">   22</a></span>    <span class="keyword">class </span><a class="code hl_class" href="classClassProject_1_1Manager.html">Manager</a> : <span class="keyword">public</span> ManagerInterface {</div>
+<div class="line"><a id="l00023" name="l00023"></a><span class="lineno">   23</span>    <span class="keyword">private</span>:</div>
+<div class="line"><a id="l00024" name="l00024"></a><span class="lineno">   24</span>        UniqueTableHashMap uniqueTable;</div>
+<div class="line"><a id="l00025" name="l00025"></a><span class="lineno">   25</span> </div>
+<div class="line"><a id="l00026" name="l00026"></a><span class="lineno">   26</span>        boost::unordered_map&lt;NodeTriple, ComputedNode, NodeTripleHash&gt; computedTable;</div>
+<div class="line"><a id="l00027" name="l00027"></a><span class="lineno">   27</span> </div>
+<div class="line"><a id="l00028" name="l00028"></a><span class="lineno">   28</span>        UniqueTableHashMap::index&lt;UniqueTableHashMapTags::ById&gt;::type &amp;uniqueTableById();</div>
+<div class="line"><a id="l00029" name="l00029"></a><span class="lineno">   29</span> </div>
+<div class="line"><a id="l00030" name="l00030"></a><span class="lineno">   30</span>        UniqueTableHashMap::index&lt;UniqueTableHashMapTags::ByTriple&gt;::type &amp;uniqueTableByTriple();</div>
+<div class="line"><a id="l00031" name="l00031"></a><span class="lineno">   31</span> </div>
+<div class="line"><a id="l00032" name="l00032"></a><span class="lineno">   32</span>        std::string nodeToString(BDD_ID i, BDD_ID t, BDD_ID e);</div>
+<div class="line"><a id="l00033" name="l00033"></a><span class="lineno">   33</span> </div>
+<div class="line"><a id="l00034" name="l00034"></a><span class="lineno">   34</span>    <span class="keyword">public</span>:</div>
+<div class="line"><a id="l00038" name="l00038"></a><span class="lineno">   38</span>        <a class="code hl_function" href="classClassProject_1_1Manager.html#a1658ff9f18e38ccd9cb8b0b371b9c20b">Manager</a>();</div>
+<div class="line"><a id="l00039" name="l00039"></a><span class="lineno">   39</span> </div>
+<div class="line"><a id="l00046" name="l00046"></a><span class="lineno">   46</span>        BDD_ID <a class="code hl_function" href="classClassProject_1_1Manager.html#aa3fe08b0b002032a13a5ff9d05f39cfd">createVar</a>(<span class="keyword">const</span> std::string &amp;label) <span class="keyword">override</span>;</div>
+<div class="line"><a id="l00047" name="l00047"></a><span class="lineno">   47</span> </div>
+<div class="line"><a id="l00053" name="l00053"></a><span class="lineno">   53</span>        <span class="keyword">const</span> BDD_ID &amp;<a class="code hl_function" href="classClassProject_1_1Manager.html#a7229b49af4aebfd32af558a18e17e243">True</a>() <span class="keyword">override</span>;</div>
+<div class="line"><a id="l00054" name="l00054"></a><span class="lineno">   54</span> </div>
+<div class="line"><a id="l00060" name="l00060"></a><span class="lineno">   60</span>        <span class="keyword">const</span> BDD_ID &amp;<a class="code hl_function" href="classClassProject_1_1Manager.html#a699638a290747c865312b4c130260a06">False</a>() <span class="keyword">override</span>;</div>
+<div class="line"><a id="l00061" name="l00061"></a><span class="lineno">   61</span> </div>
+<div class="line"><a id="l00068" name="l00068"></a><span class="lineno">   68</span>        <span class="keywordtype">bool</span> <a class="code hl_function" href="classClassProject_1_1Manager.html#a1f569cd9f52041717ffc42157114dbea">isConstant</a>(BDD_ID f) <span class="keyword">override</span>;</div>
+<div class="line"><a id="l00069" name="l00069"></a><span class="lineno">   69</span> </div>
+<div class="line"><a id="l00076" name="l00076"></a><span class="lineno">   76</span>        <span class="keywordtype">bool</span> <a class="code hl_function" href="classClassProject_1_1Manager.html#aacbffc7d53f4f71c3596d5b21be5bd6b">isVariable</a>(BDD_ID x) <span class="keyword">override</span>;</div>
+<div class="line"><a id="l00077" name="l00077"></a><span class="lineno">   77</span> </div>
+<div class="line"><a id="l00084" name="l00084"></a><span class="lineno">   84</span>        BDD_ID <a class="code hl_function" href="classClassProject_1_1Manager.html#a6513250e35580b1931ccfb0581ff3f02">topVar</a>(BDD_ID f) <span class="keyword">override</span>;</div>
+<div class="line"><a id="l00085" name="l00085"></a><span class="lineno">   85</span> </div>
+<div class="line"><a id="l00095" name="l00095"></a><span class="lineno">   95</span>        BDD_ID <a class="code hl_function" href="classClassProject_1_1Manager.html#a7cdb795eb4a196e1e72dcbf4378526b4">ite</a>(BDD_ID i, BDD_ID t, BDD_ID e) <span class="keyword">override</span>;</div>
+<div class="line"><a id="l00096" name="l00096"></a><span class="lineno">   96</span> </div>
+<div class="line"><a id="l00105" name="l00105"></a><span class="lineno">  105</span>        BDD_ID <a class="code hl_function" href="classClassProject_1_1Manager.html#ad3b56050cfd8e8216fca5ceea713c375">coFactorTrue</a>(BDD_ID f, BDD_ID x) <span class="keyword">override</span>;</div>
+<div class="line"><a id="l00106" name="l00106"></a><span class="lineno">  106</span> </div>
+<div class="line"><a id="l00115" name="l00115"></a><span class="lineno">  115</span>        BDD_ID <a class="code hl_function" href="classClassProject_1_1Manager.html#a8649e9857af1bba0199c5d6fcf8f6eb9">coFactorFalse</a>(BDD_ID f, BDD_ID x) <span class="keyword">override</span>;</div>
+<div class="line"><a id="l00116" name="l00116"></a><span class="lineno">  116</span> </div>
+<div class="line"><a id="l00124" name="l00124"></a><span class="lineno">  124</span>        BDD_ID <a class="code hl_function" href="classClassProject_1_1Manager.html#ad3b56050cfd8e8216fca5ceea713c375">coFactorTrue</a>(BDD_ID f) <span class="keyword">override</span>;</div>
 <div class="line"><a id="l00125" name="l00125"></a><span class="lineno">  125</span> </div>
-<div class="line"><a id="l00133" name="l00133"></a><span class="lineno">  133</span>        BDD_ID <a class="code hl_function" href="classClassProject_1_1Manager.html#ad3b56050cfd8e8216fca5ceea713c375">coFactorTrue</a>(BDD_ID f) <span class="keyword">override</span>;</div>
+<div class="line"><a id="l00133" name="l00133"></a><span class="lineno">  133</span>        BDD_ID <a class="code hl_function" href="classClassProject_1_1Manager.html#a8649e9857af1bba0199c5d6fcf8f6eb9">coFactorFalse</a>(BDD_ID f) <span class="keyword">override</span>;</div>
 <div class="line"><a id="l00134" name="l00134"></a><span class="lineno">  134</span> </div>
-<div class="line"><a id="l00142" name="l00142"></a><span class="lineno">  142</span>        BDD_ID <a class="code hl_function" href="classClassProject_1_1Manager.html#a8649e9857af1bba0199c5d6fcf8f6eb9">coFactorFalse</a>(BDD_ID f) <span class="keyword">override</span>;</div>
+<div class="line"><a id="l00142" name="l00142"></a><span class="lineno">  142</span>        BDD_ID <a class="code hl_function" href="classClassProject_1_1Manager.html#a7e9c431fc71c56de3c6dd2eb0a4f8af1">and2</a>(BDD_ID a, BDD_ID b) <span class="keyword">override</span>;</div>
 <div class="line"><a id="l00143" name="l00143"></a><span class="lineno">  143</span> </div>
-<div class="line"><a id="l00151" name="l00151"></a><span class="lineno">  151</span>        BDD_ID <a class="code hl_function" href="classClassProject_1_1Manager.html#a7e9c431fc71c56de3c6dd2eb0a4f8af1">and2</a>(BDD_ID a, BDD_ID b) <span class="keyword">override</span>;</div>
+<div class="line"><a id="l00151" name="l00151"></a><span class="lineno">  151</span>        BDD_ID <a class="code hl_function" href="classClassProject_1_1Manager.html#a6ac0a66c6d12d2c177c5096edb1e2024">or2</a>(BDD_ID a, BDD_ID b) <span class="keyword">override</span>;</div>
 <div class="line"><a id="l00152" name="l00152"></a><span class="lineno">  152</span> </div>
-<div class="line"><a id="l00160" name="l00160"></a><span class="lineno">  160</span>        BDD_ID <a class="code hl_function" href="classClassProject_1_1Manager.html#a6ac0a66c6d12d2c177c5096edb1e2024">or2</a>(BDD_ID a, BDD_ID b) <span class="keyword">override</span>;</div>
+<div class="line"><a id="l00160" name="l00160"></a><span class="lineno">  160</span>        BDD_ID <a class="code hl_function" href="classClassProject_1_1Manager.html#a41d20b0492847694bac8ef8a246e1257">xor2</a>(BDD_ID a, BDD_ID b) <span class="keyword">override</span>;</div>
 <div class="line"><a id="l00161" name="l00161"></a><span class="lineno">  161</span> </div>
-<div class="line"><a id="l00169" name="l00169"></a><span class="lineno">  169</span>        BDD_ID <a class="code hl_function" href="classClassProject_1_1Manager.html#a41d20b0492847694bac8ef8a246e1257">xor2</a>(BDD_ID a, BDD_ID b) <span class="keyword">override</span>;</div>
-<div class="line"><a id="l00170" name="l00170"></a><span class="lineno">  170</span> </div>
-<div class="line"><a id="l00177" name="l00177"></a><span class="lineno">  177</span>        BDD_ID <a class="code hl_function" href="classClassProject_1_1Manager.html#a9e7be44042c79fd6945af04a4cdc39c5">neg</a>(BDD_ID a) <span class="keyword">override</span>;</div>
+<div class="line"><a id="l00168" name="l00168"></a><span class="lineno">  168</span>        BDD_ID <a class="code hl_function" href="classClassProject_1_1Manager.html#a9e7be44042c79fd6945af04a4cdc39c5">neg</a>(BDD_ID a) <span class="keyword">override</span>;</div>
+<div class="line"><a id="l00169" name="l00169"></a><span class="lineno">  169</span> </div>
+<div class="line"><a id="l00177" name="l00177"></a><span class="lineno">  177</span>        BDD_ID <a class="code hl_function" href="classClassProject_1_1Manager.html#abb4ee706ec822a5609d560233122e177">nand2</a>(BDD_ID a, BDD_ID b) <span class="keyword">override</span>;</div>
 <div class="line"><a id="l00178" name="l00178"></a><span class="lineno">  178</span> </div>
-<div class="line"><a id="l00186" name="l00186"></a><span class="lineno">  186</span>        BDD_ID <a class="code hl_function" href="classClassProject_1_1Manager.html#abb4ee706ec822a5609d560233122e177">nand2</a>(BDD_ID a, BDD_ID b) <span class="keyword">override</span>;</div>
+<div class="line"><a id="l00186" name="l00186"></a><span class="lineno">  186</span>        BDD_ID <a class="code hl_function" href="classClassProject_1_1Manager.html#a637eb1784ada0322663e596e5fd78303">nor2</a>(BDD_ID a, BDD_ID b) <span class="keyword">override</span>;</div>
 <div class="line"><a id="l00187" name="l00187"></a><span class="lineno">  187</span> </div>
-<div class="line"><a id="l00195" name="l00195"></a><span class="lineno">  195</span>        BDD_ID <a class="code hl_function" href="classClassProject_1_1Manager.html#a637eb1784ada0322663e596e5fd78303">nor2</a>(BDD_ID a, BDD_ID b) <span class="keyword">override</span>;</div>
+<div class="line"><a id="l00195" name="l00195"></a><span class="lineno">  195</span>        BDD_ID <a class="code hl_function" href="classClassProject_1_1Manager.html#ad03480f26d8b09e05cef788f334a2fd1">xnor2</a>(BDD_ID a, BDD_ID b) <span class="keyword">override</span>;</div>
 <div class="line"><a id="l00196" name="l00196"></a><span class="lineno">  196</span> </div>
-<div class="line"><a id="l00204" name="l00204"></a><span class="lineno">  204</span>        BDD_ID <a class="code hl_function" href="classClassProject_1_1Manager.html#ad03480f26d8b09e05cef788f334a2fd1">xnor2</a>(BDD_ID a, BDD_ID b) <span class="keyword">override</span>;</div>
-<div class="line"><a id="l00205" name="l00205"></a><span class="lineno">  205</span> </div>
-<div class="line"><a id="l00212" name="l00212"></a><span class="lineno">  212</span>        std::string <a class="code hl_function" href="classClassProject_1_1Manager.html#a7238da7832b931611dbfd273800360e2">getTopVarName</a>(<span class="keyword">const</span> BDD_ID &amp;root) <span class="keyword">override</span>;</div>
+<div class="line"><a id="l00203" name="l00203"></a><span class="lineno">  203</span>        std::string <a class="code hl_function" href="classClassProject_1_1Manager.html#a7238da7832b931611dbfd273800360e2">getTopVarName</a>(<span class="keyword">const</span> BDD_ID &amp;root) <span class="keyword">override</span>;</div>
+<div class="line"><a id="l00204" name="l00204"></a><span class="lineno">  204</span> </div>
+<div class="line"><a id="l00212" name="l00212"></a><span class="lineno">  212</span>        <span class="keywordtype">void</span> <a class="code hl_function" href="classClassProject_1_1Manager.html#a9d465fdff670b0bd9ef4a35ab9611f25">findNodes</a>(<span class="keyword">const</span> BDD_ID &amp;root, std::set&lt;BDD_ID&gt; &amp;nodes_of_root) <span class="keyword">override</span>;</div>
 <div class="line"><a id="l00213" name="l00213"></a><span class="lineno">  213</span> </div>
-<div class="line"><a id="l00221" name="l00221"></a><span class="lineno">  221</span>        <span class="keywordtype">void</span> <a class="code hl_function" href="classClassProject_1_1Manager.html#a9d465fdff670b0bd9ef4a35ab9611f25">findNodes</a>(<span class="keyword">const</span> BDD_ID &amp;root, std::set&lt;BDD_ID&gt; &amp;nodes_of_root) <span class="keyword">override</span>;</div>
+<div class="line"><a id="l00221" name="l00221"></a><span class="lineno">  221</span>        <span class="keywordtype">void</span> <a class="code hl_function" href="classClassProject_1_1Manager.html#a759513c0bb7447bfb05a82a818ab22eb">findVars</a>(<span class="keyword">const</span> BDD_ID &amp;root, std::set&lt;BDD_ID&gt; &amp;vars_of_root) <span class="keyword">override</span>;</div>
 <div class="line"><a id="l00222" name="l00222"></a><span class="lineno">  222</span> </div>
-<div class="line"><a id="l00230" name="l00230"></a><span class="lineno">  230</span>        <span class="keywordtype">void</span> <a class="code hl_function" href="classClassProject_1_1Manager.html#a759513c0bb7447bfb05a82a818ab22eb">findVars</a>(<span class="keyword">const</span> BDD_ID &amp;root, std::set&lt;BDD_ID&gt; &amp;vars_of_root) <span class="keyword">override</span>;</div>
-<div class="line"><a id="l00231" name="l00231"></a><span class="lineno">  231</span> </div>
-<div class="line"><a id="l00237" name="l00237"></a><span class="lineno">  237</span>        std::size_t <a class="code hl_function" href="classClassProject_1_1Manager.html#ad0c74763d66ee3dc524b3e400c7e1020">uniqueTableSize</a>() <span class="keyword">override</span>;</div>
-<div class="line"><a id="l00238" name="l00238"></a><span class="lineno">  238</span> </div>
-<div class="line"><a id="l00246" name="l00246"></a><span class="lineno">  246</span>        <span class="keywordtype">void</span> <a class="code hl_function" href="classClassProject_1_1Manager.html#a4f351c0235b5a22364868c95a6b67f4d">visualizeBDD</a>(std::string filepath, BDD_ID &amp;root) <span class="keyword">override</span>;</div>
-<div class="line"><a id="l00247" name="l00247"></a><span class="lineno">  247</span>    };</div>
-<div class="line"><a id="l00248" name="l00248"></a><span class="lineno">  248</span> </div>
-<div class="line"><a id="l00249" name="l00249"></a><span class="lineno">  249</span>}</div>
-<div class="line"><a id="l00250" name="l00250"></a><span class="lineno">  250</span> </div>
-<div class="line"><a id="l00251" name="l00251"></a><span class="lineno">  251</span><span class="preprocessor">#endif</span></div>
-<div class="ttc" id="aclassClassProject_1_1ComputedNode_html"><div class="ttname"><a href="classClassProject_1_1ComputedNode.html">ClassProject::ComputedNode</a></div><div class="ttdoc">The ComputedNode class represents a node of the computed table.</div><div class="ttdef"><b>Definition:</b> Manager.h:21</div></div>
-<div class="ttc" id="aclassClassProject_1_1Manager_html"><div class="ttname"><a href="classClassProject_1_1Manager.html">ClassProject::Manager</a></div><div class="ttdoc">The Manager class represents the manager of a binary decision diagram (BDD). Each Manager object has ...</div><div class="ttdef"><b>Definition:</b> Manager.h:31</div></div>
+<div class="line"><a id="l00228" name="l00228"></a><span class="lineno">  228</span>        std::size_t <a class="code hl_function" href="classClassProject_1_1Manager.html#ad0c74763d66ee3dc524b3e400c7e1020">uniqueTableSize</a>() <span class="keyword">override</span>;</div>
+<div class="line"><a id="l00229" name="l00229"></a><span class="lineno">  229</span> </div>
+<div class="line"><a id="l00237" name="l00237"></a><span class="lineno">  237</span>        <span class="keywordtype">void</span> <a class="code hl_function" href="classClassProject_1_1Manager.html#a4f351c0235b5a22364868c95a6b67f4d">visualizeBDD</a>(std::string filepath, BDD_ID &amp;root) <span class="keyword">override</span>;</div>
+<div class="line"><a id="l00238" name="l00238"></a><span class="lineno">  238</span>    };</div>
+<div class="line"><a id="l00239" name="l00239"></a><span class="lineno">  239</span> </div>
+<div class="line"><a id="l00240" name="l00240"></a><span class="lineno">  240</span>}</div>
+<div class="line"><a id="l00241" name="l00241"></a><span class="lineno">  241</span> </div>
+<div class="line"><a id="l00242" name="l00242"></a><span class="lineno">  242</span><span class="preprocessor">#endif</span></div>
+<div class="ttc" id="aclassClassProject_1_1Manager_html"><div class="ttname"><a href="classClassProject_1_1Manager.html">ClassProject::Manager</a></div><div class="ttdoc">The Manager class represents the manager of a binary decision diagram (BDD). Each Manager object has ...</div><div class="ttdef"><b>Definition:</b> Manager.h:22</div></div>
 <div class="ttc" id="aclassClassProject_1_1Manager_html_a1658ff9f18e38ccd9cb8b0b371b9c20b"><div class="ttname"><a href="classClassProject_1_1Manager.html#a1658ff9f18e38ccd9cb8b0b371b9c20b">ClassProject::Manager::Manager</a></div><div class="ttdeci">Manager()</div><div class="ttdoc">Default constructor of the Manager object.</div><div class="ttdef"><b>Definition:</b> Manager.cpp:75</div></div>
 <div class="ttc" id="aclassClassProject_1_1Manager_html_a1f569cd9f52041717ffc42157114dbea"><div class="ttname"><a href="classClassProject_1_1Manager.html#a1f569cd9f52041717ffc42157114dbea">ClassProject::Manager::isConstant</a></div><div class="ttdeci">bool isConstant(BDD_ID f) override</div><div class="ttdoc">Checks if the given ID represents a leaf node.</div><div class="ttdef"><b>Definition:</b> Manager.cpp:106</div></div>
 <div class="ttc" id="aclassClassProject_1_1Manager_html_a41d20b0492847694bac8ef8a246e1257"><div class="ttname"><a href="classClassProject_1_1Manager.html#a41d20b0492847694bac8ef8a246e1257">ClassProject::Manager::xor2</a></div><div class="ttdeci">BDD_ID xor2(BDD_ID a, BDD_ID b) override</div><div class="ttdoc">Gets the node representing the resulting function of a xor b.</div><div class="ttdef"><b>Definition:</b> Manager.cpp:241</div></div>
