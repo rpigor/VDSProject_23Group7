@@ -241,7 +241,8 @@ BDD_ID Manager::or2(BDD_ID a, BDD_ID b)
 
 BDD_ID Manager::xor2(BDD_ID a, BDD_ID b)
 {
-
+    BDD_ID negB = ite(b, FALSE_ID, TRUE_ID);
+    return ite(a, negB, b);
 }
 
 BDD_ID Manager::neg(BDD_ID a)
