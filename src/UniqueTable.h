@@ -12,6 +12,10 @@ namespace ClassProject {
     static const BDD_ID FALSE_ID = 0;
     static const BDD_ID TRUE_ID = 1;
 
+    /**
+     * @brief The NodeTriple class represents the triple that defines
+     *  the identity of a node.
+     */
     class NodeTriple {
     public:
         BDD_ID topVariable;
@@ -21,11 +25,18 @@ namespace ClassProject {
         bool operator==(const NodeTriple &triple) const;
     };
 
+    /**
+     * @brief The NodeTripleHash class represents the hash function of
+     * the NodeTriple class.
+     */
     class NodeTripleHash {
     public:
         std::size_t operator()(const NodeTriple &triple) const;
     };
 
+    /**
+     * @brief The Node class represents a node of the BDD.
+     */
     class Node {
     public:
         BDD_ID id;
@@ -45,6 +56,10 @@ namespace ClassProject {
         }
     };
 
+    /**
+     * @brief The UniqueTableHashMapTags namespace contains the tags representing
+     * the indexing mode of the unique table.
+     */
     namespace UniqueTableHashMapTags {
 
         struct ById {
