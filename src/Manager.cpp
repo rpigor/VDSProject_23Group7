@@ -247,7 +247,7 @@ BDD_ID Manager::xor2(BDD_ID a, BDD_ID b)
 
 BDD_ID Manager::neg(BDD_ID a)
 {
-
+    return ite(a, FALSE_ID, TRUE_ID);
 }
 
 BDD_ID Manager::nand2(BDD_ID a, BDD_ID b)
