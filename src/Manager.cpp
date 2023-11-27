@@ -231,7 +231,6 @@ BDD_ID Manager::coFactorFalse(BDD_ID f)
 BDD_ID Manager::and2(BDD_ID a, BDD_ID b)
 {
     return ite(a, b, FALSE_ID);
-
 }
 
 BDD_ID Manager::or2(BDD_ID a, BDD_ID b)
@@ -252,7 +251,7 @@ BDD_ID Manager::neg(BDD_ID a)
 
 BDD_ID Manager::nand2(BDD_ID a, BDD_ID b)
 {
-
+    return neg(and2(a, b));
 }
 
 BDD_ID Manager::nor2(BDD_ID a, BDD_ID b)
