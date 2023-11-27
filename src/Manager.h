@@ -6,7 +6,7 @@
 #define VDSPROJECT_MANAGER_H
 
 #include "ManagerInterface.h"
-#include "UniqueTable.h"
+#include "Table.h"
 #include <boost/unordered_map.hpp>
 #include <string>
 
@@ -14,15 +14,6 @@
  * @brief The ClassProject namespace contains everything related to the library.
  */
 namespace ClassProject {
-
-    /**
-     * @brief The ComputedNode class represents a node of the computed table.
-     */
-    class ComputedNode {
-    public:
-        BDD_ID result;
-        std::string comment;
-    };
 
     /**
      * @brief The Manager class represents the manager of a binary decision diagram (BDD).

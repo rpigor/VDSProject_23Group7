@@ -1,5 +1,5 @@
-#ifndef VDSPROJECT_UNIQUE_TABLE_H
-#define VDSPROJECT_UNIQUE_TABLE_H
+#ifndef VDSPROJECT_TABLE_H
+#define VDSPROJECT_TABLE_H
 
 #include "ManagerInterface.h"
 #include <boost/multi_index_container.hpp>
@@ -35,6 +35,15 @@ namespace ClassProject {
     };
 
     /**
+     * @brief The ComputedNode class represents a node of the computed table.
+     */
+    class ComputedNode {
+    public:
+        BDD_ID result;
+        std::string comment;
+    };
+
+    /**
      * @brief The Node class represents a node of the BDD.
      */
     class Node {
@@ -62,10 +71,17 @@ namespace ClassProject {
      */
     namespace UniqueTableHashMapTags {
 
+        /**
+         * @brief The ById struct serves as a tag for indexing the unique table by ID.
+         */
         struct ById {
 
         };
 
+        /**
+         * @brief The ByTriple struct serves as a tag for indexing the unique table by
+         * the node triple.
+         */
         struct ByTriple {
 
         };
