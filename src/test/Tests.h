@@ -17,9 +17,13 @@ TEST_F(ManagerTest, CreateVarWorks)
 {
     ClassProject::BDD_ID aVarId = manager.createVar("a");
     EXPECT_EQ(aVarId, 2);
+    EXPECT_EQ(manager.coFactorTrue(aVarId), ClassProject::TRUE_ID);
+
     manager.createVar("b");
+
     ClassProject::BDD_ID cVarId = manager.createVar("c");
     EXPECT_EQ(cVarId, 4);
+    EXPECT_EQ(manager.coFactorFalse(cVarId), ClassProject::FALSE_ID);
 }
 
 TEST_F(ManagerTest, TrueAndFalseConstantsWork)
@@ -35,8 +39,11 @@ TEST_F(ManagerTest, IsConstantWorks)
 
     ClassProject::BDD_ID aVarId = manager.createVar("a");
     ClassProject::BDD_ID bVarId = manager.createVar("b");
+    ClassProject::BDD_ID andABId = manager.and2(aVarId, bVarId);
+
     EXPECT_FALSE(manager.isConstant(aVarId));
     EXPECT_FALSE(manager.isConstant(bVarId));
+    EXPECT_FALSE(manager.isConstant(andABId));
 }
 
 TEST_F(ManagerTest, IsVariableWorks)
@@ -46,8 +53,11 @@ TEST_F(ManagerTest, IsVariableWorks)
 
     ClassProject::BDD_ID aVarId = manager.createVar("a");
     ClassProject::BDD_ID bVarId = manager.createVar("b");
+    ClassProject::BDD_ID orABId = manager.or2(aVarId, bVarId);
+
     EXPECT_TRUE(manager.isVariable(aVarId));
     EXPECT_TRUE(manager.isVariable(bVarId));
+    EXPECT_FALSE(manager.isVariable(orABId));
 }
 
 TEST_F(ManagerTest, TopVarWorks)
@@ -56,7 +66,14 @@ TEST_F(ManagerTest, TopVarWorks)
     EXPECT_EQ(manager.topVar(ClassProject::FALSE_ID), ClassProject::FALSE_ID);
 
     ClassProject::BDD_ID aVarId = manager.createVar("a");
+    ClassProject::BDD_ID bVarId = manager.createVar("b");
+    ClassProject::BDD_ID cVarId = manager.createVar("c");
+    ClassProject::BDD_ID andBCId = manager.and2(bVarId, cVarId);
+    ClassProject::BDD_ID orCCId = manager.or2(cVarId, cVarId);
+
     EXPECT_EQ(manager.topVar(aVarId), aVarId);
+    EXPECT_EQ(manager.topVar(andBCId), bVarId);
+    EXPECT_EQ(manager.topVar(orCCId), cVarId);
 }
 
 TEST_F(ManagerTest, IteWorks)
