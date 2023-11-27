@@ -132,6 +132,11 @@ BDD_ID Manager::ite(BDD_ID i, BDD_ID t, BDD_ID e)
         return e;
     }
 
+    if ((t == TRUE_ID) && (e == FALSE_ID))
+    {
+        return i;
+    }
+
     NodeTriple iteTriple {i, t, e};
     auto computedTableResult = computedTable.find(iteTriple);
     if (computedTableResult != computedTable.end())
@@ -174,8 +179,9 @@ BDD_ID Manager::ite(BDD_ID i, BDD_ID t, BDD_ID e)
     }
 
     std::string compComment = "ite(" + std::to_string(i) + ", " + std::to_string(t) + ", " + std::to_string(e) + ")";
+    NodeTriple compTriple {i, t, e};
     ComputedNode compNode {rId, compComment};
-    computedTable.insert(std::make_pair(rTriple, compNode));
+    computedTable.insert(std::make_pair(compTriple, compNode));
 
     return rId;
 }
