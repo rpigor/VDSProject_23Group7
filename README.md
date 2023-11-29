@@ -140,6 +140,7 @@ List of Ubuntu packages required to complete the project:
 
 * git-all
 * libboost-all-dev
+* graphviz-dev
 * build-essential
 
 

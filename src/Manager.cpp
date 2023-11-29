@@ -1,4 +1,6 @@
 #include "Manager.h"
+#include <graphviz/gvc.h>
+#include <vector>
 #include <stack>
 #include <utility>
 
@@ -70,6 +72,32 @@ std::string Manager::nodeToString(BDD_ID i, BDD_ID t, BDD_ID e)
     }
 
     return "ite( " + iLabel + ", " + tLabel + ", " + eLabel + ")";
+}
+
+Agnode_t *Manager::createNodeIfAbsent(Agraph_t *graph, const std::string &nodeLabel)
+{
+    std::vector<char> labelStr(nodeLabel.c_str(), nodeLabel.c_str() + nodeLabel.size() + 1);
+    Agnode_t *gNode = agnode(graph, labelStr.data(), FALSE);
+    if (gNode == NULL)
+    {
+        gNode = agnode(graph, labelStr.data(), TRUE);
+        agsafeset(gNode, const_cast<char*>("label"), labelStr.data(), "");
+        agsafeset(gNode, const_cast<char*>("shape"), "circle", "");
+        agsafeset(gNode, const_cast<char*>("style"), "filled", "");
+        agsafeset(gNode, const_cast<char*>("fillcolor"), "#bedee8", "");
+    }
+    return gNode;
+}
+
+Agedge_t *Manager::createEdgeIfAbsent(Agraph_t *graph, Agnode_t *firstNode, Agnode_t *secondNode, const std::string &nodeLabel)
+{
+    std::vector<char> labelStr(nodeLabel.c_str(), nodeLabel.c_str() + nodeLabel.size() + 1);
+    Agedge_t *gEdge = agedge(graph, firstNode, secondNode, labelStr.data(), FALSE);
+    if (gEdge == NULL)
+    {
+        gEdge = agedge(graph, firstNode, secondNode, labelStr.data(), TRUE);
+    }
+    return gEdge;
 }
 
 Manager::Manager()
@@ -313,5 +341,47 @@ std::size_t Manager::uniqueTableSize()
 
 void Manager::visualizeBDD(std::string filepath, BDD_ID &root)
 {
+    Agraph_t *g = agopen(const_cast<char*>("G"), Agdirected, NULL);
+    agsafeset(g, const_cast<char*>("dpi"), "400", "");
 
+    Agnode_t *rootGNode = createNodeIfAbsent(g, getTopVarName(root));
+    Agnode_t *trueGNode = createNodeIfAbsent(g, uniqueTableById().find(TRUE_ID)->label);
+    Agnode_t *falseGNode = createNodeIfAbsent(g, uniqueTableById().find(FALSE_ID)->label);
+    agsafeset(trueGNode, const_cast<char*>("label"), "1", "");
+    agsafeset(falseGNode, const_cast<char*>("label"), "0", "");
+    agsafeset(trueGNode, const_cast<char*>("shape"), "square", "");
+    agsafeset(falseGNode, const_cast<char*>("shape"), "square", "");
+    agsafeset(trueGNode, const_cast<char*>("fillcolor"), "#000000", "");
+    agsafeset(falseGNode, const_cast<char*>("fillcolor"), "#000000", "");
+    agsafeset(trueGNode, const_cast<char*>("fontcolor"), "#ffffff", "");
+    agsafeset(falseGNode, const_cast<char*>("fontcolor"), "#ffffff", "");
+
+    std::stack<BDD_ID> nodes;
+    nodes.push(root);
+    while (!nodes.empty())
+    {
+        auto topNode = uniqueTableById().find(nodes.top());
+        Agnode_t *topGNode = createNodeIfAbsent(g, getTopVarName(topNode->id));
+        nodes.pop();
+
+        if (!isConstant(topNode->id))
+        {
+            auto highNode = uniqueTableById().find(topNode->triple.high);
+            auto lowNode = uniqueTableById().find(topNode->triple.low);
+            Agnode_t *highGNode = createNodeIfAbsent(g, getTopVarName(highNode->id));
+            Agnode_t *lowGNode = createNodeIfAbsent(g, getTopVarName(lowNode->id));
+            Agedge_t *highGEdge = createEdgeIfAbsent(g, topGNode, highGNode, "high");
+            Agedge_t *lowGEdge = createEdgeIfAbsent(g, topGNode, lowGNode, "low");
+            agsafeset(lowGEdge, const_cast<char*>("style"), "dotted", "");
+            nodes.push(topNode->triple.high);
+            nodes.push(topNode->triple.low);
+        }
+    }
+
+    GVC_t *gvc = gvContext();
+    gvLayout(gvc, g, "dot");
+    gvRender(gvc, g, "png", fopen(filepath.c_str(), "w"));
+    gvFreeLayout(gvc, g);
+    agclose(g);
+    gvFreeContext(gvc);
 }
