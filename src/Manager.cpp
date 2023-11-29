@@ -295,7 +295,15 @@ void Manager::findNodes(const BDD_ID &root, std::set<BDD_ID> &nodes_of_root)
 
 void Manager::findVars(const BDD_ID &root, std::set<BDD_ID> &vars_of_root)
 {
-
+    std::set<BDD_ID> nodes;
+    findNodes(root, nodes);
+    for (BDD_ID nodeId : nodes)
+    {
+        if (!isConstant(nodeId))
+        {
+            vars_of_root.insert(topVar(nodeId));
+        }
+    }
 }
 
 std::size_t Manager::uniqueTableSize()
