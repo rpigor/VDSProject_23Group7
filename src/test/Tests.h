@@ -262,9 +262,27 @@ TEST_F(ManagerTest, FindNodesWorks)
     manager.createVar("a");
     ClassProject::BDD_ID bVarId = manager.createVar("b");
     manager.findNodes(bVarId, nodes);
-    std::set<ClassProject::BDD_ID> groundTruthNodes = {bVarId, ClassProject::TRUE_ID, ClassProject::FALSE_ID};
 
+    std::set<ClassProject::BDD_ID> groundTruthNodes = {bVarId, ClassProject::TRUE_ID, ClassProject::FALSE_ID};
     EXPECT_EQ(nodes, groundTruthNodes);
+}
+
+TEST_F(ManagerTest, FindVarsWorks)
+{
+    std::set<ClassProject::BDD_ID> andABVars;
+    std::set<ClassProject::BDD_ID> orCAndABVars;
+    ClassProject::BDD_ID aVarId = manager.createVar("a");
+    ClassProject::BDD_ID bVarId = manager.createVar("b");
+    ClassProject::BDD_ID cVarId = manager.createVar("c");
+    ClassProject::BDD_ID andABId = manager.and2(aVarId, bVarId);
+    ClassProject::BDD_ID orCAndABId = manager.or2(cVarId, andABId);
+    manager.findVars(andABId, andABVars);
+    manager.findVars(orCAndABId, orCAndABVars);
+
+    std::set<ClassProject::BDD_ID> andABGroundTruthVars = {aVarId, bVarId};
+    std::set<ClassProject::BDD_ID> orCAndABGroundTruthVars = {aVarId, bVarId, cVarId};
+    EXPECT_EQ(andABVars, andABGroundTruthVars);
+    EXPECT_EQ(orCAndABVars, orCAndABGroundTruthVars);
 }
 
 TEST_F(ManagerTest, uniqueTableSizeWorks)
