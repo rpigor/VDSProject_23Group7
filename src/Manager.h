@@ -62,26 +62,26 @@ namespace ClassProject {
         /**
          * @brief Checks if the given ID represents a leaf node.
          *
-         * @param f ID of the node.
+         * @param node ID of the node.
          * @return True if the given ID represents a leaf node.
          */
-        bool isConstant(BDD_ID f) override;
+        bool isConstant(BDD_ID node) override;
 
         /**
          * @brief Checks if the given ID represents a variable.
          *
-         * @param x ID of the node.
+         * @param node ID of the node.
          * @return True if the given ID represents a variable.
          */
-        bool isVariable(BDD_ID x) override;
+        bool isVariable(BDD_ID node) override;
 
         /**
          * @brief Gets the top variable of the given node.
          *
-         * @param f ID of the node.
+         * @param node ID of the node.
          * @return ID of the top variable node.
          */
-        BDD_ID topVar(BDD_ID f) override;
+        BDD_ID topVar(BDD_ID node) override;
 
         /**
          * @brief Implements the if-then-else algorithm, which most of the following
@@ -98,39 +98,39 @@ namespace ClassProject {
          * @brief Returns the positive co-factor of the function represented by the
          * given node.
          *
-         * @param f ID of the node representing the function.
-         * @param x ID of the variable node.
+         * @param function ID of the node representing the function.
+         * @param var ID of the variable node.
          * @return ID of the node representing the positive co-factor.
          */
-        BDD_ID coFactorTrue(BDD_ID f, BDD_ID x) override;
+        BDD_ID coFactorTrue(BDD_ID function, BDD_ID var) override;
 
         /**
          * @brief Returns the negative co-factor of the function represented by the
          * given node.
          *
-         * @param f ID of the node representing the function.
-         * @param x ID of the variable node.
+         * @param function ID of the node representing the function.
+         * @param var ID of the variable node.
          * @return ID of the node representing the negative co-factor.
          */
-        BDD_ID coFactorFalse(BDD_ID f, BDD_ID x) override;
+        BDD_ID coFactorFalse(BDD_ID function, BDD_ID var) override;
 
         /**
          * @brief Returns the positive co-factor of the function represented by the
          * given node.
          *
-         * @param f ID of the node representing the function.
+         * @param function ID of the node representing the function.
          * @return ID of the node representing the positive co-factor.
          */
-        BDD_ID coFactorTrue(BDD_ID f) override;
+        BDD_ID coFactorTrue(BDD_ID function) override;
 
         /**
          * @brief Returns the negative co-factor of the function represented by the
          * given node.
          *
-         * @param f ID of the node representing the function.
+         * @param function ID of the node representing the function.
          * @return ID of the node representing the negative co-factor.
          */
-        BDD_ID coFactorFalse(BDD_ID f) override;
+        BDD_ID coFactorFalse(BDD_ID function) override;
 
         /**
          * @brief Gets the node representing the resulting function of a ∗ b.
@@ -207,18 +207,18 @@ namespace ClassProject {
          * itself.
          *
          * @param root ID of the root node.
-         * @param nodes_of_root Set of nodes.
+         * @param rootNodes Set of nodes.
          */
-        void findNodes(const BDD_ID &root, std::set<BDD_ID> &nodes_of_root) override;
+        void findNodes(const BDD_ID &root, std::set<BDD_ID> &rootNodes) override;
 
         /**
          * @brief Gets the set of all variables which are reachable from root including
          * itself.
          *
          * @param root ID of the root node.
-         * @param vars_of_root Set of variable nodes.
+         * @param rootVars Set of variable nodes.
          */
-        void findVars(const BDD_ID &root, std::set<BDD_ID> &vars_of_root) override;
+        void findVars(const BDD_ID &root, std::set<BDD_ID> &rootVars) override;
 
         /**
          * @brief Gets the number of nodes currently existing in the unique table.

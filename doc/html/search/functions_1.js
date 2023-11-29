@@ -1,6 +1,6 @@
 var searchData=
 [
-  ['cofactorfalse_0',['coFactorFalse',['../classClassProject_1_1Manager.html#a8649e9857af1bba0199c5d6fcf8f6eb9',1,'ClassProject::Manager::coFactorFalse(BDD_ID f, BDD_ID x) override'],['../classClassProject_1_1Manager.html#af5388c2afb5f0c572dd658b508d3b066',1,'ClassProject::Manager::coFactorFalse(BDD_ID f) override']]],
-  ['cofactortrue_1',['coFactorTrue',['../classClassProject_1_1Manager.html#ad3b56050cfd8e8216fca5ceea713c375',1,'ClassProject::Manager::coFactorTrue(BDD_ID f, BDD_ID x) override'],['../classClassProject_1_1Manager.html#a08bd84761c5e896b77300381a8a626f0',1,'ClassProject::Manager::coFactorTrue(BDD_ID f) override']]],
+  ['cofactorfalse_0',['coFactorFalse',['../classClassProject_1_1Manager.html#a9bfb1e1d8b1ba9cc14f440b4cabceb07',1,'ClassProject::Manager::coFactorFalse(BDD_ID function, BDD_ID var) override'],['../classClassProject_1_1Manager.html#ab79a3ebc2b1bdcb2d8a59acb988f5fc0',1,'ClassProject::Manager::coFactorFalse(BDD_ID function) override']]],
+  ['cofactortrue_1',['coFactorTrue',['../classClassProject_1_1Manager.html#aa1dea03ffb078e6c52502a2b16bb2902',1,'ClassProject::Manager::coFactorTrue(BDD_ID function, BDD_ID var) override'],['../classClassProject_1_1Manager.html#ad4bfae82a1220f93f416720eb82e044c',1,'ClassProject::Manager::coFactorTrue(BDD_ID function) override']]],
   ['createvar_2',['createVar',['../classClassProject_1_1Manager.html#aa3fe08b0b002032a13a5ff9d05f39cfd',1,'ClassProject::Manager']]]
 ];

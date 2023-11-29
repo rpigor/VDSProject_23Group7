@@ -74,10 +74,10 @@ std::string Manager::nodeToString(BDD_ID i, BDD_ID t, BDD_ID e)
 
 Manager::Manager()
 {
-    NodeTriple falseTriple {FALSE_ID, FALSE_ID, FALSE_ID};
-    Node falseNode {FALSE_ID, falseTriple, "False"};
-    NodeTriple trueTriple {TRUE_ID, TRUE_ID, TRUE_ID};
-    Node trueNode {TRUE_ID, trueTriple, "True"};
+    NodeTriple falseTriple{FALSE_ID, FALSE_ID, FALSE_ID};
+    Node falseNode{FALSE_ID, falseTriple, "False"};
+    NodeTriple trueTriple{TRUE_ID, TRUE_ID, TRUE_ID};
+    Node trueNode{TRUE_ID, trueTriple, "True"};
 
     uniqueTable.insert(falseNode);
     uniqueTable.insert(trueNode);
@@ -86,8 +86,8 @@ Manager::Manager()
 BDD_ID Manager::createVar(const std::string &label)
 {
     BDD_ID varId = uniqueTable.size();
-    NodeTriple varNodeTriple {varId, FALSE_ID, TRUE_ID};
-    Node varNode {varId, varNodeTriple, label};
+    NodeTriple varNodeTriple{varId, FALSE_ID, TRUE_ID};
+    Node varNode{varId, varNodeTriple, label};
 
     uniqueTable.insert(varNode);
     return varId;
@@ -103,21 +103,21 @@ const BDD_ID &Manager::False()
     return FALSE_ID;
 }
 
-bool Manager::isConstant(BDD_ID f)
+bool Manager::isConstant(BDD_ID node)
 {
-    return (f == TRUE_ID) || (f == FALSE_ID);
+    return (node == TRUE_ID) || (node == FALSE_ID);
 }
 
-bool Manager::isVariable(BDD_ID x)
+bool Manager::isVariable(BDD_ID node)
 {
-    auto xNode = uniqueTableById().find(x);
-    return (xNode->triple.high == TRUE_ID) && (xNode->triple.low == FALSE_ID);
+    auto nodeRef = uniqueTableById().find(node);
+    return (nodeRef->triple.high == TRUE_ID) && (nodeRef->triple.low == FALSE_ID);
 }
 
-BDD_ID Manager::topVar(BDD_ID f)
+BDD_ID Manager::topVar(BDD_ID node)
 {
-    auto fNode = uniqueTableById().find(f);
-    return fNode->triple.topVariable;
+    auto nodeRef = uniqueTableById().find(node);
+    return nodeRef->triple.topVariable;
 }
 
 BDD_ID Manager::ite(BDD_ID i, BDD_ID t, BDD_ID e)
@@ -137,7 +137,7 @@ BDD_ID Manager::ite(BDD_ID i, BDD_ID t, BDD_ID e)
         return i;
     }
 
-    NodeTriple iteTriple {i, t, e};
+    NodeTriple iteTriple{i, t, e};
     auto computedTableResult = computedTable.find(iteTriple);
     if (computedTableResult != computedTable.end())
     {
@@ -165,12 +165,12 @@ BDD_ID Manager::ite(BDD_ID i, BDD_ID t, BDD_ID e)
     }
 
     BDD_ID rId;
-    NodeTriple rTriple {xTopVar, rLow, rHigh};
+    NodeTriple rTriple{xTopVar, rLow, rHigh};
     auto uniqueTableResult = uniqueTableByTriple().find(rTriple);
     if (uniqueTableResult == uniqueTableByTriple().end())
     {
         rId = uniqueTable.size();
-        Node rNode {rId, rTriple, nodeToString(xTopVar, rHigh, rLow)};
+        Node rNode{rId, rTriple, nodeToString(xTopVar, rHigh, rLow)};
         uniqueTableByTriple().insert(rNode);
     }
     else
@@ -179,59 +179,59 @@ BDD_ID Manager::ite(BDD_ID i, BDD_ID t, BDD_ID e)
     }
 
     std::string compComment = "ite(" + std::to_string(i) + ", " + std::to_string(t) + ", " + std::to_string(e) + ")";
-    NodeTriple compTriple {i, t, e};
-    ComputedNode compNode {rId, compComment};
+    NodeTriple compTriple{i, t, e};
+    ComputedNode compNode{rId, compComment};
     computedTable.insert(std::make_pair(compTriple, compNode));
 
     return rId;
 }
 
-BDD_ID Manager::coFactorTrue(BDD_ID f, BDD_ID x)
+BDD_ID Manager::coFactorTrue(BDD_ID function, BDD_ID var)
 {
-    if (isConstant(f) || isConstant(x) || topVar(f) > x)
+    if (isConstant(function) || isConstant(var) || topVar(function) > var)
     {
-        return f;
+        return function;
     }
 
-    auto fNode = uniqueTableById().find(f);
-    if (topVar(f) == x)
+    auto nodeRef = uniqueTableById().find(function);
+    if (topVar(function) == var)
     {
-        return fNode->triple.high;
+        return nodeRef->triple.high;
     }
 
-    BDD_ID trueCoFactId = coFactorTrue(fNode->triple.high, x);
-    BDD_ID falseCoFactId = coFactorTrue(fNode->triple.low, x);
+    BDD_ID trueCoFactId = coFactorTrue(nodeRef->triple.high, var);
+    BDD_ID falseCoFactId = coFactorTrue(nodeRef->triple.low, var);
 
-    return ite(topVar(f), trueCoFactId, falseCoFactId);
+    return ite(topVar(function), trueCoFactId, falseCoFactId);
 }
 
-BDD_ID Manager::coFactorFalse(BDD_ID f, BDD_ID x)
+BDD_ID Manager::coFactorFalse(BDD_ID function, BDD_ID var)
 {
-    if (isConstant(f) || isConstant(x) || topVar(f) > x)
+    if (isConstant(function) || isConstant(var) || topVar(function) > var)
     {
-        return f;
+        return function;
     }
 
-    auto fNode = uniqueTableById().find(f);
-    if (topVar(f) == x)
+    auto nodeRef = uniqueTableById().find(function);
+    if (topVar(function) == var)
     {
-        return fNode->triple.low;
+        return nodeRef->triple.low;
     }
 
-    BDD_ID trueCoFactId = coFactorFalse(fNode->triple.high, x);
-    BDD_ID falseCoFactId = coFactorFalse(fNode->triple.low, x);
+    BDD_ID trueCoFactId = coFactorFalse(nodeRef->triple.high, var);
+    BDD_ID falseCoFactId = coFactorFalse(nodeRef->triple.low, var);
 
-    return ite(topVar(f), trueCoFactId, falseCoFactId);
+    return ite(topVar(function), trueCoFactId, falseCoFactId);
 }
 
-BDD_ID Manager::coFactorTrue(BDD_ID f)
+BDD_ID Manager::coFactorTrue(BDD_ID function)
 {
-    return coFactorTrue(f, topVar(f));
+    return coFactorTrue(function, topVar(function));
 }
 
-BDD_ID Manager::coFactorFalse(BDD_ID f)
+BDD_ID Manager::coFactorFalse(BDD_ID function)
 {
-    return coFactorFalse(f, topVar(f));
+    return coFactorFalse(function, topVar(function));
 }
 
 BDD_ID Manager::and2(BDD_ID a, BDD_ID b)
@@ -275,14 +275,14 @@ std::string Manager::getTopVarName(const BDD_ID &root)
     return topVarNode->label;
 }
 
-void Manager::findNodes(const BDD_ID &root, std::set<BDD_ID> &nodes_of_root)
+void Manager::findNodes(const BDD_ID &root, std::set<BDD_ID> &rootNodes)
 {
     std::stack<BDD_ID> nodes;
     nodes.push(root);
     while (!nodes.empty())
     {
         auto topNode = uniqueTableById().find(nodes.top());
-        nodes_of_root.insert(nodes.top());
+        rootNodes.insert(nodes.top());
         nodes.pop();
 
         if (!isConstant(topNode->id))
@@ -293,7 +293,7 @@ void Manager::findNodes(const BDD_ID &root, std::set<BDD_ID> &nodes_of_root)
     }
 }
 
-void Manager::findVars(const BDD_ID &root, std::set<BDD_ID> &vars_of_root)
+void Manager::findVars(const BDD_ID &root, std::set<BDD_ID> &rootVars)
 {
     std::set<BDD_ID> nodes;
     findNodes(root, nodes);
@@ -301,7 +301,7 @@ void Manager::findVars(const BDD_ID &root, std::set<BDD_ID> &vars_of_root)
     {
         if (!isConstant(nodeId))
         {
-            vars_of_root.insert(topVar(nodeId));
+            rootVars.insert(topVar(nodeId));
         }
     }
 }
