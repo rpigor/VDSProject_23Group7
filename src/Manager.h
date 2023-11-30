@@ -36,6 +36,9 @@ namespace ClassProject {
 
         Agedge_t *createEdgeIfAbsent(Agraph_t *graph, Agnode_t *firstNode, Agnode_t *secondNode, const std::string &nodeLabel);
 
+        template <typename T>
+        void setGProperty(T *ref, std::string name, std::string value);
+
     public:
         /**
          * @brief Default constructor of the Manager object.
@@ -233,8 +236,8 @@ namespace ClassProject {
         std::size_t uniqueTableSize() override;
 
         /**
-         * @brief Creates a file that contains a visual representation of the BDD
-         * represented by the root node.
+         * @brief Creates a file (PNG format) that contains a visual representation of the
+         * BDD represented by the root node.
          *
          * @param filepath Absolute path of the file.
          * @param root ID of the root node.

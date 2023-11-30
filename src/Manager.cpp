@@ -81,10 +81,10 @@ Agnode_t *Manager::createNodeIfAbsent(Agraph_t *graph, const std::string &nodeLa
     if (gNode == NULL)
     {
         gNode = agnode(graph, labelStr.data(), TRUE);
-        agsafeset(gNode, const_cast<char*>("label"), labelStr.data(), "");
-        agsafeset(gNode, const_cast<char*>("shape"), "circle", "");
-        agsafeset(gNode, const_cast<char*>("style"), "filled", "");
-        agsafeset(gNode, const_cast<char*>("fillcolor"), "#bedee8", "");
+        setGProperty(gNode, "label", nodeLabel);
+        setGProperty(gNode, "shape", "circle");
+        setGProperty(gNode, "style", "filled");
+        setGProperty(gNode, "fillcolor", "#bedee8");
     }
     return gNode;
 }
@@ -98,6 +98,14 @@ Agedge_t *Manager::createEdgeIfAbsent(Agraph_t *graph, Agnode_t *firstNode, Agno
         gEdge = agedge(graph, firstNode, secondNode, labelStr.data(), TRUE);
     }
     return gEdge;
+}
+
+template <typename T>
+void Manager::setGProperty(T *ref, std::string name, std::string value)
+{
+    std::vector<char> nameStr(name.c_str(), name.c_str() + name.size() + 1);
+    std::vector<char> valueStr(value.c_str(), value.c_str() + value.size() + 1);
+    agsafeset(ref, const_cast<char*>(nameStr.data()), const_cast<char*>(valueStr.data()), const_cast<char*>(""));
 }
 
 Manager::Manager()
@@ -342,19 +350,19 @@ std::size_t Manager::uniqueTableSize()
 void Manager::visualizeBDD(std::string filepath, BDD_ID &root)
 {
     Agraph_t *g = agopen(const_cast<char*>("G"), Agdirected, NULL);
-    agsafeset(g, const_cast<char*>("dpi"), "400", "");
+    setGProperty(g, "dpi", "400");
 
     Agnode_t *rootGNode = createNodeIfAbsent(g, getTopVarName(root));
     Agnode_t *trueGNode = createNodeIfAbsent(g, uniqueTableById().find(TRUE_ID)->label);
     Agnode_t *falseGNode = createNodeIfAbsent(g, uniqueTableById().find(FALSE_ID)->label);
-    agsafeset(trueGNode, const_cast<char*>("label"), "1", "");
-    agsafeset(falseGNode, const_cast<char*>("label"), "0", "");
-    agsafeset(trueGNode, const_cast<char*>("shape"), "square", "");
-    agsafeset(falseGNode, const_cast<char*>("shape"), "square", "");
-    agsafeset(trueGNode, const_cast<char*>("fillcolor"), "#000000", "");
-    agsafeset(falseGNode, const_cast<char*>("fillcolor"), "#000000", "");
-    agsafeset(trueGNode, const_cast<char*>("fontcolor"), "#ffffff", "");
-    agsafeset(falseGNode, const_cast<char*>("fontcolor"), "#ffffff", "");
+    setGProperty(trueGNode, "label", "1");
+    setGProperty(falseGNode, "label", "0");
+    setGProperty(trueGNode, "shape", "square");
+    setGProperty(falseGNode, "shape", "square");
+    setGProperty(trueGNode, "fillcolor", "#000000");
+    setGProperty(falseGNode, "fillcolor", "#000000");
+    setGProperty(trueGNode, "fontcolor", "#ffffff");
+    setGProperty(falseGNode, "fontcolor", "#ffffff");
 
     std::stack<BDD_ID> nodes;
     nodes.push(root);
@@ -372,7 +380,7 @@ void Manager::visualizeBDD(std::string filepath, BDD_ID &root)
             Agnode_t *lowGNode = createNodeIfAbsent(g, getTopVarName(lowNode->id));
             Agedge_t *highGEdge = createEdgeIfAbsent(g, topGNode, highGNode, "high");
             Agedge_t *lowGEdge = createEdgeIfAbsent(g, topGNode, lowGNode, "low");
-            agsafeset(lowGEdge, const_cast<char*>("style"), "dotted", "");
+            setGProperty(lowGEdge, "style", "dotted");
             nodes.push(topNode->triple.high);
             nodes.push(topNode->triple.low);
         }
