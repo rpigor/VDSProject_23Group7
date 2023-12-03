@@ -13,6 +13,29 @@ protected:
     ClassProject::Manager manager;
 };
 
+class ManagerExampleTest : public testing::Test {
+protected:
+    ClassProject::Manager manager;
+
+    ClassProject::BDD_ID functionId;
+
+    ClassProject::BDD_ID orABId;
+
+    ClassProject::BDD_ID andCDId;
+
+    void SetUp() override
+    {
+        auto aVarId = manager.createVar("a");
+        auto bVarId = manager.createVar("b");
+        auto cVarId = manager.createVar("c");
+        auto dVarId = manager.createVar("d");
+
+        orABId = manager.or2(aVarId, bVarId);
+        andCDId = manager.and2(cVarId, dVarId);
+        functionId = manager.and2(orABId, andCDId);
+    }
+};
+
 TEST_F(ManagerTest, CreateVarWorks)
 {
     ClassProject::BDD_ID aVarId = manager.createVar("a");
@@ -285,7 +308,7 @@ TEST_F(ManagerTest, FindVarsWorks)
     EXPECT_EQ(orCAndABVars, orCAndABGroundTruthVars);
 }
 
-TEST_F(ManagerTest, uniqueTableSizeWorks)
+TEST_F(ManagerTest, UniqueTableSizeWorks)
 {
     EXPECT_EQ(manager.uniqueTableSize(), 2);
 
@@ -293,6 +316,61 @@ TEST_F(ManagerTest, uniqueTableSizeWorks)
     manager.createVar("b");
 
     EXPECT_EQ(manager.uniqueTableSize(), 4);
+}
+
+TEST_F(ManagerExampleTest, FindNodesWorks)
+{
+    std::set<ClassProject::BDD_ID> nodes;
+    manager.findNodes(functionId, nodes);
+
+    EXPECT_EQ(nodes.size(), 6); // the other 4 nodes are unreachable from functionId
+
+    unsigned int constNum = 0;
+    unsigned int varNum = 0;
+    unsigned int funcNum = 0;
+    for (const ClassProject::BDD_ID &node : nodes)
+    {
+        if (manager.isVariable(node))
+        {
+            varNum++;
+        }
+        else if (manager.isConstant(node))
+        {
+            constNum++;
+        }
+        else
+        {
+            funcNum++;
+        }
+    }
+
+    EXPECT_EQ(constNum, 2);
+    EXPECT_EQ(varNum, 1);
+    EXPECT_EQ(funcNum, 3);
+}
+
+TEST_F(ManagerExampleTest, FindVarsWorks)
+{
+    std::set<ClassProject::BDD_ID> vars;
+    manager.findVars(functionId, vars);
+
+    EXPECT_EQ(vars.size(), 4);
+    ClassProject::BDD_ID id = 2;
+    for (const ClassProject::BDD_ID &var : vars)
+    {
+        EXPECT_TRUE(manager.isVariable(var));
+        EXPECT_EQ(var, id++);
+    }
+}
+
+TEST_F(ManagerExampleTest, UniqueTableSizeWorks)
+{
+    EXPECT_EQ(manager.uniqueTableSize(), 10);
+
+    manager.createVar("e");
+    manager.createVar("f");
+
+    EXPECT_EQ(manager.uniqueTableSize(), 12);
 }
 
 #endif
