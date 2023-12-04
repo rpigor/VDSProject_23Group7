@@ -1,5 +1,6 @@
 var searchData=
 [
-  ['topvar_0',['topVar',['../classClassProject_1_1Manager.html#a002301f0befbc756d8c960b16d481124',1,'ClassProject::Manager']]],
-  ['true_1',['True',['../classClassProject_1_1Manager.html#a7229b49af4aebfd32af558a18e17e243',1,'ClassProject::Manager']]]
+  ['nand2_0',['nand2',['../classClassProject_1_1Manager.html#abb4ee706ec822a5609d560233122e177',1,'ClassProject::Manager']]],
+  ['neg_1',['neg',['../classClassProject_1_1Manager.html#a9e7be44042c79fd6945af04a4cdc39c5',1,'ClassProject::Manager']]],
+  ['nor2_2',['nor2',['../classClassProject_1_1Manager.html#a637eb1784ada0322663e596e5fd78303',1,'ClassProject::Manager']]]
 ];

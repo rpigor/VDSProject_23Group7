@@ -1,4 +1,4 @@
 var searchData=
 [
-  ['computednode_0',['ComputedNode',['../classClassProject_1_1ComputedNode.html',1,'ClassProject']]]
+  ['manager_0',['Manager',['../classClassProject_1_1Manager.html',1,'ClassProject']]]
 ];
