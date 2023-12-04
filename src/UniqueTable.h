@@ -43,7 +43,7 @@ namespace ClassProject {
         unordered_bimap::index<ByTriple>::type &tableByTriple();
 
     public:
-        bool insert(const Node& node);
+        unordered_bimap::iterator insert(const Node& node);
 
         unordered_bimap::iterator findById(const BDD_ID &id);
 
