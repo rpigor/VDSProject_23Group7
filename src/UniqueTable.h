@@ -43,21 +43,17 @@ namespace ClassProject {
         unordered_bimap::index<ByTriple>::type &tableByTriple();
 
     public:
-        unordered_bimap::iterator insert(const Node& node);
+        void insert(const Node& node);
 
-        unordered_bimap::iterator findById(const BDD_ID &id);
+        unordered_bimap::const_iterator findById(const BDD_ID &id);
 
-        unordered_bimap::iterator findByTriple(const NodeTriple &triple);
+        unordered_bimap::const_iterator findByTriple(const NodeTriple &triple);
 
         std::size_t size() const;
 
-        unordered_bimap::iterator begin();
+        unordered_bimap::iterator begin() const;
 
-        unordered_bimap::iterator end();
-
-        unordered_bimap::const_iterator begin() const;
-
-        unordered_bimap::const_iterator end() const;
+        unordered_bimap::iterator end() const;
 
         unordered_bimap::const_iterator cbegin() const;
 
