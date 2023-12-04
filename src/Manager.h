@@ -11,6 +11,7 @@
 #include <boost/unordered_map.hpp>
 #include <graphviz/cgraph.h>
 #include <string>
+#include <set>
 
 /**
  * @brief The ClassProject namespace contains everything related to the library.
@@ -29,12 +30,14 @@ namespace ClassProject {
 
         std::string nodeToString(BDD_ID i, BDD_ID t, BDD_ID e);
 
-        Agnode_t *createNodeIfAbsent(Agraph_t *graph, const std::string &nodeLabel);
+        Agnode_t *createGNodeIfAbsent(Agraph_t *graph, const std::string &nodeLabel);
 
-        Agedge_t *createEdgeIfAbsent(Agraph_t *graph, Agnode_t *firstNode, Agnode_t *secondNode, const std::string &nodeLabel);
+        Agedge_t *createGEdgeIfAbsent(Agraph_t *graph, Agnode_t *firstNode, Agnode_t *secondNode, const std::string &nodeLabel);
 
         template <typename T>
         void setGProperty(T *ref, std::string name, std::string value);
+
+        Agraph_t *fillGGraph(Agraph_t *g, BDD_ID function);
 
     public:
         /**
