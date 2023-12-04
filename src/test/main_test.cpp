@@ -4,6 +4,7 @@
 
 
 #include "Tests.h"
+#include "UniqueTableTests.h"
 
 int main(int argc, char* argv[])
 {
