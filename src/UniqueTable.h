@@ -2,7 +2,7 @@
 #define VDSPROJECT_UNIQUE_TABLE_H
 
 #include "ManagerInterface.h"
-#include "Table.h"
+#include "Node.h"
 #include <boost/multi_index_container.hpp>
 #include <boost/multi_index/hashed_index.hpp>
 #include <boost/multi_index/member.hpp>

@@ -6,7 +6,8 @@
 #define VDSPROJECT_MANAGER_H
 
 #include "ManagerInterface.h"
-#include "Table.h"
+#include "UniqueTable.h"
+#include "Node.h"
 #include <boost/unordered_map.hpp>
 #include <graphviz/cgraph.h>
 #include <string>
@@ -22,13 +23,9 @@ namespace ClassProject {
      */
     class Manager : public ManagerInterface {
     private:
-        UniqueTableHashMap uniqueTable;
+        UniqueTable uniqueTable;
 
         boost::unordered_map<NodeTriple, ComputedNode, NodeTripleHash> computedTable;
-
-        UniqueTableHashMap::index<UniqueTableHashMapTags::ById>::type &uniqueTableById();
-
-        UniqueTableHashMap::index<UniqueTableHashMapTags::ByTriple>::type &uniqueTableByTriple();
 
         std::string nodeToString(BDD_ID i, BDD_ID t, BDD_ID e);
 

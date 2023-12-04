@@ -1,4 +1,4 @@
-#include "Table.h"
+#include "Node.h"
 #include <boost/functional/hash.hpp>
 
 using namespace ClassProject;

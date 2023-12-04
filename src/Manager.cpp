@@ -6,16 +6,6 @@
 
 using namespace ClassProject;
 
-UniqueTableHashMap::index<UniqueTableHashMapTags::ById>::type &Manager::uniqueTableById()
-{
-    return uniqueTable.get<UniqueTableHashMapTags::ById>();
-}
-
-UniqueTableHashMap::index<UniqueTableHashMapTags::ByTriple>::type &Manager::uniqueTableByTriple()
-{
-    return uniqueTable.get<UniqueTableHashMapTags::ByTriple>();
-}
-
 std::string Manager::nodeToString(BDD_ID i, BDD_ID t, BDD_ID e)
 {
     if (i == TRUE_ID)
@@ -38,7 +28,7 @@ std::string Manager::nodeToString(BDD_ID i, BDD_ID t, BDD_ID e)
         return "False";
     }
 
-    std::string iLabel = uniqueTableById().find(i)->label;
+    std::string iLabel = uniqueTable.findById(i)->label;
     if ((t == TRUE_ID) && (e == FALSE_ID))
     {
         return iLabel;
@@ -49,7 +39,7 @@ std::string Manager::nodeToString(BDD_ID i, BDD_ID t, BDD_ID e)
         return "neg(" + iLabel + ")";
     }
 
-    std::string eLabel = uniqueTableById().find(e)->label;
+    std::string eLabel = uniqueTable.findById(e)->label;
     if (t == TRUE_ID)
     {
         return "or2(" + iLabel + ", " + eLabel + ")";
@@ -60,7 +50,7 @@ std::string Manager::nodeToString(BDD_ID i, BDD_ID t, BDD_ID e)
         return "and2(neg(" + iLabel + "), " + eLabel + ")";
     }
 
-    std::string tLabel = uniqueTableById().find(t)->label;
+    std::string tLabel = uniqueTable.findById(t)->label;
     if (e == TRUE_ID)
     {
         return "or2(neg(" + iLabel + "), " + tLabel + ")";
@@ -146,13 +136,13 @@ bool Manager::isConstant(BDD_ID node)
 
 bool Manager::isVariable(BDD_ID node)
 {
-    auto nodeRef = uniqueTableById().find(node);
+    auto nodeRef = uniqueTable.findById(node);
     return (nodeRef->triple.high == TRUE_ID) && (nodeRef->triple.low == FALSE_ID);
 }
 
 BDD_ID Manager::topVar(BDD_ID node)
 {
-    auto nodeRef = uniqueTableById().find(node);
+    auto nodeRef = uniqueTable.findById(node);
     return nodeRef->triple.topVariable;
 }
 
@@ -202,12 +192,12 @@ BDD_ID Manager::ite(BDD_ID i, BDD_ID t, BDD_ID e)
 
     BDD_ID rId;
     NodeTriple rTriple{xTopVar, rLow, rHigh};
-    auto uniqueTableResult = uniqueTableByTriple().find(rTriple);
-    if (uniqueTableResult == uniqueTableByTriple().end())
+    auto uniqueTableResult = uniqueTable.findByTriple(rTriple);
+    if (uniqueTableResult == uniqueTable.end())
     {
         rId = uniqueTable.size();
         Node rNode{rId, rTriple, nodeToString(xTopVar, rHigh, rLow)};
-        uniqueTableByTriple().insert(rNode);
+        uniqueTable.insert(rNode);
     }
     else
     {
@@ -229,7 +219,7 @@ BDD_ID Manager::coFactorTrue(BDD_ID function, BDD_ID var)
         return function;
     }
 
-    auto nodeRef = uniqueTableById().find(function);
+    auto nodeRef = uniqueTable.findById(function);
     if (topVar(function) == var)
     {
         return nodeRef->triple.high;
@@ -248,7 +238,7 @@ BDD_ID Manager::coFactorFalse(BDD_ID function, BDD_ID var)
         return function;
     }
 
-    auto nodeRef = uniqueTableById().find(function);
+    auto nodeRef = uniqueTable.findById(function);
     if (topVar(function) == var)
     {
         return nodeRef->triple.low;
@@ -307,7 +297,7 @@ BDD_ID Manager::xnor2(BDD_ID a, BDD_ID b)
 
 std::string Manager::getTopVarName(const BDD_ID &root)
 {
-    auto topVarNode = uniqueTableById().find(topVar(root));
+    auto topVarNode = uniqueTable.findById(topVar(root));
     return topVarNode->label;
 }
 
@@ -317,7 +307,7 @@ void Manager::findNodes(const BDD_ID &root, std::set<BDD_ID> &rootNodes)
     nodes.push(root);
     while (!nodes.empty())
     {
-        auto topNode = uniqueTableById().find(nodes.top());
+        auto topNode = uniqueTable.findById(nodes.top());
         rootNodes.insert(nodes.top());
         nodes.pop();
 
@@ -353,8 +343,8 @@ void Manager::visualizeBDD(std::string filepath, BDD_ID &root)
     setGProperty(g, "dpi", "400");
 
     Agnode_t *rootGNode = createNodeIfAbsent(g, getTopVarName(root));
-    Agnode_t *trueGNode = createNodeIfAbsent(g, uniqueTableById().find(TRUE_ID)->label);
-    Agnode_t *falseGNode = createNodeIfAbsent(g, uniqueTableById().find(FALSE_ID)->label);
+    Agnode_t *trueGNode = createNodeIfAbsent(g, uniqueTable.findById(TRUE_ID)->label);
+    Agnode_t *falseGNode = createNodeIfAbsent(g, uniqueTable.findById(FALSE_ID)->label);
     setGProperty(trueGNode, "label", "1");
     setGProperty(falseGNode, "label", "0");
     setGProperty(trueGNode, "shape", "square");
@@ -368,14 +358,14 @@ void Manager::visualizeBDD(std::string filepath, BDD_ID &root)
     nodes.push(root);
     while (!nodes.empty())
     {
-        auto topNode = uniqueTableById().find(nodes.top());
+        auto topNode = uniqueTable.findById(nodes.top());
         Agnode_t *topGNode = createNodeIfAbsent(g, getTopVarName(topNode->id));
         nodes.pop();
 
         if (!isConstant(topNode->id))
         {
-            auto highNode = uniqueTableById().find(topNode->triple.high);
-            auto lowNode = uniqueTableById().find(topNode->triple.low);
+            auto highNode = uniqueTable.findById(topNode->triple.high);
+            auto lowNode = uniqueTable.findById(topNode->triple.low);
             Agnode_t *highGNode = createNodeIfAbsent(g, getTopVarName(highNode->id));
             Agnode_t *lowGNode = createNodeIfAbsent(g, getTopVarName(lowNode->id));
             Agedge_t *highGEdge = createEdgeIfAbsent(g, topGNode, highGNode, "high");

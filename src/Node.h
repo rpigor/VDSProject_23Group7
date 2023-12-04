@@ -1,11 +1,7 @@
-#ifndef VDSPROJECT_TABLE_H
-#define VDSPROJECT_TABLE_H
+#ifndef VDSPROJECT_NODE_H
+#define VDSPROJECT_NODE_H
 
 #include "ManagerInterface.h"
-#include <boost/multi_index_container.hpp>
-#include <boost/multi_index/hashed_index.hpp>
-#include <boost/multi_index/member.hpp>
-#include <boost/multi_index/tag.hpp>
 
 namespace ClassProject {
 
@@ -64,44 +60,6 @@ namespace ClassProject {
 
         }
     };
-
-    /**
-     * @brief The UniqueTableHashMapTags namespace contains the tags representing
-     * the indexing mode of the unique table.
-     */
-    namespace UniqueTableHashMapTags {
-
-        /**
-         * @brief The ById struct serves as a tag for indexing the unique table by ID.
-         */
-        struct ById {
-
-        };
-
-        /**
-         * @brief The ByTriple struct serves as a tag for indexing the unique table by
-         * the node triple.
-         */
-        struct ByTriple {
-
-        };
-
-    }
-
-    using UniqueTableHashMap = boost::multi_index_container<
-        Node,
-        boost::multi_index::indexed_by<
-            boost::multi_index::hashed_unique<
-                boost::multi_index::tag<UniqueTableHashMapTags::ById>,
-                boost::multi_index::member<Node, BDD_ID, &Node::id>
-            >,
-            boost::multi_index::hashed_unique<
-                boost::multi_index::tag<UniqueTableHashMapTags::ByTriple>,
-                boost::multi_index::member<Node, NodeTriple, &Node::triple>,
-                NodeTripleHash
-            >
-        >
-    >;
 
 }
 
