@@ -47,6 +47,7 @@ namespace ClassProject {
         unordered_bimap::index<ByTriple>::type &tableByTriple();
 
     public:
+
         /**
          * @brief Inserts a new node to the table.
          *

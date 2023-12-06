@@ -3,6 +3,12 @@
 
 using namespace ClassProject;
 
+NodeTriple::NodeTriple(BDD_ID topVariable, BDD_ID low, BDD_ID high)
+: topVariable(topVariable), low(low), high(high)
+{
+
+}
+
 bool NodeTriple::operator==(const NodeTriple &triple) const
 {
     return (this->topVariable == triple.topVariable) && (this->low == triple.low) && (this->high == triple.high);
@@ -15,4 +21,22 @@ std::size_t NodeTripleHash::operator()(const NodeTriple &triple) const
     boost::hash_combine(hash, boost::hash_value(triple.low));
     boost::hash_combine(hash, boost::hash_value(triple.high));
     return hash;
+}
+
+ComputedNode::ComputedNode(BDD_ID result, const std::string &comment)
+: result(result), comment(comment)
+{
+
+}
+
+Node::Node(BDD_ID id, const NodeTriple &triple, const std::string &label)
+: id(id), triple(triple), label(label)
+{
+
+}
+
+Node::Node(BDD_ID id, BDD_ID topVariable, BDD_ID low, BDD_ID high, const std::string &label)
+: id(id), triple(NodeTriple{topVariable, low, high}), label(label)
+{
+
 }
