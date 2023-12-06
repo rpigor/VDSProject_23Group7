@@ -1,5 +1,5 @@
 var searchData=
 [
-  ['xnor2_0',['xnor2',['../classClassProject_1_1Manager.html#ad03480f26d8b09e05cef788f334a2fd1',1,'ClassProject::Manager']]],
-  ['xor2_1',['xor2',['../classClassProject_1_1Manager.html#a41d20b0492847694bac8ef8a246e1257',1,'ClassProject::Manager']]]
+  ['vdsproject_5f23group7_0',['VDSProject_23Group7',['../index.html',1,'']]],
+  ['visualizebdd_1',['visualizeBDD',['../classClassProject_1_1Manager.html#a4f351c0235b5a22364868c95a6b67f4d',1,'ClassProject::Manager']]]
 ];

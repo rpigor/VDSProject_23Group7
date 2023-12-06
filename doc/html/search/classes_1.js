@@ -1,4 +1,4 @@
 var searchData=
 [
-  ['manager_0',['Manager',['../classClassProject_1_1Manager.html',1,'ClassProject']]]
+  ['graphrenderer_0',['GraphRenderer',['../classClassProject_1_1GraphRenderer.html',1,'ClassProject']]]
 ];

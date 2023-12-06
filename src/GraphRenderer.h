@@ -8,6 +8,9 @@
 
 namespace ClassProject {
 
+    /**
+     * @brief The GraphRenderer class represents a renderer for BDDs.
+     */
     class GraphRenderer {
     private:
 
@@ -28,8 +31,19 @@ namespace ClassProject {
 
         ~GraphRenderer();
 
+        /**
+         * @brief Fills the rendering graph with the BDD using the provided unique table.
+         *
+         * @param function The node ID of the function to be constructed.
+         * @param uniqueTable The unique table to be used.
+         */
         void fillGraph(BDD_ID function, UniqueTable &uniqueTable);
 
+        /**
+         * @brief Renders the BDD to the designed filepath.
+         *
+         * @param filepath The filepath to render the BDD.
+         */
         void renderGraph(const std::string &filepath);
 
     };
