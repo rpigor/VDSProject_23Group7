@@ -7,13 +7,12 @@ using namespace ClassProject;
 
 GraphRenderer::GraphRenderer(const std::string &graphName)
 {
-    graph = agopen(const_cast<char*>(graphName.c_str()), Agdirected, NULL);
-
+    graph = agopen(const_cast<char*>(graphName.c_str()), Agdirected, nullptr);
 }
 
 GraphRenderer::GraphRenderer(const std::string &graphName, BDD_ID root, UniqueTable &uniqueTable)
+: GraphRenderer(graphName)
 {
-    graph = agopen(const_cast<char*>(graphName.c_str()), Agdirected, NULL);
     fillGraph(root, uniqueTable);
 }
 
@@ -34,9 +33,10 @@ Agnode_t *GraphRenderer::createNodeIfAbsent(const std::string &nodeLabel)
 {
     std::vector<char> labelStr(nodeLabel.c_str(), nodeLabel.c_str() + nodeLabel.size() + 1);
     Agnode_t *gNode = agnode(graph, labelStr.data(), FALSE);
-    if (gNode == NULL)
+    if (gNode == nullptr)
     {
         gNode = agnode(graph, labelStr.data(), TRUE);
+
         setProperty(gNode, "label", nodeLabel);
         setProperty(gNode, "shape", "circle");
         setProperty(gNode, "style", "filled");
@@ -50,7 +50,7 @@ Agedge_t *GraphRenderer::createEdgeIfAbsent(Agnode_t *firstNode, Agnode_t *secon
 {
     std::vector<char> labelStr(nodeLabel.c_str(), nodeLabel.c_str() + nodeLabel.size() + 1);
     Agedge_t *gEdge = agedge(graph, firstNode, secondNode, labelStr.data(), FALSE);
-    if (gEdge == NULL)
+    if (gEdge == nullptr)
     {
         gEdge = agedge(graph, firstNode, secondNode, labelStr.data(), TRUE);
     }
@@ -62,13 +62,17 @@ void GraphRenderer::fillGraph(BDD_ID function, UniqueTable &uniqueTable)
     setProperty(graph, "dpi", "400");
     setProperty(graph, "bgcolor", "transparent");
 
-    BDD_ID funcTopVar = uniqueTable.findById(function)->triple.topVariable;
+    auto functionNode = uniqueTable.findById(function);
+    BDD_ID funcTopVar = functionNode->triple.topVariable;
     std::string topVarLabel = uniqueTable.findById(funcTopVar)->label;
 
-    createNodeIfAbsent(topVarLabel);
+    Agnode_t *rootNode = createNodeIfAbsent(topVarLabel);
+
+    setProperty(rootNode, "xlabel", functionNode->label);
 
     Agnode_t *trueGNode = createNodeIfAbsent(uniqueTable.findById(TRUE_ID)->label);
     Agnode_t *falseGNode = createNodeIfAbsent(uniqueTable.findById(FALSE_ID)->label);
+
     setProperty(trueGNode, "label", "1");
     setProperty(falseGNode, "label", "0");
     setProperty(trueGNode, "shape", "square");

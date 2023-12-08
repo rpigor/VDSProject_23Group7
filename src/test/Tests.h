@@ -128,6 +128,10 @@ TEST_F(ManagerTest, IteWorks)
     EXPECT_EQ(manager.coFactorTrue(andCOrABId, cVarId), orABId);
     EXPECT_EQ(manager.coFactorFalse(andCOrABId, cVarId), ClassProject::FALSE_ID);
     EXPECT_EQ(manager.getTopVarName(andCOrABId), "a");
+
+    ClassProject::BDD_ID andABId = manager.ite(aVarId, bVarId, ClassProject::FALSE_ID);
+    ClassProject::BDD_ID bVarWithNodeMergingId = manager.ite(aVarId, andABId, orABId);
+    EXPECT_EQ(bVarWithNodeMergingId, bVarId);
 }
 
 TEST_F(ManagerTest, CoFactorTrueWorks)

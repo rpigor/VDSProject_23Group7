@@ -61,7 +61,7 @@ std::string Manager::nodeToString(BDD_ID i, BDD_ID t, BDD_ID e)
         return "and2(" + iLabel + ", " + tLabel + ")";
     }
 
-    return "ite( " + iLabel + ", " + tLabel + ", " + eLabel + ")";
+    return "ite(" + iLabel + ", " + tLabel + ", " + eLabel + ")";
 }
 
 Manager::Manager()

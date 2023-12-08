@@ -1,3 +1,5 @@
 gtest/
 build/
 .vscode/
+code_coverage_report/
+code_coverage.info
