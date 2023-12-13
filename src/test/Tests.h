@@ -76,10 +76,12 @@ TEST_F(ManagerTest, IsVariableWorks)
 
     ClassProject::BDD_ID aVarId = manager.createVar("a");
     ClassProject::BDD_ID bVarId = manager.createVar("b");
+    ClassProject::BDD_ID negBId = manager.neg(bVarId);
     ClassProject::BDD_ID orABId = manager.or2(aVarId, bVarId);
 
     EXPECT_TRUE(manager.isVariable(aVarId));
     EXPECT_TRUE(manager.isVariable(bVarId));
+    EXPECT_FALSE(manager.isVariable(negBId));
     EXPECT_FALSE(manager.isVariable(orABId));
 }
 
