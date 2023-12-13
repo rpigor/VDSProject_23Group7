@@ -46,7 +46,7 @@ bool Manager::isConstant(BDD_ID node)
 bool Manager::isVariable(BDD_ID node)
 {
     auto nodeRef = uniqueTable.findById(node);
-    return (nodeRef->triple.high == TRUE_ID) && (nodeRef->triple.low == FALSE_ID);
+    return (nodeRef->triple.high == TRUE_ID) && (nodeRef->triple.low == FALSE_ID) && !nodeRef->complemented;
 }
 
 BDD_ID Manager::topVar(BDD_ID node)
