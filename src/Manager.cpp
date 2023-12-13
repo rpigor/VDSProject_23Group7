@@ -7,64 +7,6 @@
 
 using namespace ClassProject;
 
-std::string Manager::nodeToString(BDD_ID i, BDD_ID t, BDD_ID e)
-{
-    if (i == TRUE_ID)
-    {
-        return "True";
-    }
-
-    if (i == FALSE_ID)
-    {
-        return "False";
-    }
-
-    if ((t == TRUE_ID) && (e == TRUE_ID))
-    {
-        return "True";
-    }
-
-    if ((t == FALSE_ID) && (t == FALSE_ID))
-    {
-        return "False";
-    }
-
-    std::string iLabel = uniqueTable.findById(i)->label;
-    if ((t == TRUE_ID) && (e == FALSE_ID))
-    {
-        return iLabel;
-    }
-
-    if ((t == FALSE_ID) && (e == TRUE_ID))
-    {
-        return "neg(" + iLabel + ")";
-    }
-
-    std::string eLabel = uniqueTable.findById(e)->label;
-    if (t == TRUE_ID)
-    {
-        return "or2(" + iLabel + ", " + eLabel + ")";
-    }
-
-    if (t == FALSE_ID)
-    {
-        return "and2(neg(" + iLabel + "), " + eLabel + ")";
-    }
-
-    std::string tLabel = uniqueTable.findById(t)->label;
-    if (e == TRUE_ID)
-    {
-        return "or2(neg(" + iLabel + "), " + tLabel + ")";
-    }
-
-    if (e == FALSE_ID)
-    {
-        return "and2(" + iLabel + ", " + tLabel + ")";
-    }
-
-    return "ite(" + iLabel + ", " + tLabel + ", " + eLabel + ")";
-}
-
 Manager::Manager()
 {
     NodeTriple trueTriple{TRUE_ID, TRUE_ID, TRUE_ID};
@@ -194,7 +136,7 @@ BDD_ID Manager::ite(BDD_ID i, BDD_ID t, BDD_ID e)
     if (uniqueTableResult == uniqueTable.end())
     {
         rId = uniqueTable.size();
-        Node rNode{rId, rTriple, shouldComplementResult, nodeToString(xTopVar, rHigh, rLow)};
+        Node rNode{rId, rTriple, shouldComplementResult, "n" + std::to_string(rId)};
         uniqueTable.insert(rNode);
     }
     else

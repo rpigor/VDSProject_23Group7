@@ -28,8 +28,6 @@ namespace ClassProject {
 
         boost::unordered_map<NodeTriple, ComputedNode> computedTable;
 
-        std::string nodeToString(BDD_ID i, BDD_ID t, BDD_ID e);
-
     public:
 
         /**
