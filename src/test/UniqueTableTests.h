@@ -21,8 +21,8 @@ TEST_F(UniqueTableTest, InsertAndFindWorks)
     EXPECT_EQ(uniqueTable.findById(3)->id, 3);
     EXPECT_EQ(uniqueTable.findById(284)->id, 284);
 
-    EXPECT_EQ(uniqueTable.findByTriple(ClassProject::NodeTriple{0, 0, 0})->id, 3);
-    EXPECT_EQ(uniqueTable.findByTriple(ClassProject::NodeTriple{1, 1, 1})->id, 284);
+    EXPECT_EQ(uniqueTable.findByTripleAndComplemented(ClassProject::NodeTriple{0, 0, 0}, false)->id, 3);
+    EXPECT_EQ(uniqueTable.findByTripleAndComplemented(ClassProject::NodeTriple{1, 1, 1}, false)->id, 284);
 }
 
 TEST_F(UniqueTableTest, SizeWorks)

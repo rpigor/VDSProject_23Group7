@@ -3,6 +3,7 @@
 #include <vector>
 #include <stack>
 #include <utility>
+#include <iostream>
 
 using namespace ClassProject;
 
@@ -66,9 +67,8 @@ std::string Manager::nodeToString(BDD_ID i, BDD_ID t, BDD_ID e)
 
 Manager::Manager()
 {
-    NodeTriple falseTriple{FALSE_ID, FALSE_ID, FALSE_ID};
-    Node falseNode{FALSE_ID, falseTriple, "False"};
     NodeTriple trueTriple{TRUE_ID, TRUE_ID, TRUE_ID};
+    Node falseNode{FALSE_ID, trueTriple, true, "False"};
     Node trueNode{TRUE_ID, trueTriple, "True"};
 
     uniqueTable.insert(falseNode);
@@ -82,6 +82,7 @@ BDD_ID Manager::createVar(const std::string &label)
     Node varNode{varId, varNodeTriple, label};
 
     uniqueTable.insert(varNode);
+
     return varId;
 }
 
@@ -129,6 +130,28 @@ BDD_ID Manager::ite(BDD_ID i, BDD_ID t, BDD_ID e)
         return i;
     }
 
+    if ((t == FALSE_ID) && (e == TRUE_ID))
+    {
+        return neg(i);
+    }
+
+    bool shouldComplementResult = false;
+
+    auto iNode = uniqueTable.findById(i);
+    if (iNode->complemented) // ite(neg(i), t, e) = ite(i, e, t)
+    {
+        i = neg(i);
+        std::swap(t, e);
+    }
+
+    auto tNode = uniqueTable.findById(t);
+    if (tNode->complemented) // ite(i, neg(t), e) = neg(ite(i, t, neg(e)))
+    {
+        t = neg(t);
+        e = neg(e);
+        shouldComplementResult = true;
+    }
+
     NodeTriple iteTriple{i, t, e};
     auto computedTableResult = computedTable.find(iteTriple);
     if (computedTableResult != computedTable.end())
@@ -149,8 +172,17 @@ BDD_ID Manager::ite(BDD_ID i, BDD_ID t, BDD_ID e)
         return i1 < i2;
     });
 
-    BDD_ID rHigh = ite(coFactorTrue(i, xTopVar), coFactorTrue(t, xTopVar), coFactorTrue(e, xTopVar));
-    BDD_ID rLow = ite(coFactorFalse(i, xTopVar), coFactorFalse(t, xTopVar), coFactorFalse(e, xTopVar));
+    auto eNode = uniqueTable.findById(e);
+    BDD_ID iTrueCoFactor = coFactorTrue(i, xTopVar);
+    BDD_ID iFalseCoFactor = coFactorFalse(i, xTopVar);
+    BDD_ID tTrueCoFactor = coFactorTrue(t, xTopVar);
+    BDD_ID tFalseCoFactor = coFactorFalse(t, xTopVar);
+    BDD_ID eTrueCoFactor = coFactorTrue(e, xTopVar);
+    BDD_ID eFalseCoFactor = coFactorFalse(e, xTopVar);
+
+    BDD_ID rHigh = ite(iTrueCoFactor, tTrueCoFactor, eTrueCoFactor);
+    BDD_ID rLow = ite(iFalseCoFactor, tFalseCoFactor, eFalseCoFactor);
+
     if (rHigh == rLow)
     {
         return rHigh;
@@ -158,11 +190,11 @@ BDD_ID Manager::ite(BDD_ID i, BDD_ID t, BDD_ID e)
 
     BDD_ID rId;
     NodeTriple rTriple{xTopVar, rLow, rHigh};
-    auto uniqueTableResult = uniqueTable.findByTriple(rTriple);
+    auto uniqueTableResult = uniqueTable.findByTripleAndComplemented(rTriple, shouldComplementResult);
     if (uniqueTableResult == uniqueTable.end())
     {
         rId = uniqueTable.size();
-        Node rNode{rId, rTriple, nodeToString(xTopVar, rHigh, rLow)};
+        Node rNode{rId, rTriple, shouldComplementResult, nodeToString(xTopVar, rHigh, rLow)};
         uniqueTable.insert(rNode);
     }
     else
@@ -180,40 +212,54 @@ BDD_ID Manager::ite(BDD_ID i, BDD_ID t, BDD_ID e)
 
 BDD_ID Manager::coFactorTrue(BDD_ID function, BDD_ID var)
 {
-    if (isConstant(function) || isConstant(var) || topVar(function) > var)
+    if (isConstant(function) || isConstant(var))
     {
         return function;
     }
 
     auto nodeRef = uniqueTable.findById(function);
-    if (topVar(function) == var)
+    BDD_ID functionTopVarId = nodeRef->triple.topVariable;
+    if (functionTopVarId > var)
     {
-        return nodeRef->triple.high;
+        return function;
+    }
+
+    if (functionTopVarId == var)
+    {
+        return (nodeRef->complemented) ? neg(nodeRef->triple.high) : nodeRef->triple.high;
     }
 
     BDD_ID trueCoFactId = coFactorTrue(nodeRef->triple.high, var);
     BDD_ID falseCoFactId = coFactorTrue(nodeRef->triple.low, var);
 
-    return ite(topVar(function), trueCoFactId, falseCoFactId);
+    BDD_ID iteId = ite(functionTopVarId, trueCoFactId, falseCoFactId);
+    return (nodeRef->complemented) ? neg(iteId) : iteId;
 }
 
 BDD_ID Manager::coFactorFalse(BDD_ID function, BDD_ID var)
 {
-    if (isConstant(function) || isConstant(var) || topVar(function) > var)
+    if (isConstant(function) || isConstant(var))
     {
         return function;
     }
 
     auto nodeRef = uniqueTable.findById(function);
-    if (topVar(function) == var)
+    BDD_ID functionTopVarId = nodeRef->triple.topVariable;
+    if (functionTopVarId > var)
     {
-        return nodeRef->triple.low;
+        return function;
+    }
+
+    if (functionTopVarId == var)
+    {
+        return (nodeRef->complemented) ? neg(nodeRef->triple.low) : nodeRef->triple.low;
     }
 
     BDD_ID trueCoFactId = coFactorFalse(nodeRef->triple.high, var);
     BDD_ID falseCoFactId = coFactorFalse(nodeRef->triple.low, var);
 
-    return ite(topVar(function), trueCoFactId, falseCoFactId);
+    BDD_ID iteId = ite(functionTopVarId, trueCoFactId, falseCoFactId);
+    return (nodeRef->complemented) ? neg(iteId) : iteId;
 }
 
 BDD_ID Manager::coFactorTrue(BDD_ID function)
@@ -243,7 +289,22 @@ BDD_ID Manager::xor2(BDD_ID a, BDD_ID b)
 
 BDD_ID Manager::neg(BDD_ID a)
 {
-    return ite(a, FALSE_ID, TRUE_ID);
+    auto node = uniqueTable.findById(a);
+    auto negatedNodeRef = uniqueTable.findByTripleAndComplemented(node->triple, !(node->complemented));
+
+    BDD_ID negatedNodeId;
+    if (negatedNodeRef == uniqueTable.end())
+    {
+        negatedNodeId = uniqueTable.size();
+        Node negatedNode = Node(negatedNodeId, node->triple, !(node->complemented), "neg(" + node->label + ")");
+        uniqueTable.insert(negatedNode);
+    }
+    else
+    {
+        negatedNodeId = negatedNodeRef->id;
+    }
+
+    return negatedNodeId;
 }
 
 BDD_ID Manager::nand2(BDD_ID a, BDD_ID b)
@@ -307,4 +368,15 @@ void Manager::visualizeBDD(std::string filepath, BDD_ID &root)
 {
     GraphRenderer graphRend("G", root, uniqueTable);
     graphRend.renderGraph(filepath);
+}
+
+void Manager::debugUniqueTable()
+{
+    std::cout << "begin unique table" << std::endl;
+    std::cout << "\tID\tcompl?\ttriple\tlabel" << std::endl;
+    for (auto it = uniqueTable.cbegin(); it != uniqueTable.cend(); it++)
+    {
+        std::cout << "\t" << it->id << "\t" << it->complemented << "\t(" << it->triple.topVariable << "," << it->triple.high << "," << it->triple.low << ")\t" << it->label << std::endl;
+    }
+    std::cout << "end table" << std::endl;
 }

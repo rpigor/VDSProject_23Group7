@@ -4,6 +4,7 @@
 #include "ManagerInterface.h"
 #include "Node.h"
 #include <boost/multi_index_container.hpp>
+#include <boost/multi_index/composite_key.hpp>
 #include <boost/multi_index/hashed_index.hpp>
 #include <boost/multi_index/member.hpp>
 #include <boost/multi_index/tag.hpp>
@@ -21,7 +22,7 @@ namespace ClassProject {
 
         };
 
-        struct ByTriple {
+        struct ByTripleCompl {
 
         };
 
@@ -33,9 +34,12 @@ namespace ClassProject {
                     boost::multi_index::member<Node, BDD_ID, &Node::id>
                 >,
                 boost::multi_index::hashed_unique<
-                    boost::multi_index::tag<ByTriple>,
-                    boost::multi_index::member<Node, NodeTriple, &Node::triple>,
-                    NodeTripleHash
+                    boost::multi_index::tag<ByTripleCompl>,
+                    boost::multi_index::composite_key<
+                        Node,
+                        boost::multi_index::member<Node, NodeTriple, &Node::triple>,
+                        boost::multi_index::member<Node, bool, &Node::complemented>
+                    >
                 >
             >
         > unordered_bimap;
@@ -44,7 +48,7 @@ namespace ClassProject {
 
         unordered_bimap::index<ById>::type &tableById();
 
-        unordered_bimap::index<ByTriple>::type &tableByTriple();
+        unordered_bimap::index<ByTripleCompl>::type &tableByTripleCompl();
 
     public:
 
@@ -69,7 +73,7 @@ namespace ClassProject {
          * @param triple Triple of the node.
          * @return Constant iterator to node.
          */
-        unordered_bimap::const_iterator findByTriple(const NodeTriple &triple);
+        unordered_bimap::const_iterator findByTripleAndComplemented(const NodeTriple &triple, bool complemented);
 
         /**
          * @brief Gets the size of the table.

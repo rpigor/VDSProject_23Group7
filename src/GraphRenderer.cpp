@@ -57,6 +57,11 @@ Agedge_t *GraphRenderer::createEdgeIfAbsent(Agnode_t *firstNode, Agnode_t *secon
     return gEdge;
 }
 
+bool GraphRenderer::isLeaf(BDD_ID id) const
+{
+    return (id == TRUE_ID) || (id == FALSE_ID);
+}
+
 void GraphRenderer::fillGraph(BDD_ID function, UniqueTable &uniqueTable)
 {
     setProperty(graph, "dpi", "400");
@@ -68,19 +73,26 @@ void GraphRenderer::fillGraph(BDD_ID function, UniqueTable &uniqueTable)
 
     Agnode_t *rootNode = createNodeIfAbsent(topVarLabel);
 
-    setProperty(rootNode, "xlabel", functionNode->label);
+    if (functionNode->complemented)
+    {
+        Agnode_t *dummyGNode = createNodeIfAbsent(functionNode->label);
+        Agedge_t *dummyGEdge = createEdgeIfAbsent(dummyGNode, rootNode, "-1");
+
+        setProperty(dummyGNode, "color", "transparent");
+        setProperty(dummyGNode, "fillcolor", "transparent");
+        setProperty(dummyGEdge, "style", "dotted");
+    }
+    else
+    {
+        setProperty(rootNode, "xlabel", functionNode->label);
+    }
 
     Agnode_t *trueGNode = createNodeIfAbsent(uniqueTable.findById(TRUE_ID)->label);
-    Agnode_t *falseGNode = createNodeIfAbsent(uniqueTable.findById(FALSE_ID)->label);
 
     setProperty(trueGNode, "label", "1");
-    setProperty(falseGNode, "label", "0");
     setProperty(trueGNode, "shape", "square");
-    setProperty(falseGNode, "shape", "square");
     setProperty(trueGNode, "fillcolor", "#000000");
-    setProperty(falseGNode, "fillcolor", "#000000");
     setProperty(trueGNode, "fontcolor", "#ffffff");
-    setProperty(falseGNode, "fontcolor", "#ffffff");
 
     std::stack<BDD_ID> nodes;
     nodes.push(function);
@@ -94,8 +106,7 @@ void GraphRenderer::fillGraph(BDD_ID function, UniqueTable &uniqueTable)
 
         nodes.pop();
 
-        bool isLeaf = (topNode->id == TRUE_ID) || (topNode->id == FALSE_ID);
-        if (!isLeaf)
+        if (!isLeaf(topNode->id))
         {
             auto highNode = uniqueTable.findById(topNode->triple.high);
             BDD_ID topVarOfHighNode = highNode->triple.topVariable;
@@ -110,7 +121,25 @@ void GraphRenderer::fillGraph(BDD_ID function, UniqueTable &uniqueTable)
             Agedge_t *highGEdge = createEdgeIfAbsent(topGNode, highGNode, "high");
             Agedge_t *lowGEdge = createEdgeIfAbsent(topGNode, lowGNode, "low");
 
-            setProperty(lowGEdge, "style", "dotted");
+            /*
+            if (highNode->complemented)
+            {
+                setProperty(highGEdge, "style", "solid");
+            }
+            else
+            {
+                setProperty(highGEdge, "style", "bold");
+            }
+            */
+
+            if (lowNode->complemented)
+            {
+                setProperty(lowGEdge, "style", "dotted");
+            }
+            else
+            {
+                setProperty(lowGEdge, "style", "dashed");
+            }
 
             nodes.push(topNode->triple.high);
             nodes.push(topNode->triple.low);

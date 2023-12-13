@@ -28,16 +28,7 @@ namespace ClassProject {
 
     };
 
-    /**
-     * @brief The NodeTripleHash class represents the hash function of
-     * the NodeTriple class.
-     */
-    class NodeTripleHash {
-    public:
-
-        std::size_t operator()(const NodeTriple &triple) const;
-
-    };
+    std::size_t hash_value(const NodeTriple &triple);
 
     /**
      * @brief The ComputedNode class represents a node of the computed table.
@@ -61,6 +52,8 @@ namespace ClassProject {
 
         BDD_ID id;
 
+        bool complemented;
+
         NodeTriple triple;
 
         std::string label;
@@ -68,6 +61,12 @@ namespace ClassProject {
         Node(BDD_ID id, const NodeTriple &triple, const std::string &label);
 
         Node(BDD_ID id, BDD_ID topVariable, BDD_ID low, BDD_ID high, const std::string &label);
+
+        Node(BDD_ID id, const NodeTriple &triple, bool complemented, const std::string &label);
+
+        Node(BDD_ID id, BDD_ID topVariable, BDD_ID low, BDD_ID high, bool complemented, const std::string &label);
+
+        bool operator==(const Node &node) const;
 
     };
 

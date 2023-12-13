@@ -26,7 +26,7 @@ namespace ClassProject {
 
         UniqueTable uniqueTable;
 
-        boost::unordered_map<NodeTriple, ComputedNode, NodeTripleHash> computedTable;
+        boost::unordered_map<NodeTriple, ComputedNode> computedTable;
 
         std::string nodeToString(BDD_ID i, BDD_ID t, BDD_ID e);
 
@@ -235,6 +235,8 @@ namespace ClassProject {
          * @param root ID of the root node.
          */
         void visualizeBDD(std::string filepath, BDD_ID &root) override;
+
+        void debugUniqueTable();
 
     };
 

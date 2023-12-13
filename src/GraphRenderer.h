@@ -23,6 +23,8 @@ namespace ClassProject {
 
         Agedge_t *createEdgeIfAbsent(Agnode_t *firstNode, Agnode_t *secondNode, const std::string &nodeLabel);
 
+        bool isLeaf(BDD_ID id) const;
+
     public:
 
         GraphRenderer(const std::string &graphName);

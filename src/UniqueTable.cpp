@@ -1,4 +1,5 @@
 #include "UniqueTable.h"
+#include <tuple>
 
 using namespace ClassProject;
 
@@ -7,9 +8,9 @@ UniqueTable::unordered_bimap::index<UniqueTable::ById>::type &UniqueTable::table
     return table.get<UniqueTable::ById>();
 }
 
-UniqueTable::unordered_bimap::index<UniqueTable::ByTriple>::type &UniqueTable::tableByTriple()
+UniqueTable::unordered_bimap::index<UniqueTable::ByTripleCompl>::type &UniqueTable::tableByTripleCompl()
 {
-    return table.get<UniqueTable::ByTriple>();
+    return table.get<UniqueTable::ByTripleCompl>();
 }
 
 void UniqueTable::insert(const Node& node)
@@ -22,9 +23,9 @@ UniqueTable::unordered_bimap::const_iterator UniqueTable::findById(const BDD_ID 
     return table.iterator_to(*(tableById().find(id)));
 }
 
-UniqueTable::unordered_bimap::const_iterator UniqueTable::findByTriple(const NodeTriple &triple)
+UniqueTable::unordered_bimap::const_iterator UniqueTable::findByTripleAndComplemented(const NodeTriple &triple, bool complemented)
 {
-    return table.iterator_to(*(tableByTriple().find(triple)));
+    return table.iterator_to(*(tableByTripleCompl().find(std::make_tuple(triple, complemented))));
 }
 
 std::size_t UniqueTable::size() const
