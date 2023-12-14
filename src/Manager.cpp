@@ -125,23 +125,25 @@ BDD_ID Manager::ite(BDD_ID i, BDD_ID t, BDD_ID e)
     BDD_ID rHigh = ite(iTrueCoFactor, tTrueCoFactor, eTrueCoFactor);
     BDD_ID rLow = ite(iFalseCoFactor, tFalseCoFactor, eFalseCoFactor);
 
+    BDD_ID rId;
     if (rHigh == rLow)
     {
-        return rHigh;
-    }
-
-    BDD_ID rId;
-    NodeTriple rTriple{xTopVar, rLow, rHigh};
-    auto uniqueTableResult = uniqueTable.findByTripleAndComplemented(rTriple, shouldComplementResult);
-    if (uniqueTableResult == uniqueTable.end())
-    {
-        rId = uniqueTable.size();
-        Node rNode{rId, rTriple, shouldComplementResult, "n" + std::to_string(rId)};
-        uniqueTable.insert(rNode);
+        rId = shouldComplementResult ? neg(rHigh) : rHigh;
     }
     else
     {
-        rId = uniqueTableResult->id;
+        NodeTriple rTriple{xTopVar, rLow, rHigh};
+        auto uniqueTableResult = uniqueTable.findByTripleAndComplemented(rTriple, shouldComplementResult);
+        if (uniqueTableResult == uniqueTable.end())
+        {
+            rId = uniqueTable.size();
+            Node rNode{rId, rTriple, shouldComplementResult, "n" + std::to_string(rId)};
+            uniqueTable.insert(rNode);
+        }
+        else
+        {
+            rId = uniqueTableResult->id;
+        }
     }
 
     std::string compComment = "ite(" + std::to_string(i) + ", " + std::to_string(t) + ", " + std::to_string(e) + ")";
