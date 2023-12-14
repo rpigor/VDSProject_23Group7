@@ -146,10 +146,9 @@ BDD_ID Manager::ite(BDD_ID i, BDD_ID t, BDD_ID e)
         }
     }
 
-    std::string compComment = "ite(" + std::to_string(i) + ", " + std::to_string(t) + ", " + std::to_string(e) + ")";
     NodeTriple compTriple{i, t, e};
-    ComputedNode compNode{rId, compComment};
-    computedTable.insert(std::make_pair(compTriple, compNode));
+    ComputedNode compNode{rId};
+    computedTable.insert({compTriple, compNode});
 
     return rId;
 }

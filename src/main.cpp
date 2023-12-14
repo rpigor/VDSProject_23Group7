@@ -24,6 +24,8 @@ int main(int argc, char* argv[])
     BDD_ID andX2X3Id = manager.and2(x2VarId, x3VarId);
     BDD_ID orAllId = manager.or2(manager.or2(andNegsId, andX1X2Id), andX2X3Id);
 
+    manager.debugUniqueTable();
+
     std::string diagramFilename = "complemented_edges.png";
 
     // Reference diagram:

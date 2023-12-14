@@ -9,6 +9,11 @@ NodeTriple::NodeTriple(BDD_ID topVariable, BDD_ID low, BDD_ID high)
 
 }
 
+bool NodeTriple::operator==(const NodeTriple &triple) const
+{
+    return (this->topVariable == triple.topVariable) && (this->low == triple.low) && (this->high == triple.high);
+}
+
 std::size_t ClassProject::hash_value(const NodeTriple &triple)
 {
     std::size_t hash = 0;
@@ -18,13 +23,8 @@ std::size_t ClassProject::hash_value(const NodeTriple &triple)
     return hash;
 }
 
-bool NodeTriple::operator==(const NodeTriple &triple) const
-{
-    return (this->topVariable == triple.topVariable) && (this->low == triple.low) && (this->high == triple.high);
-}
-
-ComputedNode::ComputedNode(BDD_ID result, const std::string &comment)
-: result(result), comment(comment)
+ComputedNode::ComputedNode(BDD_ID result)
+: result(result)
 {
 
 }

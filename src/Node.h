@@ -38,9 +38,7 @@ namespace ClassProject {
 
         BDD_ID result;
 
-        std::string comment;
-
-        ComputedNode(BDD_ID result, const std::string &comment);
+        ComputedNode(BDD_ID result);
 
     };
 
