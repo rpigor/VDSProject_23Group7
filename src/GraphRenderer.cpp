@@ -29,13 +29,13 @@ void GraphRenderer::setProperty(T *ref, const std::string &name, const std::stri
     agsafeset(ref, const_cast<char*>(nameStr.data()), const_cast<char*>(valueStr.data()), const_cast<char*>(""));
 }
 
-Agnode_t *GraphRenderer::createNodeIfAbsent(const std::string &nodeLabel)
+Agnode_t *GraphRenderer::createNodeIfAbsent(Agraph_t *g, const std::string &nodeName, const std::string &nodeLabel)
 {
-    std::vector<char> labelStr(nodeLabel.c_str(), nodeLabel.c_str() + nodeLabel.size() + 1);
-    Agnode_t *gNode = agnode(graph, labelStr.data(), FALSE);
+    std::vector<char> nameStr(nodeName.c_str(), nodeName.c_str() + nodeName.size() + 1);
+    Agnode_t *gNode = agnode(g, nameStr.data(), FALSE);
     if (gNode == nullptr)
     {
-        gNode = agnode(graph, labelStr.data(), TRUE);
+        gNode = agnode(g, nameStr.data(), TRUE);
 
         setProperty(gNode, "label", nodeLabel);
         setProperty(gNode, "shape", "circle");
@@ -43,7 +43,16 @@ Agnode_t *GraphRenderer::createNodeIfAbsent(const std::string &nodeLabel)
         setProperty(gNode, "fillcolor", "#bedee8");
     }
     return gNode;
+}
 
+Agnode_t *GraphRenderer::createNodeIfAbsent(const std::string &nodeName, const std::string &nodeLabel)
+{
+    return createNodeIfAbsent(graph, nodeName, nodeLabel);
+}
+
+Agnode_t *GraphRenderer::createNodeIfAbsent(const std::string &nodeLabel)
+{
+    return createNodeIfAbsent(nodeLabel, nodeLabel);
 }
 
 Agedge_t *GraphRenderer::createEdgeIfAbsent(Agnode_t *firstNode, Agnode_t *secondNode, const std::string &nodeLabel)
@@ -57,9 +66,26 @@ Agedge_t *GraphRenderer::createEdgeIfAbsent(Agnode_t *firstNode, Agnode_t *secon
     return gEdge;
 }
 
+Agraph_t *GraphRenderer::createSubGraphIfAbsent(const std::string &subGraphName)
+{
+    std::vector<char> labelStr(subGraphName.c_str(), subGraphName.c_str() + subGraphName.size() + 1);
+    Agraph_t *subGraph = agsubg(graph, labelStr.data(), FALSE);
+    if (subGraph == nullptr)
+    {
+        subGraph = agsubg(graph, labelStr.data(), TRUE);
+        setProperty(subGraph, "rank", "same");
+    }
+    return subGraph;
+}
+
 bool GraphRenderer::isLeaf(BDD_ID id) const
 {
     return (id == TRUE_ID) || (id == FALSE_ID);
+}
+
+std::string GraphRenderer::nodeNameByTriple(const NodeTriple &triple)
+{
+    return std::to_string(triple.topVariable) + "," + std::to_string(triple.high) + "," + std::to_string(triple.low);
 }
 
 void GraphRenderer::fillGraph(BDD_ID function, UniqueTable &uniqueTable)
@@ -70,8 +96,9 @@ void GraphRenderer::fillGraph(BDD_ID function, UniqueTable &uniqueTable)
     auto functionNode = uniqueTable.findById(function);
     BDD_ID funcTopVar = functionNode->triple.topVariable;
     std::string topVarLabel = uniqueTable.findById(funcTopVar)->label;
-
-    Agnode_t *rootNode = createNodeIfAbsent(topVarLabel);
+    std::string rootNodeName = nodeNameByTriple(functionNode->triple);
+    Agraph_t *varSubGraph = createSubGraphIfAbsent(topVarLabel);
+    Agnode_t *rootNode = createNodeIfAbsent(varSubGraph, rootNodeName, topVarLabel);
 
     if (functionNode->complemented)
     {
@@ -87,7 +114,10 @@ void GraphRenderer::fillGraph(BDD_ID function, UniqueTable &uniqueTable)
         setProperty(rootNode, "xlabel", functionNode->label);
     }
 
-    Agnode_t *trueGNode = createNodeIfAbsent(uniqueTable.findById(TRUE_ID)->label);
+    auto trueNode = uniqueTable.findById(TRUE_ID);
+    std::string trueNodeName = nodeNameByTriple(trueNode->triple);
+    varSubGraph = createSubGraphIfAbsent(trueNode->label);
+    Agnode_t *trueGNode = createNodeIfAbsent(varSubGraph, trueNodeName, trueNode->label);
 
     setProperty(trueGNode, "label", "1");
     setProperty(trueGNode, "shape", "square");
@@ -101,8 +131,9 @@ void GraphRenderer::fillGraph(BDD_ID function, UniqueTable &uniqueTable)
         auto topNode = uniqueTable.findById(nodes.top());
         BDD_ID topVarOfTopNode = topNode->triple.topVariable;
         std::string topVarLabel = uniqueTable.findById(topVarOfTopNode)->label;
-
-        Agnode_t *topGNode = createNodeIfAbsent(topVarLabel);
+        std::string topGNodeName = nodeNameByTriple(topNode->triple);
+        varSubGraph = createSubGraphIfAbsent(topVarLabel);
+        Agnode_t *topGNode = createNodeIfAbsent(varSubGraph, topGNodeName, topVarLabel);
 
         nodes.pop();
 
@@ -111,26 +142,19 @@ void GraphRenderer::fillGraph(BDD_ID function, UniqueTable &uniqueTable)
             auto highNode = uniqueTable.findById(topNode->triple.high);
             BDD_ID topVarOfHighNode = highNode->triple.topVariable;
             std::string highTopVarLabel = uniqueTable.findById(topVarOfHighNode)->label;
+            varSubGraph = createSubGraphIfAbsent(highTopVarLabel);
+            std::string highGNodeName = nodeNameByTriple(highNode->triple);
+            Agnode_t *highGNode = createNodeIfAbsent(varSubGraph, highGNodeName, highTopVarLabel);
 
             auto lowNode = uniqueTable.findById(topNode->triple.low);
             BDD_ID topVarOfLowNode = lowNode->triple.topVariable;
             std::string lowTopVarLabel = uniqueTable.findById(topVarOfLowNode)->label;
+            varSubGraph = createSubGraphIfAbsent(lowTopVarLabel);
+            std::string lowGNodeName = nodeNameByTriple(lowNode->triple);
+            Agnode_t *lowGNode = createNodeIfAbsent(varSubGraph, lowGNodeName, lowTopVarLabel);
 
-            Agnode_t *highGNode = createNodeIfAbsent(highTopVarLabel);
-            Agnode_t *lowGNode = createNodeIfAbsent(lowTopVarLabel);
             Agedge_t *highGEdge = createEdgeIfAbsent(topGNode, highGNode, "high");
             Agedge_t *lowGEdge = createEdgeIfAbsent(topGNode, lowGNode, "low");
-
-            /*
-            if (highNode->complemented)
-            {
-                setProperty(highGEdge, "style", "solid");
-            }
-            else
-            {
-                setProperty(highGEdge, "style", "bold");
-            }
-            */
 
             if (lowNode->complemented)
             {

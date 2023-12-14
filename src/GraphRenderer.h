@@ -3,6 +3,7 @@
 
 #include "ManagerInterface.h"
 #include "UniqueTable.h"
+#include "Node.h"
 #include <graphviz/cgraph.h>
 #include <string>
 
@@ -19,11 +20,19 @@ namespace ClassProject {
         template <typename T>
         static void setProperty(T *ref, const std::string &name, const std::string &value);
 
+        Agnode_t *createNodeIfAbsent(Agraph_t *g, const std::string &nodeName, const std::string &nodeLabel);
+
+        Agnode_t *createNodeIfAbsent(const std::string &nodeName, const std::string &nodeLabel);
+
         Agnode_t *createNodeIfAbsent(const std::string &nodeLabel);
 
         Agedge_t *createEdgeIfAbsent(Agnode_t *firstNode, Agnode_t *secondNode, const std::string &nodeLabel);
 
+        Agraph_t *createSubGraphIfAbsent(const std::string &subGraphName);
+
         bool isLeaf(BDD_ID id) const;
+
+        std::string nodeNameByTriple(const NodeTriple &triple);
 
     public:
 
