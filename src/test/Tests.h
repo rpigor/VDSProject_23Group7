@@ -134,7 +134,12 @@ TEST_F(ManagerTest, IteWorks)
 
     ClassProject::BDD_ID andABId = manager.ite(aVarId, bVarId, ClassProject::FALSE_ID);
     ClassProject::BDD_ID bVarWithNodeMergingId = manager.ite(aVarId, andABId, orABId);
+    ClassProject::BDD_ID negBId = manager.neg(bVarId);
+    ClassProject::BDD_ID negBWithNodemergingId = manager.neg(bVarWithNodeMergingId);
     EXPECT_EQ(bVarWithNodeMergingId, bVarId);
+    EXPECT_EQ(negBWithNodemergingId, negBId);
+    EXPECT_EQ(manager.coFactorTrue(bVarWithNodeMergingId), ClassProject::TRUE_ID);
+    EXPECT_EQ(manager.coFactorTrue(negBWithNodemergingId), ClassProject::FALSE_ID);
 }
 
 TEST_F(ManagerTest, CoFactorTrueWorks)
@@ -157,7 +162,6 @@ TEST_F(ManagerTest, CoFactorTrueWorks)
     ClassProject::BDD_ID orABId = manager.ite(aVarId, ClassProject::TRUE_ID, bVarId);
     EXPECT_EQ(manager.coFactorTrue(orABId), ClassProject::TRUE_ID);
     EXPECT_EQ(manager.coFactorTrue(orABId, bVarId), ClassProject::TRUE_ID);
-
 }
 
 TEST_F(ManagerTest, CoFactorFalseWorks)
@@ -232,10 +236,12 @@ TEST_F(ManagerTest, NegWorks)
     ClassProject::BDD_ID aVarId = manager.createVar("a");
     ClassProject::BDD_ID negAId = manager.neg(aVarId);
     ClassProject::BDD_ID negNegAId = manager.neg(negAId);
+    ClassProject::BDD_ID iteNegAId = manager.ite(aVarId, ClassProject::FALSE_ID, ClassProject::TRUE_ID);
 
     EXPECT_EQ(manager.coFactorTrue(negAId), ClassProject::FALSE_ID);
     EXPECT_EQ(manager.coFactorFalse(negAId), ClassProject::TRUE_ID);
     EXPECT_EQ(aVarId, negNegAId);
+    EXPECT_EQ(negAId, iteNegAId);
 }
 
 TEST_F(ManagerTest, Nand2Works)
