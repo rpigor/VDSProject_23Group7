@@ -50,9 +50,9 @@ namespace ClassProject {
 
         BDD_ID id;
 
-        bool complemented;
-
         NodeTriple triple;
+
+        bool complemented;
 
         std::string label;
 

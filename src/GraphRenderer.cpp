@@ -153,7 +153,7 @@ void GraphRenderer::fillGraph(BDD_ID function, UniqueTable &uniqueTable)
             std::string lowGNodeName = nodeNameByTriple(lowNode->triple);
             Agnode_t *lowGNode = createNodeIfAbsent(varSubGraph, lowGNodeName, lowTopVarLabel);
 
-            Agedge_t *highGEdge = createEdgeIfAbsent(topGNode, highGNode, "high");
+            createEdgeIfAbsent(topGNode, highGNode, "high");
             Agedge_t *lowGEdge = createEdgeIfAbsent(topGNode, lowGNode, "low");
 
             if (lowNode->complemented)

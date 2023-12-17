@@ -114,7 +114,6 @@ BDD_ID Manager::ite(BDD_ID i, BDD_ID t, BDD_ID e)
         return i1 < i2;
     });
 
-    auto eNode = uniqueTable.findById(e);
     BDD_ID iTrueCoFactor = coFactorTrue(i, xTopVar);
     BDD_ID iFalseCoFactor = coFactorFalse(i, xTopVar);
     BDD_ID tTrueCoFactor = coFactorTrue(t, xTopVar);
