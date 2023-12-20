@@ -57,7 +57,7 @@ BDD_ID Manager::topVar(BDD_ID node)
 
 BDD_ID Manager::ite(BDD_ID i, BDD_ID t, BDD_ID e)
 {
-    if ((i == TRUE_ID) || (t == e))
+    if (i == TRUE_ID)
     {
         return t;
     }
@@ -65,6 +65,11 @@ BDD_ID Manager::ite(BDD_ID i, BDD_ID t, BDD_ID e)
     if (i == FALSE_ID)
     {
         return e;
+    }
+
+    if (t == e)
+    {
+        return t;
     }
 
     if ((t == TRUE_ID) && (e == FALSE_ID))
@@ -77,6 +82,16 @@ BDD_ID Manager::ite(BDD_ID i, BDD_ID t, BDD_ID e)
         return neg(i);
     }
 
+    NodeTriple iteTriple{i, t, e};
+    auto computedTableResult = computedTable.find(iteTriple);
+    if (computedTableResult != computedTable.end())
+    {
+        return computedTableResult->second.result;
+    }
+
+    BDD_ID oldI = i;
+    BDD_ID oldT = t;
+    BDD_ID oldE = e;
     bool shouldComplementResult = false;
 
     auto iNode = uniqueTable.findById(i);
@@ -92,13 +107,6 @@ BDD_ID Manager::ite(BDD_ID i, BDD_ID t, BDD_ID e)
         t = neg(t);
         e = neg(e);
         shouldComplementResult = true;
-    }
-
-    NodeTriple iteTriple{i, t, e};
-    auto computedTableResult = computedTable.find(iteTriple);
-    if (computedTableResult != computedTable.end())
-    {
-        return computedTableResult->second.result;
     }
 
     BDD_ID xTopVar = std::min({topVar(i), topVar(t), topVar(e)}, [&](const BDD_ID &i1, const BDD_ID &i2) {
@@ -145,7 +153,7 @@ BDD_ID Manager::ite(BDD_ID i, BDD_ID t, BDD_ID e)
         }
     }
 
-    NodeTriple compTriple{i, t, e};
+    NodeTriple compTriple{oldI, oldT, oldE};
     ComputedNode compNode{rId};
     computedTable.insert({compTriple, compNode});
 
