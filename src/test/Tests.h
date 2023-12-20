@@ -386,4 +386,19 @@ TEST_F(ManagerExampleTest, UniqueTableSizeWorks)
     EXPECT_EQ(manager.uniqueTableSize(), 12);
 }
 
+TEST_F(ManagerTest, ComplementedEdgesWork)
+{
+    ClassProject::BDD_ID aVarId = manager.createVar("a");
+    ClassProject::BDD_ID bVarId = manager.createVar("b");
+    ClassProject::BDD_ID negAId = manager.neg(aVarId);
+    ClassProject::BDD_ID negBId = manager.neg(bVarId);
+
+    ClassProject::BDD_ID orNegANegBId = manager.or2(negAId, negBId);
+    ClassProject::BDD_ID andABId = manager.and2(aVarId, bVarId);
+
+    EXPECT_NE(orNegANegBId, andABId);
+    EXPECT_EQ(manager.coFactorTrue(orNegANegBId, aVarId), negBId);
+    EXPECT_EQ(manager.coFactorFalse(negAId, aVarId), ClassProject::TRUE_ID);
+}
+
 #endif
