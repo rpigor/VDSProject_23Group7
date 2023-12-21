@@ -1,0 +1,48 @@
+name: Test and verify VDS Project
+
+on:
+  push:
+    branches: [ master ]
+  pull_request:
+    branches: [ master ]
+
+jobs:
+  test-and-verify:
+    name: Test and verify
+    runs-on: ubuntu-latest
+
+    steps:
+    - uses: actions/checkout@v4
+
+    - name: Install GTest
+      run: |
+        sudo apt-get install libgtest-dev
+        cd /usr/src/gtest
+        sudo cmake CMakeLists.txt
+        sudo make
+        sudo cp lib/*.a /usr/lib
+        sudo ln -s /usr/lib/libgtest.a /usr/local/lib/libgtest.a
+        sudo ln -s /usr/lib/libgtest_main.a /usr/local/lib/libgtest_main.a
+
+    - name: Install other dependencies
+      run: sudo apt-get install libboost-all-dev graphviz-dev
+
+    - name: Build VDSProject_23Group7
+      run: |
+        cmake -S . -B build
+        cmake --build build
+
+    - name: Test VDSProject_23Group7
+      run: ./build/src/test/VDSProject_test
+
+    - name: Verify VDSProject_23Group7 with ISCAS'85 c3540 benchmark
+      shell: bash
+      run: |
+        chmod +x ./src/verify/verify.sh
+        ./src/verify/verify.sh c3540 20s
+
+    - name: Verify VDSProject_23Group7 with ISCAS'85 c432 benchmark
+      shell: bash
+      run: |
+        chmod +x ./src/verify/verify.sh
+        ./src/verify/verify.sh c432 10s
