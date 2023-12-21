@@ -1,0 +1,20 @@
+digraph BDD {
+center = true;
+{ rank = same; { node [style=invis]; "T" };
+ { node [shape=box,fontsize=12]; "0"; }
+  { node [shape=box,fontsize=12]; "1"; }
+}
+{ rank=same; { node [shape=plaintext,fontname="Times Italic",fontsize=12] "50" };"1630920";}
+{ rank=same; { node [shape=plaintext,fontname="Times Italic",fontsize=12] "58" };"1619971";}
+{ rank=same; { node [shape=plaintext,fontname="Times Italic",fontsize=12] "68" };"1615143";}
+{ rank=same; { node [shape=plaintext,fontname="Times Italic",fontsize=12] "77" };"188";}
+edge [style = invis]; {"50" -> "58" -> "68" -> "77" -> "T"; }
+"188" -> "0" [style=solid,arrowsize=".75"];
+"188" -> "1" [style=dashed,arrowsize=".75"];
+"1615143" -> "0" [style=solid,arrowsize=".75"];
+"1615143" -> "188" [style=dashed,arrowsize=".75"];
+"1619971" -> "0" [style=solid,arrowsize=".75"];
+"1619971" -> "1615143" [style=dashed,arrowsize=".75"];
+"1630920" -> "0" [style=solid,arrowsize=".75"];
+"1630920" -> "1619971" [style=dashed,arrowsize=".75"];
+}

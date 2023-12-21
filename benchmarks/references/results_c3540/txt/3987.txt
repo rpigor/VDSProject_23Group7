@@ -1,0 +1,17 @@
+Variable Node: 887721 Top Var Id: 49 Top Var Name: 50 Low: 834379 High: 834380
+Variable Node: 834380 Top Var Id: 106 Top Var Name: 58 Low: 834377 High: 834378
+Variable Node: 834379 Top Var Id: 106 Top Var Name: 58 Low: 834378 High: 834377
+Variable Node: 834378 Top Var Id: 110 Top Var Name: 68 Low: 834375 High: 834376
+Variable Node: 834377 Top Var Id: 110 Top Var Name: 68 Low: 834376 High: 834375
+Variable Node: 834376 Top Var Id: 187 Top Var Name: 77 Low: 562979 High: 579452
+Variable Node: 834375 Top Var Id: 187 Top Var Name: 77 Low: 579452 High: 562979
+Variable Node: 579452 Top Var Id: 1085 Top Var Name: 116 Low: 551324 High: 551349
+Variable Node: 562979 Top Var Id: 1085 Top Var Name: 116 Low: 551349 High: 551324
+Variable Node: 551349 Top Var Id: 1099 Top Var Name: 107 Low: 190522 High: 190512
+Variable Node: 551324 Top Var Id: 1099 Top Var Name: 107 Low: 190512 High: 190522
+Variable Node: 190522 Top Var Id: 1112 Top Var Name: 97 Low: 1122 High: 1123
+Variable Node: 190512 Top Var Id: 1112 Top Var Name: 97 Low: 1123 High: 1122
+Variable Node: 1123 Top Var Id: 1122 Top Var Name: 87 Low: 1 High: 0
+Variable Node: 1122 Top Var Id: 1122 Top Var Name: 87 Low: 0 High: 1
+Terminal Node: 1
+Terminal Node: 0

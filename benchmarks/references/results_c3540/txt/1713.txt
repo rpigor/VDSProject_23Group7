@@ -1,0 +1,6 @@
+Variable Node: 1630920 Top Var Id: 49 Top Var Name: 50 Low: 1619971 High: 0
+Variable Node: 1619971 Top Var Id: 106 Top Var Name: 58 Low: 1615143 High: 0
+Variable Node: 1615143 Top Var Id: 110 Top Var Name: 68 Low: 188 High: 0
+Variable Node: 188 Top Var Id: 187 Top Var Name: 77 Low: 1 High: 0
+Terminal Node: 1
+Terminal Node: 0

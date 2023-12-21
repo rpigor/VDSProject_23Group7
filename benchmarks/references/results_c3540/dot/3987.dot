@@ -1,0 +1,46 @@
+digraph BDD {
+center = true;
+{ rank = same; { node [style=invis]; "T" };
+ { node [shape=box,fontsize=12]; "0"; }
+  { node [shape=box,fontsize=12]; "1"; }
+}
+{ rank=same; { node [shape=plaintext,fontname="Times Italic",fontsize=12] "50" };"887721";}
+{ rank=same; { node [shape=plaintext,fontname="Times Italic",fontsize=12] "58" };"834379";"834380";}
+{ rank=same; { node [shape=plaintext,fontname="Times Italic",fontsize=12] "68" };"834377";"834378";}
+{ rank=same; { node [shape=plaintext,fontname="Times Italic",fontsize=12] "77" };"834375";"834376";}
+{ rank=same; { node [shape=plaintext,fontname="Times Italic",fontsize=12] "116" };"562979";"579452";}
+{ rank=same; { node [shape=plaintext,fontname="Times Italic",fontsize=12] "107" };"551324";"551349";}
+{ rank=same; { node [shape=plaintext,fontname="Times Italic",fontsize=12] "97" };"190512";"190522";}
+{ rank=same; { node [shape=plaintext,fontname="Times Italic",fontsize=12] "87" };"1122";"1123";}
+edge [style = invis]; {"50" -> "58" -> "68" -> "77" -> "116" -> "107" -> "97" -> "87" -> "T"; }
+"1122" -> "1" [style=solid,arrowsize=".75"];
+"1122" -> "0" [style=dashed,arrowsize=".75"];
+"1123" -> "0" [style=solid,arrowsize=".75"];
+"1123" -> "1" [style=dashed,arrowsize=".75"];
+"190512" -> "1122" [style=solid,arrowsize=".75"];
+"190512" -> "1123" [style=dashed,arrowsize=".75"];
+"190522" -> "1123" [style=solid,arrowsize=".75"];
+"190522" -> "1122" [style=dashed,arrowsize=".75"];
+"551324" -> "190522" [style=solid,arrowsize=".75"];
+"551324" -> "190512" [style=dashed,arrowsize=".75"];
+"551349" -> "190512" [style=solid,arrowsize=".75"];
+"551349" -> "190522" [style=dashed,arrowsize=".75"];
+"562979" -> "551324" [style=solid,arrowsize=".75"];
+"562979" -> "551349" [style=dashed,arrowsize=".75"];
+"579452" -> "551349" [style=solid,arrowsize=".75"];
+"579452" -> "551324" [style=dashed,arrowsize=".75"];
+"834375" -> "562979" [style=solid,arrowsize=".75"];
+"834375" -> "579452" [style=dashed,arrowsize=".75"];
+"834376" -> "579452" [style=solid,arrowsize=".75"];
+"834376" -> "562979" [style=dashed,arrowsize=".75"];
+"834377" -> "834375" [style=solid,arrowsize=".75"];
+"834377" -> "834376" [style=dashed,arrowsize=".75"];
+"834378" -> "834376" [style=solid,arrowsize=".75"];
+"834378" -> "834375" [style=dashed,arrowsize=".75"];
+"834379" -> "834377" [style=solid,arrowsize=".75"];
+"834379" -> "834378" [style=dashed,arrowsize=".75"];
+"834380" -> "834378" [style=solid,arrowsize=".75"];
+"834380" -> "834377" [style=dashed,arrowsize=".75"];
+"887721" -> "834380" [style=solid,arrowsize=".75"];
+"887721" -> "834379" [style=dashed,arrowsize=".75"];
+}

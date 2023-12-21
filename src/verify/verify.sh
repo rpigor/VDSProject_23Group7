@@ -28,14 +28,14 @@ echo "[INFO] Running a total of $total_files verifications."
 for file in ${files[*]} ; do
     filename=$(echo "${file##*/}")
     echo -n "[$i/$total_files] Verifying equivalence of $filename circuit... "
-    if ! [[ -f "../results/results_$circuit/txt/$filename" ]]; then
+    if ! [[ -f "../benchmarks/references/results_$circuit/txt/$filename" ]]; then
         echo "No reference file."
         echo "[WARN] Aborting subsequent verifications due to incorrect reference files."
         break
     fi
 
     time_start=$(date +%s%3N)
-    result=$(timeout $timeout_time ./src/verify/VDSProject_verify results_$circuit/txt/$filename ../results/results_$circuit/txt/$filename || echo "Timeout.")
+    result=$(timeout $timeout_time ./src/verify/VDSProject_verify results_$circuit/txt/$filename ../benchmarks/references/results_$circuit/txt/$filename || echo "Timeout.")
     time_end=$(date +%s%3N)
     time_ms=$(( $time_end - $time_start ))
 

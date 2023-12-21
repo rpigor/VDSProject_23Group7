@@ -1,0 +1,62 @@
+digraph BDD {
+center = true;
+{ rank = same; { node [style=invis]; "T" };
+ { node [shape=box,fontsize=12]; "0"; }
+  { node [shape=box,fontsize=12]; "1"; }
+}
+{ rank=same; { node [shape=plaintext,fontname="Times Italic",fontsize=12] "108" };"90";}
+{ rank=same; { node [shape=plaintext,fontname="Times Italic",fontsize=12] "102" };"89";}
+{ rank=same; { node [shape=plaintext,fontname="Times Italic",fontsize=12] "95" };"86";}
+{ rank=same; { node [shape=plaintext,fontname="Times Italic",fontsize=12] "89" };"85";}
+{ rank=same; { node [shape=plaintext,fontname="Times Italic",fontsize=12] "82" };"81";}
+{ rank=same; { node [shape=plaintext,fontname="Times Italic",fontsize=12] "76" };"80";}
+{ rank=same; { node [shape=plaintext,fontname="Times Italic",fontsize=12] "69" };"76";}
+{ rank=same; { node [shape=plaintext,fontname="Times Italic",fontsize=12] "63" };"75";}
+{ rank=same; { node [shape=plaintext,fontname="Times Italic",fontsize=12] "56" };"71";}
+{ rank=same; { node [shape=plaintext,fontname="Times Italic",fontsize=12] "50" };"70";}
+{ rank=same; { node [shape=plaintext,fontname="Times Italic",fontsize=12] "43" };"66";}
+{ rank=same; { node [shape=plaintext,fontname="Times Italic",fontsize=12] "37" };"65";}
+{ rank=same; { node [shape=plaintext,fontname="Times Italic",fontsize=12] "30" };"61";}
+{ rank=same; { node [shape=plaintext,fontname="Times Italic",fontsize=12] "24" };"60";}
+{ rank=same; { node [shape=plaintext,fontname="Times Italic",fontsize=12] "17" };"56";}
+{ rank=same; { node [shape=plaintext,fontname="Times Italic",fontsize=12] "11" };"55";}
+{ rank=same; { node [shape=plaintext,fontname="Times Italic",fontsize=12] "4" };"51";}
+{ rank=same; { node [shape=plaintext,fontname="Times Italic",fontsize=12] "1" };"47";}
+edge [style = invis]; {"108" -> "102" -> "95" -> "89" -> "82" -> "76" -> "69" -> "63" -> "56" -> "50" -> "43" -> "37" -> "30" -> "24" -> "17" -> "11" -> "4" -> "1" -> "T"; }
+"47" -> "0" [style=solid,arrowsize=".75"];
+"47" -> "1" [style=dashed,arrowsize=".75"];
+"51" -> "47" [style=solid,arrowsize=".75"];
+"51" -> "0" [style=dashed,arrowsize=".75"];
+"55" -> "51" [style=solid,arrowsize=".75"];
+"55" -> "1" [style=dashed,arrowsize=".75"];
+"56" -> "55" [style=solid,arrowsize=".75"];
+"56" -> "51" [style=dashed,arrowsize=".75"];
+"60" -> "56" [style=solid,arrowsize=".75"];
+"60" -> "1" [style=dashed,arrowsize=".75"];
+"61" -> "60" [style=solid,arrowsize=".75"];
+"61" -> "56" [style=dashed,arrowsize=".75"];
+"65" -> "61" [style=solid,arrowsize=".75"];
+"65" -> "1" [style=dashed,arrowsize=".75"];
+"66" -> "65" [style=solid,arrowsize=".75"];
+"66" -> "61" [style=dashed,arrowsize=".75"];
+"70" -> "66" [style=solid,arrowsize=".75"];
+"70" -> "1" [style=dashed,arrowsize=".75"];
+"71" -> "70" [style=solid,arrowsize=".75"];
+"71" -> "66" [style=dashed,arrowsize=".75"];
+"75" -> "71" [style=solid,arrowsize=".75"];
+"75" -> "1" [style=dashed,arrowsize=".75"];
+"76" -> "75" [style=solid,arrowsize=".75"];
+"76" -> "71" [style=dashed,arrowsize=".75"];
+"80" -> "76" [style=solid,arrowsize=".75"];
+"80" -> "1" [style=dashed,arrowsize=".75"];
+"81" -> "80" [style=solid,arrowsize=".75"];
+"81" -> "76" [style=dashed,arrowsize=".75"];
+"85" -> "81" [style=solid,arrowsize=".75"];
+"85" -> "1" [style=dashed,arrowsize=".75"];
+"86" -> "85" [style=solid,arrowsize=".75"];
+"86" -> "81" [style=dashed,arrowsize=".75"];
+"89" -> "86" [style=solid,arrowsize=".75"];
+"89" -> "1" [style=dashed,arrowsize=".75"];
+"90" -> "89" [style=solid,arrowsize=".75"];
+"90" -> "86" [style=dashed,arrowsize=".75"];
+}
