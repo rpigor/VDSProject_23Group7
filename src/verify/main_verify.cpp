@@ -40,8 +40,9 @@ int main(int argc, char* argv[])
 		std::cout << "Must specify a filename!" << std::endl;
 		return -1;
 	}
-	
+
 	uniqueTable BDD1, BDD2;
+	int BDD1_root, BDD2_root;
 
 	std::string BDD1_file = argv[1];
 	std::string BDD2_file = argv[2];
@@ -61,11 +62,23 @@ int main(int argc, char* argv[])
 	std::string var_name;
 	int id, top_var;
 
+	bool root = false;
+
 	while(!BDD1_if.eof())
 	{
-		node n;			
+		node n;
 		temp.clear();
 		std::getline(BDD1_if, temp,'\n');
+
+		if(!root) {
+			ss.clear();
+			ss.str(temp);
+			ss>>temp>>temp>>id>>temp>>temp>>temp>>top_var>>temp>>temp>>temp>>n.var_name>>temp>>n.low>>temp>>n.high;
+			BDD1_root = id;
+			BDD1.insert(std::pair<int,node>(id,n));
+			root = true;
+		}
+
 
 		if(temp.find("Terminal Node: 1") != std::string::npos)
 		{
@@ -91,11 +104,22 @@ int main(int argc, char* argv[])
 		}
 	}
 
+	root = false;
+
 	while(!BDD2_if.eof())
 	{
-		node n;			
+		node n;
 		temp.clear();
 		std::getline(BDD2_if, temp,'\n');
+
+		if(!root) {
+			ss.clear();
+			ss.str(temp);
+			ss>>temp>>temp>>id>>temp>>temp>>temp>>top_var>>temp>>temp>>temp>>n.var_name>>temp>>n.low>>temp>>n.high;
+			BDD2_root = id;
+			BDD2.insert(std::pair<int,node>(id,n));
+			root = true;
+		}
 
 		if(temp.find("Terminal Node: 1") != std::string::npos)
 		{
@@ -121,7 +145,7 @@ int main(int argc, char* argv[])
 		}
 	}
 
-	if( isEquivalent(BDD1, BDD2, BDD1.rbegin()->first, BDD2.rbegin()->first) )
+	if( isEquivalent(BDD1, BDD2, BDD1_root, BDD2_root) )
 		std::cout<<"Equivalent!"<<std::endl;
 	else
 		std::cout<<"Not Equivalent!"<<std::endl;

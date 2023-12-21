@@ -232,7 +232,7 @@ void CircuitToBDD::PrintBDD(const std::set<label_t> &output_labels) {
 
             output_nodes.clear();
             output_vars.clear();
-            bdd_manager->findNodes(output_id_it->second, output_nodes);
+            findNodes(output_id_it->second, output_nodes);
             bdd_manager->findVars(output_id_it->second, output_vars);
 
             dumpBddText(bdd_out_txt_file);
@@ -248,17 +248,23 @@ void CircuitToBDD::PrintBDD(const std::set<label_t> &output_labels) {
 }
 
 void CircuitToBDD::dumpBddText(std::ostream &out) {
+    std::set<std::pair<ClassProject::BDD_ID, ClassProject::BDD_ID>> top_var_node_pairs;
+
     for (auto it = output_nodes.rbegin(); it != output_nodes.rend(); ++it) {
-        if (bdd_manager->isConstant(*it)) {
-            out << "Terminal Node: " << (*it) << "\n";
-        } else {
-            out << "Variable Node: " << (*it)
-                << " Top Var Id: " << bdd_manager->topVar(*it)
-                << " Top Var Name: " << bdd_manager->getTopVarName(bdd_manager->topVar(*it))
-                << " Low: " << bdd_manager->coFactorFalse(*it)
-                << " High: " << bdd_manager->coFactorTrue(*it) << "\n";
+        top_var_node_pairs.insert(std::make_pair(bdd_manager->topVar(*it), *it));
+    }
+    for (const auto& pair : top_var_node_pairs) {
+        auto node = pair.second;
+        if (!bdd_manager->isConstant(node)) {
+                out << "Variable Node: " << node
+                    << " Top Var Id: " << bdd_manager->topVar(node)
+                    << " Top Var Name: " << bdd_manager->getTopVarName(bdd_manager->topVar(node))
+                    << " Low: " << bdd_manager->coFactorFalse(node)
+                    << " High: " << bdd_manager->coFactorTrue(node) << "\n";
         }
     }
+    out << "Terminal Node: 1"  << "\n";
+    out << "Terminal Node: 0"  << "\n";
 }
 
 void CircuitToBDD::dumpBddDot(std::ostream &out) {
@@ -291,6 +297,13 @@ void CircuitToBDD::dumpBddDot(std::ostream &out) {
         }
     }
     out << "}\n";
+}
+
+void CircuitToBDD::findNodes(const ClassProject::BDD_ID &root, std::set<ClassProject::BDD_ID> &nodes_of_root) {
+    if (nodes_of_root.insert(root).second) {
+        findNodes(bdd_manager->coFactorTrue(root), nodes_of_root);
+        findNodes(bdd_manager->coFactorFalse(root), nodes_of_root);
+    }
 }
 
 

@@ -126,4 +126,13 @@ private:
     void dumpBddText(std::ostream &out);
 
     void dumpBddDot(std::ostream &out);
+
+    /**
+     * \brief Finds all nodes of the root node with coFactoring to flip possibly complemented edges
+     * @param root is the BDD_ID of the function
+     * @param nodes_of_root set to store the nodes in
+     */
+    void findNodes(const ClassProject::BDD_ID &root, std::set<ClassProject::BDD_ID> &nodes_of_root);
+
+
 };   
