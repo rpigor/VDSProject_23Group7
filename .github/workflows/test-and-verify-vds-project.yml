@@ -39,10 +39,10 @@ jobs:
       shell: bash
       run: |
         chmod +x ./src/verify/verify.sh
-        ./src/verify/verify.sh c3540 20s
+        ./src/verify/verify.sh -c c3540 -r 10.0 -m 1000000 -t 20s
 
     - name: Verify VDSProject_23Group7 with ISCAS'85 c432 benchmark
       shell: bash
       run: |
         chmod +x ./src/verify/verify.sh
-        ./src/verify/verify.sh c432 10s
+        ./src/verify/verify.sh -c c432 -r 1.0 -m 100000 -t 10s
