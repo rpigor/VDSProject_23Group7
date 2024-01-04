@@ -30,8 +30,8 @@ jobs:
     - name: Install Boost 1.84.0 library
       run: |
         wget https://boostorg.jfrog.io/artifactory/main/release/1.84.0/source/boost_1_84_0.tar.bz2
-        tar --bzip2 -xf boost_*.tar.bz2
-        cd boost_*
+        tar --bzip2 -xf boost_1_84_0.tar.bz2
+        cd boost_1_84_0
         ./bootstrap.sh
         sudo ./b2 install
 
