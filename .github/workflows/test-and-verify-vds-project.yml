@@ -14,7 +14,7 @@ jobs:
     steps:
     - uses: actions/checkout@v4
 
-    - name: Install GTest
+    - name: Install GTest library
       run: |
         sudo apt-get install libgtest-dev
         cd /usr/src/gtest
@@ -24,8 +24,16 @@ jobs:
         sudo ln -s /usr/lib/libgtest.a /usr/local/lib/libgtest.a
         sudo ln -s /usr/lib/libgtest_main.a /usr/local/lib/libgtest_main.a
 
-    - name: Install other dependencies
-      run: sudo apt-get install libboost-all-dev graphviz-dev
+    - name: Install Graphviz library
+      run: sudo apt-get install graphviz-dev
+
+    - name: Install Boost 1.84.0 library
+      run: |
+        wget https://boostorg.jfrog.io/artifactory/main/release/1.84.0/source/boost_1_84_0.tar.bz2
+        tar --bzip2 -xf boost_*.tar.bz2
+        cd boost_*
+        ./bootstrap.sh
+        sudo ./b2 install
 
     - name: Build VDSProject_23Group7
       run: |
