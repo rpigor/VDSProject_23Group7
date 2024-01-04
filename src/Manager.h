@@ -8,7 +8,7 @@
 #include "ManagerInterface.h"
 #include "UniqueTable.h"
 #include "Node.h"
-#include <boost/unordered_map.hpp>
+#include <boost/unordered/unordered_flat_map.hpp>
 #include <string>
 #include <set>
 
@@ -26,7 +26,7 @@ namespace ClassProject {
 
         UniqueTable uniqueTable;
 
-        boost::unordered_map<NodeTriple, ComputedNode> computedTable;
+        boost::unordered_flat_map<NodeTriple, ComputedNode> computedTable;
 
     public:
 

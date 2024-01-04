@@ -44,6 +44,10 @@ namespace ClassProject {
             >
         > unordered_bimap;
 
+        typedef unordered_bimap::iterator unique_table_iterator;
+
+        typedef unordered_bimap::const_iterator unique_table_const_iterator;
+
         unordered_bimap table;
 
         unordered_bimap::index<ById>::type &tableById();
@@ -65,7 +69,7 @@ namespace ClassProject {
          * @param id ID of the node.
          * @return Constant iterator to node.
          */
-        unordered_bimap::const_iterator findById(const BDD_ID &id);
+        unique_table_const_iterator findById(const BDD_ID &id);
 
         /**
          * @brief Finds a node by its triple.
@@ -73,7 +77,7 @@ namespace ClassProject {
          * @param triple Triple of the node.
          * @return Constant iterator to node.
          */
-        unordered_bimap::const_iterator findByTripleAndComplemented(const NodeTriple &triple, bool complemented);
+        unique_table_const_iterator findByTripleAndComplemented(const NodeTriple &triple, bool complemented);
 
         /**
          * @brief Gets the size of the table.
@@ -87,28 +91,28 @@ namespace ClassProject {
          *
          * @return Iterator to the first node of the table.
          */
-        unordered_bimap::iterator begin() const;
+        unique_table_iterator begin() const;
 
         /**
          * @brief Gets iterator to the end of the table.
          *
          * @return Iterator to the end of the table.
          */
-        unordered_bimap::iterator end() const;
+        unique_table_iterator end() const;
 
         /**
          * @brief Gets constant iterator to the first node of the table.
          *
          * @return Constant iterator to the first node of the table.
          */
-        unordered_bimap::const_iterator cbegin() const;
+        unique_table_const_iterator cbegin() const;
 
         /**
          * @brief Gets constant iterator to the end of the table.
          *
          * @return Constant iterator to the end of the table.
          */
-        unordered_bimap::const_iterator cend() const;
+        unique_table_const_iterator cend() const;
 
     };
 
