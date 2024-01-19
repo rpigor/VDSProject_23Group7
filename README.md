@@ -1,22 +1,6 @@
 <div id="top"></div>
-<!--
-*** Thanks for checking out the Best-README-Template. If you have a suggestion
-*** that would make this better, please fork the repo and create a pull request
-*** or simply open an issue with the tag "enhancement".
-*** Don't forget to give the project a star!
-*** Thanks again! Now go create something AMAZING! :D
--->
-
-
 
 <!-- PROJECT SHIELDS -->
-<!--
-*** I'm using markdown "reference style" links for readability.
-*** Reference links are enclosed in brackets [ ] instead of parentheses ( ).
-*** See the bottom of this document for the declaration of the reference variables
-*** for contributors-url, forks-url, etc. This is an optional, concise syntax you may use.
-*** https://www.markdownguide.org/basic-syntax/#reference-style-links
--->
 [![Contributors][contributors-shield]][contributors-url]
 [![Stargazers][stars-shield]][stars-url]
 [![Issues][issues-shield]][issues-url]
@@ -24,7 +8,6 @@
 [![MIT License][license-shield]][license-url]
 [![LinkedIn][linkedin-shield]][linkedin-url]
 -->
-
 
 <!-- PROJECT LOGO -->
 <br />
@@ -48,10 +31,8 @@
   </p>
 </div>
 
-
 <br />
 <br />
-
 
 <!-- TABLE OF CONTENTS -->
 <details>
@@ -63,7 +44,7 @@
     <li>
       <a href="#getting-started">Getting Started</a>
       <ul>
-        <li><a href="#prerequisites">Prerequisites</a></li>
+        <li><a href="#dependencies">Dependencies</a></li>
         <li><a href="#installation">Installation</a></li>
       </ul>
     </li>
@@ -73,8 +54,6 @@
   </ol>
 </details>
 
-
-
 <!-- ABOUT THE PROJECT -->
 ## About The Project
 In the course of this Lab assignment, students are going to implement a minimal BDD package in C++. This package implements the fundamental manipulation methods for ROBDDs as they were introduced in the lecture *Verification of Digital Systems* by Prof. Kunz. The package will be implemented using the Test Driven Development (TDD) paradigm presented by Dr. Wedler.
@@ -82,10 +61,10 @@ In the course of this Lab assignment, students are going to implement a minimal 
 The project is split into three parts.
 <p align="right">(<a href="#top">back to top</a>)</p>
 
-#### Part1:
+#### Part 1:
 Implementation of the basic functionality of the BDD package using the TDD methodology. This is the biggest part of the project.
 
-Main tasks in this part:
+Tasks in this part:
 * Set up and maintain a Git repository
 * Use CMake as a build system of the project
 * Verify the code using GTest
@@ -93,116 +72,69 @@ Main tasks in this part:
 * Use Doxygen (or a similar tool) to generate documentation for the API. _(Optional)_
 <p align="right">(<a href="#top">back to top</a>)</p>
 
-#### Part2:
+#### Part 2:
 Improvement of the performance of the implementation via provided benchmarks.
 
-Main tasks in this part:
+Tasks in this part:
 * Learning how to identify performance bottlenecks within the code.
 * Analyzing benchmark results.
 * How to overcome bottlenecks.
 <p align="right">(<a href="#top">back to top</a>)</p>
 
-#### Part3:
+#### Part 3:
 Extending the existing implementation by a practical application of BDD. Using BDDs, it is possible to symbolically represent a state-space. This representation allows to check quickly, whether a specific state is within the reachable state space or not.
 
-<!--
-[![Product Name Screen Shot][product-screenshot]](https://example.com)
-
-There are many great README templates available on GitHub; however, I didn't find one that really suited my needs so I created this enhanced one. I want to create a README template so amazing that it'll be the last one you ever need -- I think this is it.
-
-Here's why:
-* Your time should be focused on creating something amazing. A project that solves a problem and helps others
-* You shouldn't be doing the same tasks over and over like creating a README from scratch
-* You should implement DRY principles to the rest of your life :smile:
-
-Of course, no one template will serve all projects since your needs may be different. So I'll be adding more in the near future. You may also suggest changes by forking this repo and creating a pull request or opening an issue. Thanks to all the people have contributed to expanding this template!
-
-Use the `BLANK_README.md` to get started.
--->
 <p align="right">(<a href="#top">back to top</a>)</p>
-
-
-
-
-
-
-
 
 <!-- GETTING STARTED -->
 ## Getting Started
-Fork this repository and follow the instructions given in doc/ to complete the project.
-<!--
-This is an example of how you may give instructions on setting up your project locally.
-To get a local copy up and running follow these simple example steps.
--->
-### Prerequisites
-List of Ubuntu packages required to complete the project:
+Fork this repository and follow the instructions given in `doc` to complete the project.
 
-* git-all
-* libboost-all-dev
-* graphviz-dev
-* build-essential
+### Dependencies
+List of dependencies required to compile the project:
 
+* Boost 1.81 or higher (`libboost-all-dev`)
+* Graphviz (`graphviz-dev`)
+* GoogleTest (`libgtest-dev`)
+* Build tools (`build-essential` and `cmake`)
 
-_No guarantee that this list is complete (Add other packages to the README)_
-<!--
-This is an example of how to list things you need to use the software and how to install them.
-* npm
-  ```sh
-  npm install npm@latest -g
-  ```
--->
+Be aware that this project uses `boost::unordered_flat_map` and thus requires Boost 1.81 or higher, which is not currently available in Ubuntu's official repository. If you don't have access to this version of the library, you can use `boost::unordered_map` with minor adjustments.
+
 <p align="right">(<a href="#top">back to top</a>)</p>
 
 ### Installation
-1. Clone the repo
+1. Install the dependencies
+
+2. Clone the repo
    ```sh
    git clone https://github.com/rpigor/VDSProject_23Group7
    ```
 **Installation with CLion**
 
-CLion comes with CMake. 
-2. Open CLion and open rpigor/CMakeLists.txt as a project.
-3. Select your target and build the project.
-   
+CLion comes with CMake.
+
+3. Open CLion and open VDSProject_23Group7/CMakeLists.txt as a project
+
+4. Select your target and build the project
+
 **Installation without CLion**
 
-
-2. Navigate to the project folder and create a build directory
+3. Navigate to the project folder
     ```sh
-    cd VDSProject_23Group7 && mkdir build
+    cd VDSProject_23Group7
     ```
-3. Navigate to the build folder and invoke CMake
+4. Invoke CMake to create the build directory and generate makefiles
     ```sh
-    cd build && cmake ../
+    cmake -S . -B build
     ```
-4. Invoke make
+5. Invoke CMake to build the project
     ```sh
-    make
-    ```   
-<!--
-_Below is an example of how you can instruct your audience on installing and setting up your app. This template doesn't rely on any external dependencies or services._
+    cmake --build build
+    ```
 
-1. Get a free API Key at [https://example.com](https://example.com)
-2. Clone the repo
-   ```sh
-   git clone https://github.com/your_username_/Project-Name.git
-   ```
-3. Install NPM packages
-   ```sh
-   npm install
-   ```
-4. Enter your API in `config.js`
-   ```js
-   const API_KEY = 'ENTER YOUR API';
-   ```
--->
 <p align="right">(<a href="#top">back to top</a>)</p>
 
-
-
-
-<!-- ROADMAP -->
+<!-- ROADMAP
 ## Roadmap
 #### Part-1
 - [ ] TODO
@@ -218,6 +150,7 @@ _Below is an example of how you can instruct your audience on installing and set
 - [ ] TODO
 - [X] DONE
 <p align="right">(<a href="#top">back to top</a>)</p>
+-->
 
 <!-- CONTACT -->
 ## Contact
@@ -225,14 +158,13 @@ _Below is an example of how you can instruct your audience on installing and set
 <!-- Your Name - [@your_twitter](https://twitter.com/your_username) - email@example.com -->
 Lucas Deutschmann & Philipp Schmitz - eit-vds-cp@rptu.de
 
+Igor Reis - xaj60vom@rptu.de
+
 <p align="right">(<a href="#top">back to top</a>)</p>
-
-
 
 <!-- ACKNOWLEDGMENTS -->
 ## Acknowledgments
 Thank you Veli Durmuşcan, Shreya Vithal Kulhalli and Osama Omar Youssif Ayoub for the work on this README.md.
-
 
 You might find helpful links below.
 
@@ -256,7 +188,6 @@ You might find helpful links below.
 
 <p align="right">(<a href="#top">back to top</a>)</p>
 
-
 <!-- MARKDOWN LINKS & IMAGES -->
 <!-- https://www.markdownguide.org/basic-syntax/#reference-style-links -->
 [contributors-shield]: https://img.shields.io/github/contributors/rpigor/VDSProject_23Group7.svg?style=for-the-badge
@@ -272,5 +203,5 @@ You might find helpful links below.
 [license-url]: https://github.com/othneildrew/Best-README-Template/blob/master/LICENSE.txt
 [linkedin-shield]: https://img.shields.io/badge/-LinkedIn-black.svg?style=for-the-badge&logo=linkedin&colorB=555
 [linkedin-url]: https://linkedin.com/in/othneildrew
--->
 [product-screenshot]: images/screenshot.png
+-->
