@@ -1,5 +1,5 @@
 var searchData=
 [
-  ['uniquetable_0',['UniqueTable',['../classClassProject_1_1UniqueTable.html',1,'ClassProject']]],
-  ['uniquetablesize_1',['uniqueTableSize',['../classClassProject_1_1Manager.html#ad0c74763d66ee3dc524b3e400c7e1020',1,'ClassProject::Manager']]]
+  ['size_0',['size',['../classClassProject_1_1UniqueTable.html#a22db6b95ab0daaf4669bf52e2267dc9c',1,'ClassProject::UniqueTable']]],
+  ['skip_5fgrammar_1',['skip_grammar',['../structskip__p_1_1skip__grammar.html',1,'skip_p']]]
 ];

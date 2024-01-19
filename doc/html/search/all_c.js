@@ -1,5 +1,4 @@
 var searchData=
 [
-  ['topvar_0',['topVar',['../classClassProject_1_1Manager.html#a002301f0befbc756d8c960b16d481124',1,'ClassProject::Manager']]],
-  ['true_1',['True',['../classClassProject_1_1Manager.html#a7229b49af4aebfd32af558a18e17e243',1,'ClassProject::Manager']]]
+  ['rendergraph_0',['renderGraph',['../classClassProject_1_1GraphRenderer.html#a83a1f04a163497c1ee727954ad07d477',1,'ClassProject::GraphRenderer']]]
 ];
