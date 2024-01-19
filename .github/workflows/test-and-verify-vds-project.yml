@@ -41,7 +41,7 @@ jobs:
         cmake --build build
 
     - name: Test VDSProject_23Group7
-      run: ./build/src/test/VDSProject_test
+      run: ctest --output-on-error
 
     - name: Verify VDSProject_23Group7 with ISCAS'85 c3540 benchmark
       shell: bash
