@@ -23,8 +23,7 @@ TEST_F(ReachabilityTest, ConstructorWorks)
     }
 }
 
-/*
-TEST_F(ReachabilityTest, HowTo_Example)
+TEST_F(ReachabilityTest, ExampleWorks)
 {
 
     BDD_ID s0 = stateVars2.at(0);
@@ -41,6 +40,5 @@ TEST_F(ReachabilityTest, HowTo_Example)
     ASSERT_FALSE(fsm2->isReachable({true, false}));
     ASSERT_TRUE(fsm2->isReachable({true, true}));
 }
-*/
 
 #endif

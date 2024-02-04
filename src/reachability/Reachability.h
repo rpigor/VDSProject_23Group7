@@ -9,13 +9,23 @@ namespace ClassProject {
     class Reachability : public ReachabilityInterface {
     private:
 
-        std::vector<BDD_ID> states;
+        std::vector<BDD_ID> currStateBits;
 
-        std::vector<BDD_ID> inputs;
+        std::vector<BDD_ID> nextStateBits;
 
-        std::vector<BDD_ID> transitionFunctions;
+        std::vector<BDD_ID> inputBits;
 
-        std::vector<bool> initState;
+        BDD_ID transitionRelation;
+
+        BDD_ID characteristicInitState;
+
+        BDD_ID boolToBDD(bool boolean);
+
+        BDD_ID exists(BDD_ID function, BDD_ID var);
+
+        BDD_ID computeImage(BDD_ID characteristicState);
+
+        bool isInStateSet(std::vector<bool> state, BDD_ID stateSet);
 
     public:
 
