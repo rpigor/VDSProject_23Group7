@@ -73,7 +73,7 @@ namespace ClassProject {
           *             {False, False} -> 0
           * @param stateVector provides the assignment for each state bit
           * @return the shortest distance to the initial state, -1 if unreachable
-	  * @throws std::runtime_error if size does not match with number of state bits
+	      * @throws std::runtime_error if size does not match with number of state bits
           */
         virtual int stateDistance(const std::vector<bool> &stateVector) = 0;
 

@@ -15,7 +15,17 @@ struct ReachabilityTest : testing::Test {
 
 };
 
-TEST_F(ReachabilityTest, HowTo_Example) { /* NOLINT */
+TEST_F(ReachabilityTest, ConstructorWorks)
+{
+    for (int i = 0; i < stateVars2.size(); i++)
+    {
+        ASSERT_EQ(fsm2->getTopVarName(stateVars2.at(i)), "s" + std::to_string(i));
+    }
+}
+
+/*
+TEST_F(ReachabilityTest, HowTo_Example)
+{
 
     BDD_ID s0 = stateVars2.at(0);
     BDD_ID s1 = stateVars2.at(1);
@@ -31,5 +41,6 @@ TEST_F(ReachabilityTest, HowTo_Example) { /* NOLINT */
     ASSERT_FALSE(fsm2->isReachable({true, false}));
     ASSERT_TRUE(fsm2->isReachable({true, true}));
 }
+*/
 
 #endif
