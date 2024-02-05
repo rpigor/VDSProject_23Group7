@@ -1,9 +1,11 @@
 var searchData=
 [
-  ['gate_5ftype_0',['gate_type',['../structcircuit__node__t.html#a21281dbbc65b776b011d4579aa559dde',1,'circuit_node_t']]],
-  ['generatebdd_1',['GenerateBDD',['../classCircuitToBDD.html#a72af9af179f3fe7b1c62e36a286085a9',1,'CircuitToBDD']]],
-  ['getlistofoutputlabels_2',['GetListOfOutputLabels',['../classBenchParser.html#aef9c0ff2adf97bf69eecf48bb126f463',1,'BenchParser']]],
-  ['getsortedcircuit_3',['GetSortedCircuit',['../classBenchParser.html#a7a8ea5b32122582ce0bc75ab080ac2b9',1,'BenchParser']]],
-  ['gettopvarname_4',['getTopVarName',['../classClassProject_1_1Manager.html#a7238da7832b931611dbfd273800360e2',1,'ClassProject::Manager']]],
-  ['graphrenderer_5',['GraphRenderer',['../classClassProject_1_1GraphRenderer.html',1,'ClassProject']]]
+  ['cbegin_0',['cbegin',['../classClassProject_1_1UniqueTable.html#acc5368f898dc494148cb0a074659aa8d',1,'ClassProject::UniqueTable']]],
+  ['cend_1',['cend',['../classClassProject_1_1UniqueTable.html#a31074cfa54189df1f5fa693539fc4002',1,'ClassProject::UniqueTable']]],
+  ['classproject_2',['ClassProject',['../namespaceClassProject.html',1,'']]],
+  ['cofactorfalse_3',['coFactorFalse',['../classClassProject_1_1Manager.html#a9bfb1e1d8b1ba9cc14f440b4cabceb07',1,'ClassProject::Manager::coFactorFalse(BDD_ID function, BDD_ID var) override'],['../classClassProject_1_1Manager.html#ab79a3ebc2b1bdcb2d8a59acb988f5fc0',1,'ClassProject::Manager::coFactorFalse(BDD_ID function) override']]],
+  ['cofactortrue_4',['coFactorTrue',['../classClassProject_1_1Manager.html#aa1dea03ffb078e6c52502a2b16bb2902',1,'ClassProject::Manager::coFactorTrue(BDD_ID function, BDD_ID var) override'],['../classClassProject_1_1Manager.html#ad4bfae82a1220f93f416720eb82e044c',1,'ClassProject::Manager::coFactorTrue(BDD_ID function) override']]],
+  ['computednode_5',['ComputedNode',['../classClassProject_1_1ComputedNode.html',1,'ClassProject']]],
+  ['contact_6',['Contact',['../index.html#autotoc_md11',1,'']]],
+  ['createvar_7',['createVar',['../classClassProject_1_1Manager.html#aa3fe08b0b002032a13a5ff9d05f39cfd',1,'ClassProject::Manager']]]
 ];

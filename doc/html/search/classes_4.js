@@ -1,6 +1,5 @@
 var searchData=
 [
-  ['node_0',['Node',['../classClassProject_1_1Node.html',1,'ClassProject']]],
-  ['node_1',['node',['../structnode.html',1,'']]],
-  ['nodetriple_2',['NodeTriple',['../classClassProject_1_1NodeTriple.html',1,'ClassProject']]]
+  ['reachability_0',['Reachability',['../classClassProject_1_1Reachability.html',1,'ClassProject']]],
+  ['reachabilityinterface_1',['ReachabilityInterface',['../classClassProject_1_1ReachabilityInterface.html',1,'ClassProject']]]
 ];

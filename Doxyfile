@@ -1010,7 +1010,12 @@ RECURSIVE              = YES
 
 EXCLUDE                = gtest \
                          src/test \
-                         src/ManagerInterface.h
+                         src/verify \
+                         src/bench \
+                         src/reachability/Tests.h \
+                         src/reachability/main_test.cpp \
+                         benchmarks \
+                         build
 
 # The EXCLUDE_SYMLINKS tag can be used to select whether or not files or
 # directories that are symbolic links (a Unix file system feature) are excluded
