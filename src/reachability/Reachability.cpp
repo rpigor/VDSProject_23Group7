@@ -52,11 +52,15 @@ BDD_ID Reachability::exists(BDD_ID function, BDD_ID var)
 
 BDD_ID Reachability::computeImage(BDD_ID characteristicState)
 {
-    // compute img(s0', s1') = ∃s0 ∃s1 c_R ∗ τ
+    // compute img(s0', s1') = ∃i ∃s0 ∃s1 c_R ∗ τ
     BDD_ID nextStateImg = and2(characteristicState, transitionRelation);
     for (BDD_ID stateBit : currStateBits)
     {
         nextStateImg = exists(nextStateImg, stateBit);
+    }
+    for (BDD_ID inputBit : inputBits)
+    {
+        nextStateImg = exists(nextStateImg, inputBit);
     }
 
     // compute img(s0, s1) = ∃s0' ∃s1' (s0 == s0') ∗ (s1 == s1') ∗ img(s0', s1')
@@ -110,6 +114,11 @@ bool Reachability::isReachable(const std::vector<bool> &stateVector)
 */
 int Reachability::stateDistance(const std::vector<bool> &stateVector)
 {
+    if (stateVector.size() != currStateBits.size())
+    {
+        throw std::runtime_error("Bit width does not match the bit width of other states.");
+    }
+
     if (isInStateSet(stateVector, characteristicInitState))
     {
         return 0;
