@@ -10,11 +10,14 @@
 
 class ManagerTest : public testing::Test {
 protected:
+
     ClassProject::Manager manager;
+
 };
 
 class ManagerExampleTest : public testing::Test {
 protected:
+
     ClassProject::Manager manager;
 
     ClassProject::BDD_ID functionId;
