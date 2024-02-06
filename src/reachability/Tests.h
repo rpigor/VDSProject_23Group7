@@ -111,6 +111,10 @@ TEST_F(ReachabilityTest, ConstructorWorks)
     {
         ASSERT_EQ(fsm2->getTopVarName(stateVars2.at(i)), "s" + std::to_string(i));
     }
+
+    ASSERT_THROW(std::make_unique<ClassProject::Reachability>(0), std::runtime_error);
+    ASSERT_THROW(std::make_unique<ClassProject::Reachability>(0, 0), std::runtime_error);
+    ASSERT_THROW(std::make_unique<ClassProject::Reachability>(0, 10), std::runtime_error);
 }
 
 TEST_F(ReachabilityTest, SetTransitionWorks)
@@ -126,8 +130,10 @@ TEST_F(ReachabilityTest, SetTransitionWorks)
 
     transitionFunctions.pop_back();
     transitionFunctions.pop_back();
+    transitionFunctions.push_back(999);
     EXPECT_THROW(fsm2->setTransitionFunctions(transitionFunctions), std::runtime_error);
 
+    transitionFunctions.pop_back();
     transitionFunctions.pop_back();
     EXPECT_THROW(fsm2->setTransitionFunctions(transitionFunctions), std::runtime_error);
 }

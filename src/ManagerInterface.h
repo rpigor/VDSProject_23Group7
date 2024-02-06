@@ -14,6 +14,7 @@ namespace ClassProject {
 
     class ManagerInterface {
     public:
+
         virtual BDD_ID createVar(const std::string &label) = 0;
 
         virtual const BDD_ID &True() = 0;
@@ -59,6 +60,7 @@ namespace ClassProject {
         virtual size_t uniqueTableSize() = 0;
 
         virtual void visualizeBDD(std::string filepath, BDD_ID &root) = 0;
+
     };
 }
 
