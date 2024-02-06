@@ -27,6 +27,8 @@ namespace ClassProject {
 
         bool isInStateSet(std::vector<bool> state, BDD_ID stateSet);
 
+        BDD_ID unionStatesWithImage(BDD_ID characteristicStateSet);
+
     public:
 
         Reachability(unsigned int stateSize, unsigned int inputSize);

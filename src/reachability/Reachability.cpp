@@ -52,7 +52,7 @@ BDD_ID Reachability::exists(BDD_ID function, BDD_ID var)
 
 BDD_ID Reachability::computeImage(BDD_ID characteristicState)
 {
-    // compute img(s0', s1') = ∃i ∃s0 ∃s1 c_R ∗ τ
+    // compute img(s0', s1') = ∃i ∃s0 ∃s1 c_R ∗ \tau
     BDD_ID nextStateImg = and2(characteristicState, transitionRelation);
     for (BDD_ID stateBit : currStateBits)
     {
@@ -88,6 +88,11 @@ bool Reachability::isInStateSet(std::vector<bool> state, BDD_ID stateSet)
     return existCheck == True();
 }
 
+BDD_ID Reachability::unionStatesWithImage(BDD_ID characteristicStateSet)
+{
+    return or2(characteristicStateSet, computeImage(characteristicStateSet));
+}
+
 const std::vector<BDD_ID> &Reachability::getStates() const
 {
     return currStateBits;
@@ -111,6 +116,8 @@ bool Reachability::isReachable(const std::vector<bool> &stateVector)
         R_{it} := R \cup img(\delta, R);
     }
     until (R_{it} = R);
+
+    TODO: optimize fixed-point iteration algorithm
 */
 int Reachability::stateDistance(const std::vector<bool> &stateVector)
 {
@@ -125,20 +132,20 @@ int Reachability::stateDistance(const std::vector<bool> &stateVector)
     }
 
     int distance = 1;
-    BDD_ID r;
-    BDD_ID rIt = characteristicInitState;
+    BDD_ID reachableStates;
+    BDD_ID reachableStatesIter = characteristicInitState;
     do
     {
-        r = rIt;
-        rIt = or2(r, computeImage(r));
+        reachableStates = reachableStatesIter;
+        reachableStatesIter = unionStatesWithImage(reachableStates);
 
-        if (isInStateSet(stateVector, rIt))
+        if (isInStateSet(stateVector, reachableStatesIter))
         {
             return distance;
         }
 
         distance++;
-    } while (rIt != r);
+    } while (reachableStatesIter != reachableStates);
 
     return -1;
 }
