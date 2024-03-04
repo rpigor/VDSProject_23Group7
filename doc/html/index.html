@@ -74,14 +74,12 @@ $(function() {
   <div class="headertitle"><div class="title">VDSProject_23Group7 </div></div>
 </div><!--header-->
 <div class="contents">
-<div class="textblock"><p><a class="anchor" id="md_README"></a> </p><div id="top"></div><p><a href="https://github.com/rpigor/VDSProject_23Group7/graphs/contributors"><img src="https://img.shields.io/github/contributors/rpigor/VDSProject_23Group7.svg?style=for-the-badge" alt="Contributors" style="pointer-events: none;" class="inline"/></a> <a href="https://github.com/rpigor/VDSProject_23Group7/stargazers"><img src="https://img.shields.io/github/stars/rpigor/VDSProject_23Group7.svg?style=for-the-badge" alt="Stargazers" style="pointer-events: none;" class="inline"/></a> <a href="https://github.com/rpigor/VDSProject_23Group7/issues"><img src="https://img.shields.io/github/issues/rpigor/VDSProject_23Group7.svg?style=for-the-badge" alt="Issues" style="pointer-events: none;" class="inline"/></a></p>
+<div class="textblock"><p><a class="anchor" id="md_README"></a> </p><div id="top"></div><p><a href="https://github.com/rpigor/librobdd/graphs/contributors"><img src="https://img.shields.io/github/contributors/rpigor/librobdd.svg?style=for-the-badge" alt="Contributors" style="pointer-events: none;" class="inline"/></a> <a href="https://github.com/rpigor/librobdd/stargazers"><img src="https://img.shields.io/github/stars/rpigor/librobdd.svg?style=for-the-badge" alt="Stargazers" style="pointer-events: none;" class="inline"/></a> <a href="https://github.com/rpigor/librobdd/issues"><img src="https://img.shields.io/github/issues/rpigor/librobdd.svg?style=for-the-badge" alt="Issues" style="pointer-events: none;" class="inline"/></a></p>
 <p><br  />
- </p><div align="center"> <a href="https://github.com/rpigor/VDSProject_23Group7"><img src="doc/figures/RPTU-Logo-RGB.png" alt="Logo" width="400" height="200" class="inline"/> </a> <h3 align="center">VDS Class Project <br  />
- Group #7 <br  />
- Winter Semester 2023/2024 </h3>
-</div><div align="center"></div><div align="center"> </div><div align="center"> GitHub repository for the Verification of Digital Systems Class Project <br  />
- <br  />
- <a href="https://github.com/rpigor/VDSProject_23Group7/issues">Report Bug</a> </div><div align="center"> </div><p><br  />
+ </p><div align="center"> <h3 align="center">ROBDD library </h3>
+</div><div align="center"></div><div align="center"> </div><div align="center"> Verification of Digital Systems class project <br  />
+ Winter Semester 2023/2024 <br  />
+ Group #7 </div><div align="center"> </div><p><br  />
  <br  />
 </p>
 <details >
@@ -89,9 +87,9 @@ $(function() {
 Table of Contents</summary>
 <ol>
 <li>
-<a href="#about-the-project">About The Project</a>  </li>
+<a href="#about-the-project">About the project</a>  </li>
 <li>
-<a href="#getting-started">Getting Started</a> <ul>
+<a href="#getting-started">Getting started</a> <ul>
 <li>
 <a href="#dependencies">Dependencies</a> </li>
 <li>
@@ -99,71 +97,45 @@ Table of Contents</summary>
 </ul>
 </li>
 <li>
-<a href="#roadmap">Roadmap</a> </li>
-<li>
-<a href="#contact">Contact</a> </li>
-<li>
 <a href="#acknowledgments">Acknowledgments</a> </li>
 </ol>
 </details>
 <h2><a class="anchor" id="autotoc_md0"></a>
-About The Project</h2>
-<p>In the course of this Lab assignment, students are going to implement a minimal BDD package in C++. This package implements the fundamental manipulation methods for ROBDDs as they were introduced in the lecture <em>Verification of Digital Systems</em> by Prof. Kunz. The package will be implemented using the Test Driven Development (TDD) paradigm presented by Dr. Wedler.</p>
-<p align="right">The project is split into three parts. </p>
-<p>(<a href="#top">back to top</a>)</p>
-<h4><a class="anchor" id="autotoc_md1"></a>
-Part 1:</h4>
-<p>Implementation of the basic functionality of the BDD package using the TDD methodology. This is the biggest part of the project.</p>
-<p align="right">Tasks in this part:</p><ul>
-<li>Set up and maintain a Git repository</li>
-<li>Use CMake as a build system of the project</li>
-<li>Verify the code using GTest</li>
-<li>Set up a Continuous Integration (CI) pipeline with GitHub Actions **(Mandatory)**</li>
-<li>Use Doxygen (or a similar tool) to generate documentation for the API. _(Optional)_ </li>
+About the project</h2>
+<p>This is a minimal Reduced Ordered Binary Decision Diagram (ROBDD) package written in C++. This package implements the fundamental manipulation methods for BDDs as they were introduced in the lecture Verification of Digital Systems by Prof. Kunz. The package was implemented using the Test Driven Development paradigm presented by Dr. Wedler.</p>
+<p>The project is split into three parts.</p>
+<ul>
+<li>Implementation of the basic functionality of the BDD package using the TDD methodology. This is the biggest part of the project.</li>
+<li>Improvement of the performance of the implementation via provided benchmarks.</li>
+<li>Extending the existing implementation by a practical application of BDD. Using BDDs, it is possible to symbolically represent a state-space and perform a reachability analysis.</li>
 </ul>
 <p>(<a href="#top">back to top</a>)</p>
-<h4><a class="anchor" id="autotoc_md2"></a>
-Part 2:</h4>
-<p>Improvement of the performance of the implementation via provided benchmarks.</p>
-<p align="right">Tasks in this part:</p><ul>
-<li>Learning how to identify performance bottlenecks within the code.</li>
-<li>Analyzing benchmark results.</li>
-<li>How to overcome bottlenecks. </li>
-</ul>
-<p>(<a href="#top">back to top</a>)</p>
-<h4><a class="anchor" id="autotoc_md3"></a>
-Part 3:</h4>
-<p>Extending the existing implementation by a practical application of BDD. Using BDDs, it is possible to symbolically represent a state-space. This representation allows to check quickly, whether a specific state is within the reachable state space or not.</p>
-<p>(<a href="#top">back to top</a>)</p>
-<h2><a class="anchor" id="autotoc_md4"></a>
-Getting Started</h2>
-<p>Fork this repository and follow the instructions given in <code>doc</code> to complete the project.</p>
-<h3><a class="anchor" id="autotoc_md5"></a>
+<h2><a class="anchor" id="autotoc_md1"></a>
+Getting started</h2>
+<h3><a class="anchor" id="autotoc_md2"></a>
 Dependencies</h3>
 <p>List of dependencies required to compile the project:</p>
 <ul>
 <li>Boost 1.81 or higher (<code>libboost-all-dev</code>)</li>
 <li>Graphviz (<code>graphviz-dev</code>)</li>
 <li>GoogleTest (<code>libgtest-dev</code>)</li>
-<li>Build tools (<code>build-essential</code> and <code>cmake</code>)</li>
 </ul>
 <p>Be aware that this project uses <code>boost::unordered_flat_map</code> and thus requires Boost 1.81 or higher, which is not currently available in Ubuntu's official repository. If you don't have access to this version of the library, you can use <code>boost::unordered_map</code> with minor adjustments.</p>
-<p>(<a href="#top">back to top</a>)</p>
-<h3><a class="anchor" id="autotoc_md6"></a>
+<h3><a class="anchor" id="autotoc_md3"></a>
 Installation</h3>
 <ol type="1">
 <li>Install the dependencies</li>
-<li>Clone the repo <div class="fragment"><div class="line">git clone https://github.com/rpigor/VDSProject_23Group7</div>
+<li>Clone the repo <div class="fragment"><div class="line">git clone https://github.com/rpigor/librobdd</div>
 </div><!-- fragment --> <b>Installation with CLion</b></li>
 </ol>
 <p>CLion comes with CMake.</p>
 <ol type="1">
-<li>Open CLion and open VDSProject_23Group7/CMakeLists.txt as a project</li>
+<li>Open CLion and open librobdd/CMakeLists.txt as a project</li>
 <li>Select your target and build the project</li>
 </ol>
 <p><b>Installation without CLion</b></p>
 <ol type="1">
-<li>Navigate to the project folder <div class="fragment"><div class="line">cd VDSProject_23Group7</div>
+<li>Navigate to the project folder <div class="fragment"><div class="line">cd librobdd</div>
 </div><!-- fragment --></li>
 <li>Invoke CMake to create the build directory and generate makefiles <div class="fragment"><div class="line">cmake -S . -B build</div>
 </div><!-- fragment --></li>
@@ -171,35 +143,9 @@ Installation</h3>
 </div><!-- fragment --></li>
 </ol>
 <p>(<a href="#top">back to top</a>)</p>
-<h2><a class="anchor" id="autotoc_md11"></a>
-Contact</h2>
-<p>Lucas Deutschmann &amp; Philipp Schmitz - <a href="#" onclick="location.href='mai'+'lto:'+'eit'+'-v'+'ds-'+'cp'+'@rp'+'tu'+'.de'; return false;">eit-v<span class="obfuscator">.nosp@m.</span>ds-c<span class="obfuscator">.nosp@m.</span>p@rpt<span class="obfuscator">.nosp@m.</span>u.de</a></p>
-<p>Igor Reis - <a href="#" onclick="location.href='mai'+'lto:'+'xaj'+'60'+'vom'+'@r'+'ptu'+'.d'+'e'; return false;">xaj60<span class="obfuscator">.nosp@m.</span>vom@<span class="obfuscator">.nosp@m.</span>rptu.<span class="obfuscator">.nosp@m.</span>de</a></p>
-<p>(<a href="#top">back to top</a>)</p>
-<h2><a class="anchor" id="autotoc_md12"></a>
+<h2><a class="anchor" id="autotoc_md4"></a>
 Acknowledgments</h2>
 <p>Thank you Veli Durmuşcan, Shreya Vithal Kulhalli and Osama Omar Youssif Ayoub for the work on this README.md.</p>
-<p>You might find helpful links below.</p>
-<h3><a class="anchor" id="autotoc_md13"></a>
-Project Related Resources</h3>
-<h4><a class="anchor" id="autotoc_md14"></a>
-Given Task Links</h4>
-<ul>
-<li><a href="https://docs.microsoft.com/en-us/windows/wsl/install">WSL</a></li>
-<li><a href="https://github.com/google/googletest">Google Test</a></li>
-<li><a href="https://lab.github.com/githubtraining/github-actions:-hello-world">GitHub CI Interactive Tutorial</a></li>
-<li><a href="https://developer.lsst.io/cpp/api-docs.html">Documenting C++ Code</a></li>
-<li><a href="https://www.doxygen.nl/results.html">Doxygen Examples</a></li>
-<li><a href="https://www.jetbrains.com/help/clion/how-to-use-wsl-development-environment-in-product.html#wsl-tooclhain">WSL Integration for CLion</a></li>
-<li><a href="https://stackoverflow.com/questions/12578499/how-to-install-boost-on-ubuntu">How to install Boost library in Ubuntu</a></li>
-</ul>
-<p>(<a href="#top">back to top</a>)</p>
-<h4><a class="anchor" id="autotoc_md15"></a>
-Additional Materials</h4>
-<ul>
-<li><a href="https://github.com/othneildrew/Best-README-Template">README Template</a></li>
-<li><a href="https://github.com/deftio/travis-ci-cpp-example">Travis CI Examples</a></li>
-</ul>
 <p>(<a href="#top">back to top</a>)</p>
 </div></div><!-- PageDoc -->
 <a href="doxygen_crawl.html"/>
